@@ -6,7 +6,32 @@
  * User Manual available at https://docs.gradle.org/5.4.1/userguide/java_library_plugin.html
  */
 
+buildscript {
+    ext {
+        springBootVersion = '2.1.2.RELEASE'
+        cucumberVersion   = '1.2.5'
+    }
+    repositories {
+        jcenter()
+        mavenCentral()
+    }
+    dependencies {
+        //classpath('org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}')
+        //classpath 'org.liquibase:liquibase-gradle-plugin:2.0.0'
+    }
+}
+
 plugins {
+    //id 'pl.allegro.tech.build.axion-release' version '1.8.1'
+    //id 'org.springframework.boot' version '${springBootVersion}'
+    id 'io.spring.dependency-management' version '1.0.5.RELEASE'
+    id 'eclipse'
+    id 'checkstyle'
+    id 'pmd'
+    id 'project-report'
+    id 'build-dashboard'
+    id 'idea'
+    //id 'org.liquibase.gradle' version '2.0.0'
     // Apply the java-library plugin to add support for Java Library
     id 'java-library'
 }
@@ -27,6 +52,30 @@ version = '0.0.1-SNAPSHOT'
 
 sourceCompatibility = 1.8
 targetCompatibility = 1.8
+
+//scmVersion {
+//    tag {
+//        prefix = 'core'
+//    }
+
+//    versionIncrementer 'incrementMinor'
+//    branchVersionIncrementer = [
+//            'master': 'incrementPrerelease',
+//            'develop': 'incrementPatch',
+//            'release/.*': 'incrementPrerelease',
+//            'hotfix/.*': 'incrementPrerelease',
+//            'add_.*': 'incrementPatch'
+//    ]
+
+//    versionCreator 'versionWithBranch'
+//    branchVersionCreator = [
+//            'feature/.*': 'versionWithBranch',
+//            'add_.*': 'versionWithBranch'
+//    ]
+
+//    localOnly = true
+//}
+//project.version = scmVersion.version
 
 sourceSets {
     integrationTest {
