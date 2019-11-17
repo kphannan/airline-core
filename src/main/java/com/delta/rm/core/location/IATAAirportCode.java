@@ -1,20 +1,20 @@
-package com.delta.rm.core;
+package com.delta.rm.core.location;
 
-
-import lombok.Value;
 
 import java.util.regex.Pattern;
 
+import lombok.Value;
 
+// IATA airport code, IATA location identifier, IATA station code
 // @RequiredArgsConstructor
 @Value
-public class AirportCode
+public class IATAAirportCode implements AirportCode
 {
     // IATA 3 letter aiprport code
     private final String airportCode;
 
 
-    public AirportCode( final String airportCode )
+    public IATAAirportCode( final String airportCode )
     {
         if ( !isAirportCodeValid( airportCode ))
         {
@@ -36,3 +36,4 @@ public class AirportCode
         return Pattern.matches( "^[A-Z]{3}$", code );
     }
 }
+

@@ -1,9 +1,22 @@
 package com.delta.rm.core;
 
 
+import java.util.regex.Pattern;
+
 import lombok.Value;
 
-import java.util.regex.Pattern;
+
+
+// AirlineDesignator                   // https://en.wikipedia.org/wiki/Airline_codes
+//    - IATA Airline Designator   // 2 letter
+//    - ICAO Airline Designator   // 3 letter code
+
+
+
+// AccountingNumber                    // IATA 3 digit accounting code
+
+
+
 
 
 @Value

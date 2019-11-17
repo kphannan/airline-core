@@ -1,40 +1,39 @@
-package com.delta.rm.core;
+package com.delta.rm.core.location;
 
-
-import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
-import static org.junit.jupiter.api.Assertions.fail;
 
-public class AirportCodeTest
+import org.junit.jupiter.api.Test;
+
+public class IATAAirportCodeTest
 {
 
     @Test
-    public void testAltantaAirportCode()
+    public void testAltantaIATAAirportCode()
     {
-        AirportCode atlantaAirportCode = new AirportCode( "ATL" );
+        IATAAirportCode atlantaIATAAirportCode = new IATAAirportCode( "ATL" );
 
-        assertNotNull( atlantaAirportCode );
-        assertEquals( "ATL", atlantaAirportCode.getAirportCode() );
+        assertNotNull( atlantaIATAAirportCode );
+        assertEquals( "ATL", atlantaIATAAirportCode.getAirportCode() );
     }
 
     @Test
-    public void testNaritaAirportCode()
+    public void testNaritaIATAAirportCode()
     {
-        AirportCode naritaAirportCode = new AirportCode( "NRT" );
+        IATAAirportCode naritaIATAAirportCode = new IATAAirportCode( "NRT" );
 
-        assertNotNull( naritaAirportCode );
-        assertEquals( "NRT", naritaAirportCode.getAirportCode() );
+        assertNotNull( naritaIATAAirportCode );
+        assertEquals( "NRT", naritaIATAAirportCode.getAirportCode() );
     }
 
     @Test
-    public void testAltantaAirportCodeLowercase()
+    public void testAltantaIATAAirportCodeLowercase()
     {
         Throwable throwable = assertThrows( IllegalArgumentException.class, () -> {
-            new AirportCode( "atl" );
+            new IATAAirportCode( "atl" );
         });
 
         assertTrue( throwable.getMessage().contains("Invalid IATA airport code")
@@ -47,10 +46,10 @@ public class AirportCodeTest
 
 
     @Test
-    public void testAirportCodeThrowsIllegalArgumentException()
+    public void testIATAAirportCodeThrowsIllegalArgumentException()
     {
         Throwable throwable = assertThrows( IllegalArgumentException.class, () -> {
-            new AirportCode( null );
+            new IATAAirportCode( null );
         });
 
         assertEquals( "Airport Code can not be null", throwable.getMessage() );
