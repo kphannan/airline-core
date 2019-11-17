@@ -65,12 +65,20 @@ test {
 
 
 
-
+// See this page for options https://reflectoring.io/jacoco/
 jacocoTestCoverageVerification {
     violationRules {
         rule {
             limit {
                 minimum = 0.5
+            }
+        }
+
+        rule {
+            limit {
+                counter = 'LINE'
+                value   = 'COVEREDRATIO'
+                minimum = 1.0
             }
         }
 
