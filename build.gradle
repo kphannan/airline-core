@@ -17,7 +17,11 @@ buildscript {
 plugins {
     // Apply the java-library plugin to add support for Java Library
     id 'java-library'
+    id 'jacoco'
+
 }
+
+// apply plugin: 'jacoco'
 
 repositories {
     // Use jcenter for resolving dependencies.

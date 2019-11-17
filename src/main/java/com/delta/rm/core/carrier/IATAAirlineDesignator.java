@@ -19,10 +19,11 @@ import lombok.Value;
 
 
 
+//    - IATA Airline Designator   // 2 letter/number
 @Value
 public class IATAAirlineDesignator implements AirlineCode
 {
-    // IATA 2 letter aiprport code
+    // IATA 2 letter airline code
     private final String airlineCode;
 
 
@@ -44,7 +45,7 @@ public class IATAAirlineDesignator implements AirlineCode
             throw new IllegalArgumentException( "Airline code is required" );
         }
 
-        // Only accept 2 uppercase letters, no leading or trailing spaces
+        // Only accept 2 uppercase letters/numbers, no leading or trailing spaces
         return Pattern.matches( "^[A-Z0-9]{2}$", code );
     }
 }

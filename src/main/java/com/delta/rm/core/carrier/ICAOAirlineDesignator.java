@@ -7,22 +7,16 @@ import lombok.Value;
 
 
 
-// AirlineDesignator                   // https://en.wikipedia.org/wiki/Airline_codes
-//    - IATA Airline Designator   // 2 letter
-//    - ICAO Airline Designator   // 3 letter code
-
-
-
 // AccountingNumber                    // IATA 3 digit accounting code
 
 
 
 
-
+// ICAO Airline designator, which is a 3 letter code
 @Value
 public class ICAOAirlineDesignator implements AirlineCode
 {
-    // IATA 2 letter aiprport code
+    // ICAO 3 letter aiprport code
     private final String airlineCode;
 
 
@@ -44,7 +38,7 @@ public class ICAOAirlineDesignator implements AirlineCode
             throw new IllegalArgumentException( "Airline code is required" );
         }
 
-        // Only accept 2 uppercase letters, no leading or trailing spaces
+        // Only accept 3 uppercase letters, no leading or trailing spaces
         return Pattern.matches( "^[A-Z]{3}$", code );
     }
 }
