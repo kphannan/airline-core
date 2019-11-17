@@ -8,6 +8,9 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import org.junit.jupiter.api.Test;
 
+// import net.serenitybdd.junit5.SerenityTest;
+
+// @SerenityTest
 public class IATAAirlineDesignatorTest
 {
 

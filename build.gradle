@@ -10,6 +10,15 @@ buildscript {
         lombokVersion    = '1.18.8'
         junitVersion     = '5.5.2'
     }
+
+    repositories {
+        mavenLocal()
+        jcenter()
+    }
+
+    dependencies {
+        // classpath("net.serenity-bdd:serenity-gradle-plugin:2.0.83")
+    }
 }
 
 
@@ -18,10 +27,15 @@ plugins {
     // Apply the java-library plugin to add support for Java Library
     id 'java-library'
     id 'jacoco'
-
+    // id 'checkstyle'
+    id 'project-report'
+    id 'build-dashboard'
+    // id 'net.serenity-bdd.aggregator'
 }
 
 // apply plugin: 'jacoco'
+// apply plugin: 'net.serenity-bdd.aggregator'
+
 
 repositories {
     // Use jcenter for resolving dependencies.
@@ -56,6 +70,8 @@ dependencies {
     annotationProcessor("org.projectlombok:lombok:${lombokVersion}")
     testAnnotationProcessor("org.projectlombok:lombok:${lombokVersion}")
 
+    // testCompile 'net.serenity-bdd:serenity-core:2.0.83'
+    // testCompile 'net.serenity-bdd:serenity-junit:2.0.83'
 }
 
 test {
@@ -95,4 +111,18 @@ jacocoTestCoverageVerification {
         }
     }
 }
+
+
+
+// checkstyle {
+//     toolVersion "7.8.1"
+// }
+// checkstyleMain {
+//     source = 'src/main/java'
+// }
+// checkstyleTest {
+//     source = 'src/test/java'
+// }
+
+
 
