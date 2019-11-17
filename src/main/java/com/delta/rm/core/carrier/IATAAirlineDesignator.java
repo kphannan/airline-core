@@ -1,4 +1,4 @@
-package com.delta.rm.core;
+package com.delta.rm.core.carrier;
 
 
 import java.util.regex.Pattern;
@@ -20,20 +20,20 @@ import lombok.Value;
 
 
 @Value
-public class CarrierCode
+public class IATAAirlineDesignator implements AirlineCode
 {
     // IATA 2 letter aiprport code
-    private final String carrierCode;
+    private final String airlineCode;
 
 
-    public CarrierCode( final String carrierCode )
+    public IATAAirlineDesignator( final String carrierCode )
     {
         if ( !isCarrierCodeValid( carrierCode ))
         {
-            throw new IllegalArgumentException( "Invalid IATA carrier code '" + carrierCode + "'" );
+            throw new IllegalArgumentException( "Invalid IATA airline code '" + carrierCode + "'" );
         }
 
-        this.carrierCode = carrierCode;
+        this.airlineCode = carrierCode;
     }
 
 
@@ -41,10 +41,10 @@ public class CarrierCode
     {
         if ( code == null )
         {
-            throw new IllegalArgumentException( "Carrier Code can not be null" );
+            throw new IllegalArgumentException( "Airline code is required" );
         }
 
         // Only accept 2 uppercase letters, no leading or trailing spaces
-        return Pattern.matches( "^[A-Z]{2}$", code );
+        return Pattern.matches( "^[A-Z0-9]{2}$", code );
     }
 }
