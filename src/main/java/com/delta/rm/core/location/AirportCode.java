@@ -8,7 +8,7 @@ package com.delta.rm.core.location;
 //    - ICAO Station Code  // 4 letters  https://en.wikipedia.org/wiki/International_Civil_Aviation_Organization
 
 
-interface AirportCode
+public interface AirportCode
 {
     public String getAirportCode();
 }

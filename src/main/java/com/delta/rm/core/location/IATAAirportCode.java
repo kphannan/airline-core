@@ -35,5 +35,10 @@ public class IATAAirportCode implements AirportCode
         // Only accept 3 uppercase letters, no leading or trailing spaces
         return Pattern.matches( "^[A-Z]{3}$", code );
     }
+
+    // public String toString()
+    // {
+    //     return airportCode;
+    // }
 }
 
