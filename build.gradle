@@ -7,8 +7,10 @@
  */
 buildscript {
     ext {
-        lombokVersion    = '1.18.8'
-        junitVersion     = '5.5.2'
+        lombokVersion      = '1.18.8'
+        junitVersion       = '5.5.2'
+        hamcrestVersion    = '2.2'
+        serenityVersion    = '2.0.83'
     }
 
     repositories {
@@ -65,16 +67,16 @@ dependencies {
     testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:${junitVersion}")
 
     // https://mvnrepository.com/artifact/org.hamcrest/hamcrest
-    testCompile group: 'org.hamcrest', name: 'hamcrest', version: '2.2'
+    testImplementation("org.hamcrest:hamcrest:${hamcrestVersion}")
 
 
     compileOnly("org.projectlombok:lombok:${lombokVersion}")
-    testCompileOnly("org.projectlombok:lombok:${lombokVersion}")
+    testImplementation("org.projectlombok:lombok:${lombokVersion}")
     annotationProcessor("org.projectlombok:lombok:${lombokVersion}")
     testAnnotationProcessor("org.projectlombok:lombok:${lombokVersion}")
 
-    // testCompile 'net.serenity-bdd:serenity-core:2.0.83'
-    // testCompile 'net.serenity-bdd:serenity-junit:2.0.83'
+    // testImplementation("net.serenity-bdd:serenity-core:${serenityVersion}" )
+    // testImplementation("net.serenity-bdd:serenity-junit:${serenityVersion}" )
 }
 
 test {
