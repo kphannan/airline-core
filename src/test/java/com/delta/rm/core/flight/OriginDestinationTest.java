@@ -20,6 +20,9 @@ public class OriginDestinationTest
         assertNotNull( od );
         assertEquals( new IATAAirportCode("ATL"), od.getOrigin(), "Origin does not match" );
         assertEquals( new IATAAirportCode("JFK"), od.getDestination(), "Destination does not match" );
+
+        assertEquals( "ATL", od.getOrigin().getAirportCode() );
+        assertEquals( "JFK", od.getDestination().getAirportCode() );
     }
 
     @Test
@@ -67,6 +70,9 @@ public class OriginDestinationTest
         assertNotNull( od );
         assertEquals( atl, od.getOrigin(), "Origin does not match" );
         assertEquals( jfk, od.getDestination(), "Destination does not match" );
+
+        assertEquals( "ATL", od.getOrigin().getAirportCode() );
+        assertEquals( "JFK", od.getDestination().getAirportCode() );
     }
 
 

@@ -1,10 +1,11 @@
 package com.delta.rm.core.carrier;
 
 
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.*;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
-import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import org.junit.jupiter.api.Test;
 
@@ -37,12 +38,15 @@ public class ICAOAirlineDesignatorTest
             new ICAOAirlineDesignator( "dal" );
         });
 
-        assertTrue( throwable.getMessage().contains("Invalid ICAO airline code")
-                   ,"Exception message contains Invalid ICAO airline code" );
 
-        assertTrue( throwable.getMessage().contains("'dal'")
-                   ,"Exception message should contain the failing airline code." );
+        assertThat( throwable.getMessage()
+                   ,both(containsString("Invalid ICAO airline code"))
+                   .and( containsString( "'dal'")) );
+        // assertTrue( throwable.getMessage().contains("Invalid ICAO airline code")
+        //            ,"Exception message contains Invalid ICAO airline code" );
 
+        // assertTrue( throwable.getMessage().contains("'dal'")
+        //            ,"Exception message should contain the failing airline code." );
     }
 
 

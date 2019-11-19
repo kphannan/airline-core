@@ -32,14 +32,6 @@ public class FlightTest
                                    });
 
         assertTrue( t.getMessage().contains("Both origin and destination must be specified") );
-        // Flight flight = flightBuilder.build();
-        // assertNotNull( flight );
-
-        // assertEquals( flightDesignator, flight.getMarketingFlightDesignator() );
-
-        // assertNull( flight.getOperatingFlightDesignator() );
-        // assertNull( flight.getOriginDestination() );
-        // assertNull( flight.getSegments() );
     }
 
     @Test
@@ -53,16 +45,14 @@ public class FlightTest
 
         assertNotNull( flightBuilder );
 
-        flightBuilder.between("ATL", "ORL" );
-        // flightBuilder.build();
+        flightBuilder.between("MSP", "LAX" );
+
         Flight flight = flightBuilder.build();
         assertNotNull( flight );
 
         assertEquals( flightDesignator, flight.getMarketingFlightDesignator() );
-
-        // assertNull( flight.getOperatingFlightDesignator() );
-        // assertNull( flight.getOriginDestination() );
-        // assertNull( flight.getSegments() );
+        assertEquals( new IATAAirportCode( "MSP"), flight.getOriginDestination().getOrigin() );
+        assertEquals( new IATAAirportCode( "LAX"), flight.getOriginDestination().getDestination() );
     }
 
     @Test
@@ -101,14 +91,14 @@ public class FlightTest
         assertNotNull( flightBuilder );
 
         flightBuilder.between( new IATAAirportCode("ATL"), new IATAAirportCode("ORL") );
-        // flightBuilder.build();
+
         Flight flight = flightBuilder.build();
         assertNotNull( flight );
 
         assertEquals( flightDesignator, flight.getMarketingFlightDesignator() );
+        assertEquals( new IATAAirportCode( "ATL"), flight.getOriginDestination().getOrigin() );
+        assertEquals( new IATAAirportCode( "ORL"), flight.getOriginDestination().getDestination() );
 
-        // assertNull( flight.getOperatingFlightDesignator() );
-        // assertNull( flight.getOriginDestination() );
         // assertNull( flight.getSegments() );
     }
 
