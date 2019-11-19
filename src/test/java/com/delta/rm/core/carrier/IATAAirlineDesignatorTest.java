@@ -1,8 +1,8 @@
 package com.delta.rm.core.carrier;
 
-
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.*;
+import static org.hamcrest.Matchers.both;
+import static org.hamcrest.Matchers.containsString;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -18,19 +18,19 @@ public class IATAAirlineDesignatorTest
     @Test
     public void testDeltaAirlinesCode()
     {
-        IATAAirlineDesignator deltaAirlinesCode = new IATAAirlineDesignator( "DL" );
+        IATAAirlineDesignator dl = new IATAAirlineDesignator( "DL" );
 
-        assertNotNull( deltaAirlinesCode );
-        assertEquals( "DL", deltaAirlinesCode.getAirlineCode() );
+        assertNotNull( dl );
+        assertEquals( "DL", dl.getAirlineCode() );
     }
 
     @Test
     public void testAirNorthCharterCode()
     {
-        IATAAirlineDesignator airNorthCharterCode = new IATAAirlineDesignator( "4N" );
+        IATAAirlineDesignator airNorthCharter = new IATAAirlineDesignator( "4N" );
 
-        assertNotNull( airNorthCharterCode );
-        assertEquals( "4N", airNorthCharterCode.getAirlineCode() );
+        assertNotNull( airNorthCharter );
+        assertEquals( "4N", airNorthCharter.getAirlineCode() );
     }
 
 
@@ -58,9 +58,10 @@ public class IATAAirlineDesignatorTest
     @Test
     public void testDeltaAirlinesCodeLowercase()
     {
-        Throwable throwable = assertThrows( IllegalArgumentException.class, () -> {
-            new IATAAirlineDesignator( "dl" );
-        });
+        Throwable throwable = assertThrows( IllegalArgumentException.class
+                                           ,() -> {
+                                               new IATAAirlineDesignator( "dl" );
+                                            });
 
         assertThat( throwable.getMessage()
                    ,both(containsString("Invalid IATA airline code"))

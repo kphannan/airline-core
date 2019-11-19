@@ -1,6 +1,5 @@
 package com.delta.rm.core.carrier;
 
-
 import java.util.regex.Pattern;
 
 import lombok.Value;
@@ -27,6 +26,12 @@ public class IATAAirlineDesignator implements AirlineCode
     private final String airlineCode;
 
 
+    /**
+     * Create a IATA carrier code instance if the code is no more than two
+     * characters/letters, all uppercase.
+     * @param carrierCode 2 character uppercase alphanumeric airport code
+     * @throws IllegalArgumentException if the code does not pass validation.
+     */
     public IATAAirlineDesignator( final String carrierCode )
     {
         if ( !isCarrierCodeValid( carrierCode ))

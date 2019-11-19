@@ -1,6 +1,5 @@
 package com.delta.rm.core.carrier;
 
-
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
@@ -12,9 +11,10 @@ public class AirlineCodeFactoryTest
     @Test
     public void nullAirlineCodeThrowsIllegalArgument()
     {
-        Throwable throwable = assertThrows( IllegalArgumentException.class, () -> {
-            AirlineCodeFactory.build( null );
-        });
+        Throwable throwable = assertThrows( IllegalArgumentException.class
+                                           ,() -> {
+                                               AirlineCodeFactory.build( null );
+                                            });
 
         assertEquals( "Airline code is required", throwable.getMessage() );
     }

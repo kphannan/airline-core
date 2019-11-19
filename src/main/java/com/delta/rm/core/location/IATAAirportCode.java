@@ -1,6 +1,5 @@
 package com.delta.rm.core.location;
 
-
 import java.util.regex.Pattern;
 
 import lombok.Value;
@@ -14,6 +13,12 @@ public class IATAAirportCode implements AirportCode
     private final String airportCode;
 
 
+    /**
+     * Create a new IATAAirportCode instance if the string airport code is
+     * exactly 3 uppercase alphabetic characters.
+     * @param airportCode target airport code string as 3 uppercase characters
+     * @throws IllegalArgumentException when input is not of the proper format
+     */
     public IATAAirportCode( final String airportCode )
     {
         if ( !isAirportCodeValid( airportCode ))

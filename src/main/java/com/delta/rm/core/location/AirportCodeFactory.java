@@ -12,7 +12,7 @@ public class AirportCodeFactory
      * structural requirements of number and type of characters.
      * @param airportCode the target airport code
      * @return an IATA airport Code or ICAO airport code depending on the
-     * number of characters in the target.
+     *     number of characters in the target.
      */
     public static AirportCode build( final String airportCode )
     {
@@ -27,5 +27,7 @@ public class AirportCodeFactory
     // Hide the default constructor to ensure this is used as a static
     // factory class.
     private AirportCodeFactory()
-    {}
+    {
+        // Empty constructor
+    }
 }

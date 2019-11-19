@@ -3,7 +3,7 @@ package com.delta.rm.core.flight;
 import java.util.List;
 
 import com.delta.rm.core.location.AirportCode;
-import com.delta.rm.core.location.IATAAirportCode;
+import com.delta.rm.core.location.AirportCodeFactory;
 
 import lombok.Data;
 
@@ -61,6 +61,12 @@ public class Flight
         //     return this;
         // }
 
+        /**
+         * Collect the origin and destination airports as AirportCode.
+         * @param origin origin airport code
+         * @param destination destination airport code
+         * @return the Builder for chaining.
+         */
         public Builder between( AirportCode origin, AirportCode destination )
         {
             this.origin      = origin;
@@ -69,14 +75,26 @@ public class Flight
             return this;
         }
 
+        /**
+         * Collect the origin and destination airports as strings which are
+         * converted into the appropriate AirportCode class.
+         * @param origin origin airport code
+         * @param destination destination airport code
+         * @return the Builder for chaining.
+         */
         public Builder between( String origin, String destination )
         {
-            this.origin      = new IATAAirportCode( origin );
-            this.destination = new IATAAirportCode( destination );
+            this.origin      = AirportCodeFactory.build( origin );
+            this.destination = AirportCodeFactory.build( destination );
 
             return this;
         }
 
+        /**
+         * Create a Flight object from the values collected by the builder.
+         * 
+         * @return the newly constructed Flight object.
+         */
         public Flight build()
         {
             Flight flight = new Flight( marketingFlightDesignator );
@@ -89,35 +107,10 @@ public class Flight
     }
 
 
-
-    // public Flight( final FlightDesignator marketingFlightDesignator
-    //               ,final FlightDesignator operatingFlightDesignator
-    //               ,final AirportCode      origin
-    //               ,final AirportCode      destination )
-    // {
-    //     this.marketingFlightDesignator = marketingFlightDesignator;
-    //     this.operatingFlightDesignator = Optional
-    //     originDestination              = new OriginDestination(origin, destination);
-    // }
-
-    // public Flight( final FlightDesignator marketingFlightDesignator
-    //               ,final AirportCode      origin
-    //               ,final AirportCode      destination )
-    // {
-    //     this.marketingFlightDesignator = marketingFlightDesignator;
-    //     originDestination              = new OriginDestination(origin, destination);
-    // }
-
     public Flight( final FlightDesignator marketingFlightDesignator )
     {
         this.marketingFlightDesignator = marketingFlightDesignator;        
     }
-
-    // public Flight( final FlightDesignator marketingFlightDesignator, OriginDestination originDestination )
-    // {
-    //     this.marketingFlightDesignator = marketingFlightDesignator;
-    //     this.originDestination         = originDestination;        
-    // }
 }
 
 

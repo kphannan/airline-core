@@ -1,6 +1,5 @@
 package com.delta.rm.core.carrier;
 
-
 import java.util.regex.Pattern;
 
 import lombok.Value;
@@ -20,6 +19,12 @@ public class ICAOAirlineDesignator implements AirlineCode
     private final String airlineCode;
 
 
+    /**
+     * Create a ICAO carrier code instance if the code is exacly three
+     * alphabetic characters, all uppercase.
+     * @param carrierCode 3 uppercase letter airport code
+     * @throws IllegalArgumentException if the code does not pass validation.
+     */
     public ICAOAirlineDesignator( final String carrierCode )
     {
         if ( !isCarrierCodeValid( carrierCode ))

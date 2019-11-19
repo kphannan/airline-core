@@ -1,6 +1,5 @@
 package com.delta.rm.core.location;
 
-
 import java.util.regex.Pattern;
 
 import lombok.Value;
@@ -15,6 +14,12 @@ public class ICAOAirportCode implements AirportCode
 
 
 
+    /**
+     * Create a new ICAOAirportCode instance if the string airport code is
+     * exactly 4 uppercase alphabetic characters.
+     * @param airportCode target airport code string as 4 uppercase characters
+     * @throws IllegalArgumentException when input is not of the proper format
+     */
     public ICAOAirportCode( final String airportCode )
     {
         if ( !isAirportCodeValid( airportCode ))

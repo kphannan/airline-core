@@ -12,7 +12,7 @@ public class AirlineCodeFactory
      * structural requirements of number and type of characters.
      * @param airlineCode the target airline code
      * @return an IATA Airline Code or ICAO airline code depending on the
-     * number of characters in the target.
+     *     number of characters in the target.
      */
     public static AirlineCode build( final String airlineCode )
     {
@@ -27,5 +27,7 @@ public class AirlineCodeFactory
     // Hide the default constructor to ensure this is used as a static
     // factory class.
     private AirlineCodeFactory()
-    {}
+    {
+        // Empty constructor
+    }
 }

@@ -1,6 +1,5 @@
 package com.delta.rm.core.location;
 
-
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
