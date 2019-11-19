@@ -30,7 +30,7 @@ public class ICAOAirportCode implements AirportCode
     {
         if ( code == null )
         {
-            throw new IllegalArgumentException( "Airport Code can not be null" );
+            throw new IllegalArgumentException( "Airport code is required" );
         }
 
         // Only accept 4 uppercase letters, no leading or trailing spaces

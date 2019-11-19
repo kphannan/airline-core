@@ -1,10 +1,11 @@
 package com.delta.rm.core.location;
 
 
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.*;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
-import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import org.junit.jupiter.api.Test;
 
@@ -36,12 +37,9 @@ public class ICAOAirportCodeTest
             new ICAOAirportCode( "katl" );
         });
 
-        assertTrue( throwable.getMessage().contains("Invalid ICAO airport code")
-                   ,"Exception message contains Invalid ICAO airport code" );
-
-        assertTrue( throwable.getMessage().contains("Invalid ICAO airport code")
-                   ,"'katl'" );
-
+        assertThat( throwable.getMessage()
+                   ,both(containsString("Invalid ICAO airport code"))
+                   .and( containsString( "'katl'")) );
     }
 
 
@@ -52,7 +50,7 @@ public class ICAOAirportCodeTest
             new ICAOAirportCode( null );
         });
 
-        assertEquals( "Airport Code can not be null", throwable.getMessage() );
+        assertEquals( "Airport code is required", throwable.getMessage() );
     }
 
 

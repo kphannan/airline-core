@@ -22,16 +22,16 @@ public class AirlineCodeFactoryTest
     @Test
     public void iataCodeFromTwoCharacterCode()
     {
-        AirlineCode airportCode = AirlineCodeFactory.build( "AF" );
+        AirlineCode airlineCode = AirlineCodeFactory.build( "AF" );
 
-        assertEquals( IATAAirlineDesignator.class, airportCode.getClass() );
+        assertEquals( IATAAirlineDesignator.class, airlineCode.getClass() );
     }
 
     @Test
     public void icaoCodeFromThreeCharacterCode()
     {
-        AirlineCode airportCode = AirlineCodeFactory.build( "DAL" );
+        AirlineCode airlineCode = AirlineCodeFactory.build( "DAL" );
 
-        assertEquals( ICAOAirlineDesignator.class, airportCode.getClass() );
+        assertEquals( ICAOAirlineDesignator.class, airlineCode.getClass() );
     }
 }
