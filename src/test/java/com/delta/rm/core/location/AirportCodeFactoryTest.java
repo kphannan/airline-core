@@ -4,11 +4,6 @@ package com.delta.rm.core.location;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-// import com.delta.rm.core.carrier.AirlineCode;
-// import com.delta.rm.core.carrier.AirlineCodeFactory;
-// import com.delta.rm.core.carrier.IATAAirlineDesignator;
-// import com.delta.rm.core.carrier.ICAOAirlineDesignator;
-
 import org.junit.jupiter.api.Test;
 
 

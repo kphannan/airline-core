@@ -42,11 +42,6 @@ public class ICAOAirlineDesignatorTest
         assertThat( throwable.getMessage()
                    ,both(containsString("Invalid ICAO airline code"))
                    .and( containsString( "'dal'")) );
-        // assertTrue( throwable.getMessage().contains("Invalid ICAO airline code")
-        //            ,"Exception message contains Invalid ICAO airline code" );
-
-        // assertTrue( throwable.getMessage().contains("'dal'")
-        //            ,"Exception message should contain the failing airline code." );
     }
 
 

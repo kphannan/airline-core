@@ -41,11 +41,6 @@ public class IATAAirportCodeTest
         assertThat( throwable.getMessage()
                    ,both(containsString("Invalid IATA airport code"))
                    .and( containsString( "'atl'")) );
-        // assertTrue( throwable.getMessage().contains("Invalid IATA airport code")
-        //            ,"Exception message contains Invalid IATA airport code" );
-
-        // assertTrue( throwable.getMessage().contains("Invalid IATA airport code")
-        //            ,"'atl'" );
     }
 
 
