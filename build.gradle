@@ -60,7 +60,11 @@ targetCompatibility = 1.8
 
 versioning {
     releases = ['release', 'development']
-    releaseMode = 'snapshot'
+    // releaseMode = 'snapshot'
+    releaseBuild = false		// own control, which build is really release, set to true in CI-server release job
+    releaseMode = 'snapshot'	// how to compute version on release-branches
+    displayMode = 'snapshot'	// how to compute version on non-release-branches
+    dirty = { t -> t }		// switch off dirty-suffix ( could be usefull for local development )
 }
 
 // ### Build the deliverable jar ###
