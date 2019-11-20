@@ -58,6 +58,10 @@ version = versioning.info.full
 sourceCompatibility = 1.8
 targetCompatibility = 1.8
 
+versioning {
+    releases = ['release', 'development']
+}
+
 // ### Build the deliverable jar ###
 task fatJar(type: Jar) {
     manifest {
