@@ -33,12 +33,13 @@ plugins {
     id 'checkstyle'
     id 'project-report'
     id 'build-dashboard'
-    // id 'net.serenity-bdd.aggregator'
+    // id 'net.serenity-bdd.aggregator' version "${serenityVersion}"
+    id "net.nemerosa.versioning" version "2.9.0"
 }
 
 // apply plugin: 'checkstyle'
 // apply plugin: 'jacoco'
-// apply plugin: 'net.serenity-bdd.aggregator'
+apply plugin: 'net.serenity-bdd.aggregator'
 
 
 repositories {
@@ -49,11 +50,33 @@ repositories {
 }
 
 
-group   = 'com.airline'
-version = '0.0.1-SNAPSHOT'
+group          = 'com.airline'
+// version = '0.0.1-SNAPSHOT'
+version = versioning.info.full
+
 
 sourceCompatibility = 1.8
 targetCompatibility = 1.8
+
+// ### Build the deliverable jar ###
+task fatJar(type: Jar) {
+    manifest {
+        // attributes 'Implementation-Title': 'Airport Core Entities',
+                //    'Implementation-Version': version
+        attributes (
+            'Built-By'       : System.properties['user.name'],
+            'Build-Timestamp': new java.text.SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSZ").format(new Date()),
+            'Build-Revision' : versioning.info.commit,
+            'Build-Version'  : versioning.info.display,
+            'Created-By'     : "Gradle ${gradle.gradleVersion}",
+            'Build-Jdk'      : "${System.properties['java.version']} (${System.properties['java.vendor']} ${System.properties['java.vm.version']})",
+            'Build-OS'       : "${System.properties['os.name']} ${System.properties['os.arch']} ${System.properties['os.version']}"
+        )
+    }
+    archiveBaseName = project.name + '-all'
+    from { configurations.compileClasspath.collect { it.isDirectory() ? it : zipTree(it) }}
+    with jar
+}
 
 dependencies {
     // This dependency is exported to consumers, that is to say found on their compile classpath.
