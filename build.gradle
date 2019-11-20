@@ -60,6 +60,7 @@ targetCompatibility = 1.8
 
 versioning {
     releases = ['release', 'development']
+    releaseMode = 'snapshot'
 }
 
 // ### Build the deliverable jar ###
