@@ -3,6 +3,13 @@ package com.delta.rm.core.location;
 import java.util.regex.Pattern;
 
 import lombok.Value;
+// import lombok.Data;
+
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
+// import com.fasterxml.jackson.annotation.JsonName;
+ 
+
 
 // ICAO airport code
 //   - https://en.wikipedia.org/wiki/ICAO_airport_code
@@ -10,6 +17,7 @@ import lombok.Value;
 public class ICAOAirportCode implements AirportCode
 {
     // ICAO 4 letter aiprport code
+    @JsonProperty( "icaoAirportCode")
     private final String airportCode;
 
 
@@ -20,14 +28,15 @@ public class ICAOAirportCode implements AirportCode
      * @param airportCode target airport code string as 4 uppercase characters
      * @throws IllegalArgumentException when input is not of the proper format
      */
-    public ICAOAirportCode( final String airportCode )
+    @JsonCreator
+    public ICAOAirportCode( @JsonProperty("icaoAirportCode") final String icaoAirportCode )
     {
-        if ( !isAirportCodeValid( airportCode ))
+        if ( !isAirportCodeValid( icaoAirportCode ))
         {
-            throw new IllegalArgumentException( "Invalid ICAO airport code '" + airportCode + "'" );
+            throw new IllegalArgumentException( "Invalid ICAO airport code '" + icaoAirportCode + "'" );
         }
 
-        this.airportCode = airportCode;
+        this.airportCode = icaoAirportCode;
     }
 
 

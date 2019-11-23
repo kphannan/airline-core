@@ -7,11 +7,12 @@
  */
 buildscript {
     ext {
-        lombokVersion      = '1.18.8'
-        junitVersion       = '5.5.2'
-        hamcrestVersion    = '2.2'
-        serenityVersion    = '2.0.83'
-        checkstyleVersion  = '8.26'
+        lombokVersion          = '1.18.8'
+        junitVersion           = '5.5.2'
+        hamcrestVersion        = '2.2'
+        serenityVersion        = '2.0.83'
+        checkstyleVersion      = '8.26'
+        cucumberReportsVersion = '4.11.2'
     }
 
     repositories {
@@ -35,6 +36,8 @@ plugins {
     id 'build-dashboard'
     // id 'net.serenity-bdd.aggregator' version "${serenityVersion}"
     id "net.nemerosa.versioning" version "2.9.0"
+    id "com.gorylenko.gradle-git-properties" version "2.2.0"
+    id 'maven-publish'
 }
 
 // apply plugin: 'checkstyle'
@@ -43,6 +46,7 @@ apply plugin: 'net.serenity-bdd.aggregator'
 
 
 repositories {
+    mavenLocal()
     // Use jcenter for resolving dependencies.
     // You can declare any Maven/Ivy/file repository here.
     jcenter()
@@ -51,20 +55,28 @@ repositories {
 
 
 group          = 'com.airline'
-// version = '0.0.1-SNAPSHOT'
-version = versioning.info.full
+version = '0.0.1-SNAPSHOT'
+// version = versioning.info.full
 
 
 sourceCompatibility = 1.8
 targetCompatibility = 1.8
 
 versioning {
-    releases = ['release', 'development']
+    releases = ['release', 'master']
     // releaseMode = 'snapshot'
     releaseBuild = true		// own control, which build is really release, set to true in CI-server release job
     // releaseMode = 'snapshot'	// how to compute version on release-branches
     displayMode = 'snapshot'	// how to compute version on non-release-branches
     dirty = { t -> t }		// switch off dirty-suffix ( could be usefull for local development )
+}
+
+publishing {
+    publications {
+        mavenJava(MavenPublication) {
+            from components.java
+        }
+    }
 }
 
 // ### Build the deliverable jar ###
@@ -82,7 +94,7 @@ task fatJar(type: Jar) {
             'Build-OS'       : "${System.properties['os.name']} ${System.properties['os.arch']} ${System.properties['os.version']}"
         )
     }
-    archiveBaseName = project.name + '-all'
+    archiveBaseName = project.name
     from { configurations.compileClasspath.collect { it.isDirectory() ? it : zipTree(it) }}
     with jar
 }
@@ -111,6 +123,18 @@ dependencies {
 
     testImplementation("net.serenity-bdd:serenity-core:${serenityVersion}" )
     testImplementation("net.serenity-bdd:serenity-junit:${serenityVersion}" )
+
+    testImplementation( "net.masterthought:cucumber-reporting:${cucumberReportsVersion}" )
+
+    // https://mvnrepository.com/artifact/com.fasterxml.jackson.core/jackson-databind
+    compile group: 'com.fasterxml.jackson.core', name: 'jackson-databind', version: '2.10.1'
+
+
+}
+
+
+compileJava {
+    options.compilerArgs << "-Xlint:unchecked" << "-Xlint:deprecation"
 }
 
 test {

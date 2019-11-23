@@ -8,3 +8,10 @@
  */
 
 rootProject.name = 'airport-core'
+
+buildCache {
+    local {
+        directory = new File(rootDir, 'build-cache')
+        removeUnusedEntriesAfterDays = 30
+    }
+}

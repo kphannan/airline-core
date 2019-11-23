@@ -4,12 +4,16 @@ import java.util.regex.Pattern;
 
 import lombok.Value;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 // IATA airport code, IATA location identifier, IATA station code
 // @RequiredArgsConstructor
 @Value
 public class IATAAirportCode implements AirportCode
 {
     // IATA 3 letter aiprport code
+    @JsonProperty( "iataAirportCode")
     private final String airportCode;
 
 
@@ -19,14 +23,15 @@ public class IATAAirportCode implements AirportCode
      * @param airportCode target airport code string as 3 uppercase characters
      * @throws IllegalArgumentException when input is not of the proper format
      */
-    public IATAAirportCode( final String airportCode )
+    @JsonCreator
+    public IATAAirportCode( @JsonProperty( "iataAirportCode") final String iataAirportCode )
     {
-        if ( !isAirportCodeValid( airportCode ))
+        if ( !isAirportCodeValid( iataAirportCode ))
         {
-            throw new IllegalArgumentException( "Invalid IATA airport code '" + airportCode + "'" );
+            throw new IllegalArgumentException( "Invalid IATA airport code '" + iataAirportCode + "'" );
         }
 
-        this.airportCode = airportCode;
+        this.airportCode = iataAirportCode;
     }
 
 
