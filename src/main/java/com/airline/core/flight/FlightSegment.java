@@ -1,6 +1,6 @@
-package com.delta.rm.core.flight;
+package com.airline.core.flight;
 
-import com.delta.rm.core.location.AirportCode;
+import com.airline.core.location.AirportCode;
 
 import lombok.Data;
 

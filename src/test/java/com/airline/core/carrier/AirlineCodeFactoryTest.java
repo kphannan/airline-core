@@ -1,4 +1,4 @@
-package com.delta.rm.core.carrier;
+package com.airline.core.carrier;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;

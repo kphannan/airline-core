@@ -1,4 +1,4 @@
-package com.delta.rm.core.carrier;
+package com.airline.core.carrier;
 
 // AirlineDesignator      // https://en.wikipedia.org/wiki/Airline_codes
 

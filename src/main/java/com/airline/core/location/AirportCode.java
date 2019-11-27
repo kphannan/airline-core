@@ -1,4 +1,4 @@
-package com.delta.rm.core.location;
+package com.airline.core.location;
 
 
 

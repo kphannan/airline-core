@@ -1,4 +1,4 @@
-package com.delta.rm.core.location;
+package com.airline.core.location;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;

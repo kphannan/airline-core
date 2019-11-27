@@ -1,4 +1,4 @@
-package com.delta.rm.core.carrier;
+package com.airline.core.carrier;
 
 
 import static org.hamcrest.MatcherAssert.assertThat;

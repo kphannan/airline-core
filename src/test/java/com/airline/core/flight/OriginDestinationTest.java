@@ -1,12 +1,12 @@
-package com.delta.rm.core.flight;
+package com.airline.core.flight;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-import com.delta.rm.core.location.AirportCode;
-import com.delta.rm.core.location.IATAAirportCode;
+import com.airline.core.location.AirportCode;
+import com.airline.core.location.IATAAirportCode;
 
 import org.junit.jupiter.api.Test;
 

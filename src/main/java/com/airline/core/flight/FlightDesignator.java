@@ -1,7 +1,7 @@
-package com.delta.rm.core.flight;
+package com.airline.core.flight;
 
-import com.delta.rm.core.carrier.AirlineCode;
-import com.delta.rm.core.carrier.IATAAirlineDesignator;
+import com.airline.core.carrier.AirlineCode;
+import com.airline.core.carrier.IATAAirlineDesignator;
 
 import lombok.Data;
 
