@@ -1,5 +1,6 @@
 package com.airline.core.flight;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import com.airline.core.location.AirportCode;
@@ -19,8 +20,8 @@ import lombok.Data;
 @Data
 public class Flight
 {
-    private final FlightDesignator   marketingFlightDesignator;
-    private       FlightDesignator   operatingFlightDesignator;
+    private final FlightDesignator   flightDesignator;
+    // private       FlightDesignator   operatingFlightDesignator;
 
     private OriginDestination        originDestination = null;
 
@@ -32,22 +33,24 @@ public class Flight
      */
     public static class Builder
     {
-        private FlightDesignator     operatingFlightDesignator;
-        private FlightDesignator     marketingFlightDesignator;
+        // private FlightDesignator     operatingFlightDesignator;
+        private FlightDesignator     flightDesignator;
     
         private AirportCode          origin;
         private AirportCode          destination;
 
+        private List<FlightSegment>  segments      = new ArrayList<>();
+
         public Builder( FlightDesignator marketingFlightDesignator )
         {
-            this.marketingFlightDesignator = marketingFlightDesignator;
+            this.flightDesignator = marketingFlightDesignator;
         }
 
-        public Builder operatedAs( FlightDesignator operatingFlightDesignator )
-        {
-            this.operatingFlightDesignator = operatingFlightDesignator;
-            return this;
-        }
+        // public Builder operatedAs( FlightDesignator operatingFlightDesignator )
+        // {
+        //     this.operatingFlightDesignator = operatingFlightDesignator;
+        //     return this;
+        // }
 
         // public Builder origin( AirportCode location )
         // {
@@ -90,6 +93,20 @@ public class Flight
             return this;
         }
 
+        public Builder segment( FlightDesignator flightDesignator, int sequence, OriginDestination od )
+        {
+            segments.add( new FlightSegment( flightDesignator, sequence, od ));
+
+            return this;
+        }
+
+        public Builder segment( FlightDesignator flightDesignator, int sequence, AirportCode origin, AirportCode destination )
+        {
+            segments.add( new FlightSegment( flightDesignator, sequence, new OriginDestination(origin, destination) ));
+
+            return this;
+        }
+
         /**
          * Create a Flight object from the values collected by the builder.
          * 
@@ -97,19 +114,35 @@ public class Flight
          */
         public Flight build()
         {
-            Flight flight = new Flight( marketingFlightDesignator );
+            Flight flight = new Flight( flightDesignator );
            
             flight.originDestination = new OriginDestination(origin, destination);
-            flight.operatingFlightDesignator = operatingFlightDesignator;
+            // flight.operatingFlightDesignator = operatingFlightDesignator;
+
+            flight.segments = new ArrayList<>();
+
+            // If there aren't any segments, then create 1 for the flight.
+            if ( segments.isEmpty() )
+            {
+                flight.segments.add( new FlightSegment( flightDesignator, 1, flight.originDestination ));
+            }
+            else
+            {
+                flight.segments.addAll( segments );
+            }
+
+            // Check that origin of segment 1 is flight origin and destination of the last segment is
+            // the flight destination.
+            // Possibly make sure that the segments chain from origin to destination
 
             return flight;
         }
     }
 
 
-    public Flight( final FlightDesignator marketingFlightDesignator )
+    public Flight( final FlightDesignator flightDesignator )
     {
-        this.marketingFlightDesignator = marketingFlightDesignator;        
+        this.flightDesignator = flightDesignator;        
     }
 }
 

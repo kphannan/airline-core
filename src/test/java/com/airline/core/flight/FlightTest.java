@@ -50,34 +50,34 @@ public class FlightTest
         Flight flight = flightBuilder.build();
         assertNotNull( flight );
 
-        assertEquals( flightDesignator, flight.getMarketingFlightDesignator() );
+        assertEquals( flightDesignator, flight.getFlightDesignator() );
         assertEquals( new IATAAirportCode( "MSP"), flight.getOriginDestination().getOrigin() );
         assertEquals( new IATAAirportCode( "LAX"), flight.getOriginDestination().getDestination() );
     }
 
-    @Test
-    public void testBuilderWithOptionalOperatingDesignator()
-    {
-        FlightDesignator flightDesignator    = new FlightDesignator( "DL", 1234 );
-        FlightDesignator operatingDesignator = new FlightDesignator( "AF", 4321 );
+    // @Test
+    // public void testBuilderWithOptionalOperatingDesignator()
+    // {
+    //     FlightDesignator flightDesignator    = new FlightDesignator( "DL", 1234 );
+    //     // FlightDesignator operatingDesignator = new FlightDesignator( "AF", 4321 );
 
-        assertNotNull( flightDesignator );
+    //     assertNotNull( flightDesignator );
 
-        Flight.Builder flightBuilder = new Flight.Builder( flightDesignator );
+    //     Flight.Builder flightBuilder = new Flight.Builder( flightDesignator );
 
-        assertNotNull( flightBuilder );
+    //     assertNotNull( flightBuilder );
 
-        flightBuilder.between("ATL", "ORL" )
-                     .operatedAs( operatingDesignator );
+    //     flightBuilder.between("ATL", "ORL" );
+    //                 //  .operatedAs( operatingDesignator );
 
-        Flight flight = flightBuilder.build();
-        assertNotNull( flight );
+    //     Flight flight = flightBuilder.build();
+    //     assertNotNull( flight );
 
-        assertEquals( flightDesignator,    flight.getMarketingFlightDesignator() );
-        assertEquals( operatingDesignator, flight.getOperatingFlightDesignator() );
-        assertEquals( new IATAAirportCode( "ATL"), flight.getOriginDestination().getOrigin() );
-        assertEquals( new IATAAirportCode( "ORL"), flight.getOriginDestination().getDestination() );
-    }
+    //     assertEquals( flightDesignator,    flight.getFlightDesignator() );
+    //     // assertEquals( operatingDesignator, flight.getOperatingFlightDesignator() );
+    //     assertEquals( new IATAAirportCode( "ATL"), flight.getOriginDestination().getOrigin() );
+    //     assertEquals( new IATAAirportCode( "ORL"), flight.getOriginDestination().getDestination() );
+    // }
 
     @Test
     public void testBuilderWithMarketingFlightDesignatorAndOriginDestinationIATA()
@@ -95,7 +95,7 @@ public class FlightTest
         Flight flight = flightBuilder.build();
         assertNotNull( flight );
 
-        assertEquals( flightDesignator, flight.getMarketingFlightDesignator() );
+        assertEquals( flightDesignator, flight.getFlightDesignator() );
         assertEquals( new IATAAirportCode( "ATL"), flight.getOriginDestination().getOrigin() );
         assertEquals( new IATAAirportCode( "ORL"), flight.getOriginDestination().getDestination() );
 

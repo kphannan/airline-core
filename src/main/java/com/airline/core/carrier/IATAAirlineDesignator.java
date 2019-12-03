@@ -4,6 +4,8 @@ import java.util.regex.Pattern;
 
 import lombok.Value;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 
 // AirlineDesignator                   // https://en.wikipedia.org/wiki/Airline_codes
@@ -23,6 +25,7 @@ import lombok.Value;
 public class IATAAirlineDesignator implements AirlineCode
 {
     // IATA 2 letter airline code
+    @JsonProperty( "iataAirlineCode")
     private final String airlineCode;
 
 
@@ -32,7 +35,8 @@ public class IATAAirlineDesignator implements AirlineCode
      * @param carrierCode 2 character uppercase alphanumeric airport code
      * @throws IllegalArgumentException if the code does not pass validation.
      */
-    public IATAAirlineDesignator( final String carrierCode )
+    @JsonCreator
+    public IATAAirlineDesignator( @JsonProperty( "iataAirlineCode")final String carrierCode )
     {
         if ( !isCarrierCodeValid( carrierCode ))
         {

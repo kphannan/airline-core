@@ -4,6 +4,8 @@ import java.util.regex.Pattern;
 
 import lombok.Value;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 
 // AccountingNumber                    // IATA 3 digit accounting code
@@ -16,6 +18,7 @@ import lombok.Value;
 public class ICAOAirlineDesignator implements AirlineCode
 {
     // ICAO 3 letter aiprport code
+    @JsonProperty( "icaoAirlineCode")
     private final String airlineCode;
 
 
@@ -25,7 +28,8 @@ public class ICAOAirlineDesignator implements AirlineCode
      * @param carrierCode 3 uppercase letter airport code
      * @throws IllegalArgumentException if the code does not pass validation.
      */
-    public ICAOAirlineDesignator( final String carrierCode )
+    @JsonCreator
+    public ICAOAirlineDesignator( @JsonProperty( "icaoAirlineCode")final String carrierCode )
     {
         if ( !isCarrierCodeValid( carrierCode ))
         {
