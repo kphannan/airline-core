@@ -50,5 +50,12 @@ public class ICAOAirportCode implements AirportCode
         // Only accept 4 uppercase letters, no leading or trailing spaces
         return Pattern.matches( "^[A-Z]{4}$", code );
     }
+
+   // ----- Comparable
+   @Override
+   public int compareTo( final AirportCode rhs )
+   {
+        return airportCode.compareTo(rhs.getAirportCode());
+    }
 }
 

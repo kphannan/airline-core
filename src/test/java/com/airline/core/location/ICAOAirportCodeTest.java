@@ -1,11 +1,11 @@
 package com.airline.core.location;
 
-
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.*;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import org.junit.jupiter.api.Test;
 
@@ -54,4 +54,25 @@ public class ICAOAirportCodeTest
     }
 
 
+    // ----- Comparable
+
+    @Test
+    public void compareSimilarICAOAirportCode()
+    {
+        ICAOAirportCode edmonton1ICAOAirportCode = new ICAOAirportCode( "CYEG" );
+        ICAOAirportCode edmonton2ICAOAirportCode = new ICAOAirportCode( "CYEG" );
+
+        assertEquals( 0, edmonton1ICAOAirportCode.compareTo(edmonton2ICAOAirportCode) );
+    }
+
+    @Test
+    public void collationOrderOfICAOAirportCode()
+    {
+        ICAOAirportCode edmontonICAOAirportCode  = new ICAOAirportCode( "CYEG" );
+        ICAOAirportCode atlantaICAOAirportCode   = new ICAOAirportCode( "KATL" );
+
+        assertTrue( edmontonICAOAirportCode.compareTo(atlantaICAOAirportCode) < 0 );
+
+        assertTrue( atlantaICAOAirportCode.compareTo(edmontonICAOAirportCode) > 0 );
+    }
 }

@@ -50,5 +50,13 @@ public class IATAAirportCode implements AirportCode
     // {
     //     return airportCode;
     // }
+
+    // ----- Comparable
+    @Override
+    public int compareTo( final AirportCode rhs )
+    {
+        return airportCode.compareTo(rhs.getAirportCode());
+    }
+
 }
 
