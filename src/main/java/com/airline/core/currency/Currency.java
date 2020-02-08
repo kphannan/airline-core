@@ -83,8 +83,8 @@ public class Currency implements Comparable<Currency>
         if ( rhs == null )
             throw new IllegalArgumentException( "Incompatible currency (null)" );
 
-            // Verify they are compatible classes
-        if ( rhs instanceof Currency)
+        // Verify they are the same class - a common parent does not count
+        if ( this.getClass().equals(rhs.getClass()) )
         {
             if (decimalPrecision == rhs.decimalPrecision )
                 return true;
