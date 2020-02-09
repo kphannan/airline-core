@@ -3,8 +3,10 @@ package com.airline.core.order;
 import java.util.ArrayList;
 import java.util.List;
 
+import lombok.Data;
 
 
+@Data
 public class Order
 {
     private String id;
