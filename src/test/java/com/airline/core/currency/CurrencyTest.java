@@ -32,23 +32,23 @@ public class CurrencyTest
     @Test
     public void nullCurrencyCodeNotAllowed()
     {
-        Throwable t = assertThrows( IllegalArgumentException.class
-                                   ,() -> {
+        Throwable t = assertThrows( IllegalArgumentException.class,
+                                   () -> {
                                     new Currency( null, 3, 1234567890 );
                                    });
 
-        assertEquals( "Currency code is required" , t.getMessage());
+        assertEquals( "Currency code is required", t.getMessage());
     }
 
     @Test
     public void blankCurrencyCodeNotAllowed()
     {
-        Throwable t = assertThrows( IllegalArgumentException.class
-                                   ,() -> {
+        Throwable t = assertThrows( IllegalArgumentException.class,
+                                   () -> {
                                     new Currency( "", 3, 1234567890 );
                                    });
 
-        assertEquals( "Currency code is required" , t.getMessage());
+        assertEquals( "Currency code is required", t.getMessage());
     }
 
 
@@ -71,8 +71,8 @@ public class CurrencyTest
     {
         Currency total  = new Currency( "cur", 3, 1234567890 );
         
-        Throwable t = assertThrows( IllegalArgumentException.class
-                                   ,() -> {
+        Throwable t = assertThrows( IllegalArgumentException.class,
+                                   () -> {
                                       total.add( null );
                                    });
 
@@ -86,8 +86,8 @@ public class CurrencyTest
         Currency addend  = new Currency( "cur", 2, 5 );
 
         
-        Throwable t = assertThrows( IllegalArgumentException.class
-                                   ,() -> {
+        Throwable t = assertThrows( IllegalArgumentException.class,
+                                   () -> {
                                       total.add( addend );
                                    });
 
@@ -117,12 +117,12 @@ public class CurrencyTest
         Currency subtend = new Currency( "cur", 2, 5 );
 
         
-        Throwable t = assertThrows( IllegalArgumentException.class
-                                   ,() -> {
+        Throwable t = assertThrows( IllegalArgumentException.class,
+                                   () -> {
                                       total.subtract( subtend );
                                    });
 
-        assertTrue( t.getMessage().contains("Can not subtract incompatible currencies") );
+        assertEquals( "Can not subtract incompatible currencies", t.getMessage() );
     }
 
 
@@ -149,8 +149,8 @@ public class CurrencyTest
     {
         Currency total  = new Currency( "cur", 3, 1234567890 );
 
-        Throwable t = assertThrows( IllegalArgumentException.class
-                                   ,() -> {
+        Throwable t = assertThrows( IllegalArgumentException.class,
+                                   () -> {
                                       total.compareTo( null );
                                    });
 
@@ -164,8 +164,8 @@ public class CurrencyTest
         Currency valueB  = new Currency( "cur", 3, 1234567890 );
 
         // TODO catch exception - until normalization of precision is implemented
-        Throwable t = assertThrows( ArithmeticException.class
-                                   ,() -> {
+        Throwable t = assertThrows( ArithmeticException.class,
+                                   () -> {
                                       valueA.compareTo( valueB );
                                    });
 
@@ -195,7 +195,7 @@ public class CurrencyTest
         Currency valueA  = new Currency( "cur", 3, 1234567890 );
         Currency valueB  = new Currency( "cur", 3, 1111111111 );
 
-        assertTrue( valueA.compareTo( valueB ) > 0);
+        assertTrue( valueA.compareTo( valueB ) > 0 );
     }
 
 
@@ -205,7 +205,7 @@ public class CurrencyTest
         Currency valueA  = new Currency( "cur", 3, 123456789 );
         Currency valueB  = new Currency( "cur", 3, 222222222 );
 
-        assertTrue( valueA.compareTo( valueB ) < 0);
+        assertTrue( valueA.compareTo( valueB ) < 0 );
     }
 
 }

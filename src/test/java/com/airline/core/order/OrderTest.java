@@ -3,11 +3,9 @@ package com.airline.core.order;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 // import static org.junit.jupiter.api.Assertions.assertTrue;
-
-import org.junit.jupiter.api.BeforeEach;
-
 // import static org.junit.jupiter.api.Assertions.assertThrows;
 
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 
@@ -29,9 +27,9 @@ public class OrderTest
     {
         Item item = new Item();
 
-        order.addToOrder(item);
+        order.addToOrder( item );
 
-        assertEquals( item, order.getOrderItems().get(0) );
+        assertEquals( item, order.getOrderItems().get( 0 ) );
     }
 
 }

@@ -35,20 +35,22 @@ public class ICAOAirportCodeTest
     {
         Throwable throwable = assertThrows( IllegalArgumentException.class, () -> {
             new ICAOAirportCode( "katl" );
-        });
+        } );
 
         assertThat( throwable.getMessage()
-                   ,both(containsString("Invalid ICAO airport code"))
-                   .and( containsString( "'katl'")) );
+                   ,both(containsString( "Invalid ICAO airport code" ) )
+                   .and( containsString( "'katl'" )) );
     }
 
 
     @Test
     public void testICAOAirportCodeThrowsIllegalArgumentException()
     {
-        Throwable throwable = assertThrows( IllegalArgumentException.class, () -> {
-            new ICAOAirportCode( null );
-        });
+        Throwable throwable = assertThrows( IllegalArgumentException.class
+                                            , () -> {
+                                                new ICAOAirportCode( null );
+                                            }
+                                          );
 
         assertEquals( "Airport code is required", throwable.getMessage() );
     }
@@ -62,7 +64,7 @@ public class ICAOAirportCodeTest
         ICAOAirportCode edmonton1ICAOAirportCode = new ICAOAirportCode( "CYEG" );
         ICAOAirportCode edmonton2ICAOAirportCode = new ICAOAirportCode( "CYEG" );
 
-        assertEquals( 0, edmonton1ICAOAirportCode.compareTo(edmonton2ICAOAirportCode) );
+        assertEquals( 0, edmonton1ICAOAirportCode.compareTo( edmonton2ICAOAirportCode ) );
     }
 
     @Test
@@ -71,8 +73,8 @@ public class ICAOAirportCodeTest
         ICAOAirportCode edmontonICAOAirportCode  = new ICAOAirportCode( "CYEG" );
         ICAOAirportCode atlantaICAOAirportCode   = new ICAOAirportCode( "KATL" );
 
-        assertTrue( edmontonICAOAirportCode.compareTo(atlantaICAOAirportCode) < 0 );
+        assertTrue( edmontonICAOAirportCode.compareTo( atlantaICAOAirportCode ) < 0 );
 
-        assertTrue( atlantaICAOAirportCode.compareTo(edmontonICAOAirportCode) > 0 );
+        assertTrue( atlantaICAOAirportCode.compareTo( edmontonICAOAirportCode ) > 0 );
     }
 }

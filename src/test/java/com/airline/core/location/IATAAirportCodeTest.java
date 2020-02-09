@@ -39,7 +39,7 @@ public class IATAAirportCodeTest
 
 
         assertThat( throwable.getMessage()
-                   ,both(containsString("Invalid IATA airport code"))
+                   ,both(containsString( "Invalid IATA airport code" ))
                    .and( containsString( "'atl'")) );
     }
 
@@ -62,7 +62,7 @@ public class IATAAirportCodeTest
         IATAAirportCode narita1IATAAirportCode = new IATAAirportCode( "NRT" );
         IATAAirportCode narita2IATAAirportCode = new IATAAirportCode( "NRT" );
 
-        assertEquals( 0, narita1IATAAirportCode.compareTo(narita2IATAAirportCode) );
+        assertEquals( 0, narita1IATAAirportCode.compareTo( narita2IATAAirportCode ) );
     }
 
     @Test
@@ -71,10 +71,9 @@ public class IATAAirportCodeTest
         IATAAirportCode naritaIATAAirportCode  = new IATAAirportCode( "NRT" );
         IATAAirportCode atlantaIATAAirportCode = new IATAAirportCode( "ATL" );
 
-        assertTrue( naritaIATAAirportCode.compareTo(atlantaIATAAirportCode) > 0 );
+        assertTrue( naritaIATAAirportCode.compareTo( atlantaIATAAirportCode ) > 0 );
 
-        assertTrue( atlantaIATAAirportCode.compareTo(naritaIATAAirportCode) < 0 );
+        assertTrue( atlantaIATAAirportCode.compareTo( naritaIATAAirportCode ) < 0 );
     }
-
 
 }

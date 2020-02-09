@@ -19,8 +19,8 @@ public class OriginDestinationTest
         OriginDestination od = new OriginDestination( "ATL", "JFK" );
 
         assertNotNull( od );
-        assertEquals( new IATAAirportCode("ATL"), od.getOrigin(), "Origin does not match" );
-        assertEquals( new IATAAirportCode("JFK"), od.getDestination(), "Destination does not match" );
+        assertEquals( new IATAAirportCode( "ATL" ), od.getOrigin(), "Origin does not match" );
+        assertEquals( new IATAAirportCode( "JFK" ), od.getDestination(), "Destination does not match" );
 
         assertEquals( "ATL", od.getOrigin().getAirportCode() );
         assertEquals( "JFK", od.getDestination().getAirportCode() );
@@ -32,9 +32,9 @@ public class OriginDestinationTest
         Throwable t = assertThrows( IllegalArgumentException.class
                                    ,() -> {
                                     new OriginDestination( null, "JFK" );
-                                   });
+                                   } );
 
-        assertTrue( t.getMessage().contains("Both origin and destination must be specified") );
+        assertTrue( t.getMessage().contains( "Both origin and destination must be specified" ) );
     }
 
     @Test
@@ -43,9 +43,9 @@ public class OriginDestinationTest
         Throwable t = assertThrows( IllegalArgumentException.class
                                    ,() -> {
                                     new OriginDestination( "MSP", null );
-                                   });
+                                   } );
 
-        assertTrue( t.getMessage().contains("Both origin and destination must be specified") );
+        assertTrue( t.getMessage().contains( "Both origin and destination must be specified" ) );
     }
 
     @Test
@@ -55,17 +55,17 @@ public class OriginDestinationTest
                                    ,() -> {
                                     // Cast to dis-ambiguate the constructor
                                     new OriginDestination( (String)null, (String)null );
-                                   });
+                                   } );
 
-        assertTrue( t.getMessage().contains("Both origin and destination must be specified") );
+        assertTrue( t.getMessage().contains( "Both origin and destination must be specified" ) );
     }
 
 
     @Test
     public void testConstructorWithBothOriginAndDestinationAsIATACodes()
     {
-        IATAAirportCode   atl = new IATAAirportCode("ATL");
-        IATAAirportCode   jfk = new IATAAirportCode("JFK");
+        IATAAirportCode   atl = new IATAAirportCode( "ATL" );
+        IATAAirportCode   jfk = new IATAAirportCode( "JFK" );
         OriginDestination od  = new OriginDestination( atl, jfk );
 
         assertNotNull( od );
@@ -80,12 +80,12 @@ public class OriginDestinationTest
     @Test
     public void testConstructorWithOriginAndNullDestinationIATACodes()
     {
-        IATAAirportCode   atl = new IATAAirportCode("ATL");
+        IATAAirportCode   atl = new IATAAirportCode( "ATL" );
 
         Throwable t = assertThrows( IllegalArgumentException.class
                                    ,() -> {
                                       new OriginDestination( atl, null );
-                                   });
+                                   } );
 
         assertEquals( "Both origin and destination must be specified", t.getMessage() );
     }
@@ -98,9 +98,9 @@ public class OriginDestinationTest
                                    ,() -> {
                                     // Cast to dis-ambiguate the constructor
                                     new OriginDestination( (AirportCode)null, (AirportCode)null );
-                                   });
+                                   } );
 
-        assertTrue( t.getMessage().contains("Both origin and destination must be specified") );
+        assertTrue( t.getMessage().contains( "Both origin and destination must be specified" ) );
     }
 
 
@@ -135,12 +135,12 @@ public class OriginDestinationTest
     @Test
     public void equalsToSimilarIsTrue()
     {
-        IATAAirportCode   atl = new IATAAirportCode("ATL");
-        IATAAirportCode   jfk = new IATAAirportCode("JFK");
+        IATAAirportCode   atl = new IATAAirportCode( "ATL" );
+        IATAAirportCode   jfk = new IATAAirportCode( "JFK" );
         OriginDestination od  = new OriginDestination( atl, jfk );
 
         assertNotNull( od );
-        assertTrue( od.equals( new OriginDestination(new IATAAirportCode("ATL"), new IATAAirportCode("JFK")) ));
+        assertTrue( od.equals( new OriginDestination( new IATAAirportCode( "ATL" ), new IATAAirportCode( "JFK" )) ));
     }
 
     @Test
@@ -157,20 +157,20 @@ public class OriginDestinationTest
     @Test
     public void equalsToDissimilarDestinationIsFalse()
     {
-        IATAAirportCode   atl = new IATAAirportCode("ATL");
-        IATAAirportCode   jfk = new IATAAirportCode("JFK");
+        IATAAirportCode   atl = new IATAAirportCode( "ATL" );
+        IATAAirportCode   jfk = new IATAAirportCode( "JFK" );
         OriginDestination od  = new OriginDestination( atl, jfk );
 
         assertNotNull( od );
-        assertFalse( od.equals( new OriginDestination(new IATAAirportCode("ATL"), new IATAAirportCode("MCO")) ));
+        assertFalse( od.equals( new OriginDestination(new IATAAirportCode( "ATL" ), new IATAAirportCode( "MCO" )) ));
     }
 
     // ----- compareTo() -----
     @Test
     public void compareToNullFails()
     {
-        IATAAirportCode   atl = new IATAAirportCode("ATL");
-        IATAAirportCode   jfk = new IATAAirportCode("JFK");
+        IATAAirportCode   atl = new IATAAirportCode( "ATL" );
+        IATAAirportCode   jfk = new IATAAirportCode( "JFK" );
         OriginDestination od  = new OriginDestination( atl, jfk );
 
         assertNotNull( od );
@@ -179,8 +179,8 @@ public class OriginDestinationTest
     @Test
     public void compareToSelfAlwaysTrue()
     {
-        IATAAirportCode   atl = new IATAAirportCode("ATL");
-        IATAAirportCode   jfk = new IATAAirportCode("JFK");
+        IATAAirportCode   atl = new IATAAirportCode( "ATL" );
+        IATAAirportCode   jfk = new IATAAirportCode( "JFK" );
         OriginDestination od  = new OriginDestination( atl, jfk );
 
         assertNotNull( od );
@@ -190,36 +190,36 @@ public class OriginDestinationTest
     @Test
     public void compareToSimilarIsTrue()
     {
-        IATAAirportCode   atl = new IATAAirportCode("ATL");
-        IATAAirportCode   jfk = new IATAAirportCode("JFK");
+        IATAAirportCode   atl = new IATAAirportCode( "ATL" );
+        IATAAirportCode   jfk = new IATAAirportCode( "JFK" );
         OriginDestination od  = new OriginDestination( atl, jfk );
 
         assertNotNull( od );
-        assertEquals( 0, od.compareTo( new OriginDestination(new IATAAirportCode("ATL"), new IATAAirportCode("JFK")) ));
+        assertEquals( 0, od.compareTo( new OriginDestination( new IATAAirportCode( "ATL" ), new IATAAirportCode( "JFK" )) ));
     }
 
 
     @Test
     public void compareToDisSimilarOriginIsFalse()
     {
-        IATAAirportCode   atl = new IATAAirportCode("ATL");
-        IATAAirportCode   jfk = new IATAAirportCode("JFK");
+        IATAAirportCode   atl = new IATAAirportCode( "ATL" );
+        IATAAirportCode   jfk = new IATAAirportCode( "JFK" );
         OriginDestination od  = new OriginDestination( atl, jfk );
 
         assertNotNull( od );
-        assertTrue( 0 < od.compareTo( new OriginDestination(new IATAAirportCode("ABY"), new IATAAirportCode("ROC")) ));
+        assertTrue( 0 < od.compareTo( new OriginDestination( new IATAAirportCode( "ABY" ), new IATAAirportCode( "ROC" )) ));
     }
 
 
     @Test
     public void compareToDissimilarDestinationIsFalse()
     {
-        IATAAirportCode   atl = new IATAAirportCode("ATL");
-        IATAAirportCode   jfk = new IATAAirportCode("JFK");
+        IATAAirportCode   atl = new IATAAirportCode( "ATL" );
+        IATAAirportCode   jfk = new IATAAirportCode( "JFK" );
         OriginDestination od  = new OriginDestination( atl, jfk );
 
         assertNotNull( od );
-        assertTrue( 0 < od.compareTo( new OriginDestination(new IATAAirportCode("ATL"), new IATAAirportCode("HCR")) ));
+        assertTrue( 0 < od.compareTo( new OriginDestination( new IATAAirportCode( "ATL" ), new IATAAirportCode( "HCR" )) ));
     }
 
 }
