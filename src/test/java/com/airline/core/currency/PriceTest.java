@@ -15,8 +15,8 @@ public class PriceTest
         Price c = new Price( "cur", 3, 1234567890 );
 
         assertEquals( "cur", c.getPriceCode() );
-        assertEquals( 3, c.getDecimalPrecision() );
-        assertEquals( 1234567890, c.getAmount() );
+        assertEquals( 3, c.getAmount().getDecimalPrecision() );
+        assertEquals( 1234567890, c.getAmount().getAmount() );
     }
 
     @Test
@@ -25,8 +25,8 @@ public class PriceTest
         Price c = new Price( "foo", 2, 4321 );
 
         assertEquals( "foo", c.getPriceCode() );
-        assertEquals( 2, c.getDecimalPrecision() );
-        assertEquals( 4321, c.getAmount() );
+        assertEquals( 2, c.getAmount().getDecimalPrecision() );
+        assertEquals( 4321, c.getAmount().getAmount() );
     }
 
     @Test
@@ -62,16 +62,14 @@ public class PriceTest
         total.add( addend );
 
         assertEquals( "cur", total.getPriceCode() );
-        assertEquals( 3, total.getDecimalPrecision() );
-        assertEquals( 1234567895, total.getAmount() );
+        assertEquals( 3, total.getAmount().getDecimalPrecision() );
+        assertEquals( 1234567895, total.getAmount().getAmount() );
     }
 
     @Test
     public void addNullValue()
     {
         Price total  = new Price( "cur", 3, 1234567890 );
-        // Price addend = new Price( "cur", 3, 5 );
-
         
         Throwable t = assertThrows( IllegalArgumentException.class
                                    ,() -> {
@@ -85,7 +83,7 @@ public class PriceTest
     public void addAddIncompatibleValue()
     {
         Price total   = new Price( "cur", 3, 1234567890 );
-        Price addend  = new Price( "cur", 2, 5 );
+        Price addend  = new Price( "ruc", 2, 5 );
 
         
         Throwable t = assertThrows( IllegalArgumentException.class
@@ -93,7 +91,7 @@ public class PriceTest
                                       total.add( addend );
                                    });
 
-        assertTrue( t.getMessage().contains("Can not add incompatible prices") );
+        assertEquals( "Can not add incompatible prices", t.getMessage() );
     }
 
 
@@ -109,15 +107,15 @@ public class PriceTest
         total.subtract( addend );
 
         assertEquals( "cur", total.getPriceCode() );
-        assertEquals( 3, total.getDecimalPrecision() );
-        assertEquals( 1234567885, total.getAmount() );
+        assertEquals( 3, total.getAmount().getDecimalPrecision() );
+        assertEquals( 1234567885, total.getAmount().getAmount() );
     }
 
     @Test
     public void addSubtractIncompatibleValue()
     {
         Price total   = new Price( "cur", 3, 1234567890 );
-        Price subtend = new Price( "cur", 2, 5 );
+        Price subtend = new Price( "ruc", 2, 5 );
 
         
         Throwable t = assertThrows( IllegalArgumentException.class
@@ -125,7 +123,7 @@ public class PriceTest
                                       total.subtract( subtend );
                                    });
 
-        assertTrue( t.getMessage().contains("Can not subtract incompatible prices") );
+        assertEquals( "Can not subtract incompatible prices", t.getMessage() );
     }
 
 
@@ -157,7 +155,7 @@ public class PriceTest
                                       total.compareTo( null );
                                    });
 
-        assertTrue( t.getMessage().contains("Can not compare against (null) price") );
+        assertEquals( "Can not compare against (null) price", t.getMessage() );
     }
 
     @Test
@@ -167,12 +165,12 @@ public class PriceTest
         Price valueB  = new Price( "cur", 2, 1234567890 );
 
         // TODO catch exception - until normalization of precision is implemented
-        Throwable t = assertThrows( IllegalArgumentException.class
+        Throwable t = assertThrows( ArithmeticException.class
                                    ,() -> {
                                       valueA.compareTo( valueB );
                                    });
 
-        assertTrue( t.getMessage().contains("Precision mismatch cur(3) and cur(2)") );
+        assertEquals( "Precision mismatch 3 != 2", t.getMessage() );
     }
 
     @Test
@@ -187,16 +185,9 @@ public class PriceTest
                                       valueA.compareTo( valueB );
                                    });
 
-        assertTrue( t.getMessage().contains("Incompatible price codes cur and ruc") );
+        assertEquals( "Incompatible price codes cur and ruc", t.getMessage() );
     }
-    // @Test
-    // public void compareDissimilarObjects()
-    // {
-    //     Price valueA  = new Price( "cur", 3, 1234567890 );
-    //     String   valueB  = new String("Incompatible");
 
-    //     assertEquals( 0, valueA.compareTo( valueB ));
-    // }
 
     @Test
     public void compareAgainstSmallerValue()

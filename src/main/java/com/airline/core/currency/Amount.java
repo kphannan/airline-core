@@ -59,8 +59,7 @@ public class Amount implements Comparable<Amount>
         // ! Need to normalize the precision before compare
         if ( this.decimalPrecision != amount.decimalPrecision )
         {
-            throw new ArithmeticException(String.format( "Precision mismatch (%d) and (%d)",
-                                                              decimalPrecision, amount.decimalPrecision ));
+            throw new ArithmeticException( String.format( "Precision mismatch %d != %d", decimalPrecision, amount.decimalPrecision ));
         }
 
         return this.amount - amount.amount;

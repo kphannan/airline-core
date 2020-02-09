@@ -9,38 +9,6 @@ import org.junit.jupiter.api.Test;
 
 public class AmountTest
 {
-    // @Test
-    // public void basicConstructor()
-    // {
-    //     Currency c = new Currency( 3, 1234567890 );
-
-    //     assertEquals( c.getCurrencyCode() );
-    //     assertEquals( 3, c.getDecimalPrecision() );
-    //     assertEquals( 1234567890, c.getAmount() );
-    // }
-
-    // @Test
-    // public void basicConstructorAlternate()
-    // {
-    //     Currency c = new Currency( "foo", 2, 4321 );
-
-    //     assertEquals( "foo", c.getCurrencyCode() );
-    //     assertEquals( 2, c.getDecimalPrecision() );
-    //     assertEquals( 4321, c.getAmount() );
-    // }
-
-    // @Test
-    // public void nullCurrencyCodeNotAllowed()
-    // {
-    //     Throwable t = assertThrows( IllegalArgumentException.class
-    //                                ,() -> {
-    //                                 new Currency( null, 3, 1234567890 );
-    //                                });
-
-    //     assertEquals( "Currency code is required" , t.getMessage());
-    // }
-
-
 
     // ----- Addition -----
     @Test
@@ -82,19 +50,6 @@ public class AmountTest
 
         assertEquals( "Precision mismatch 3 != 2", t.getMessage() );
     }
-
-
-    // @Test
-    // public void basicConstructor()
-    // {
-    //     Throwable throwable = assertThrows( IllegalArgumentException.class
-    //                                        ,() -> {
-    //                                            AirlineCodeFactory.build( null );
-    //                                         });
-
-    //     assertEquals( "Airline code is required", throwable.getMessage() );
-    // }
-
 
 
     // ----- Subtraction -----
@@ -182,33 +137,9 @@ public class AmountTest
                                       valueA.compareTo( valueB );
                                    });
 
-        assertEquals( "Precision mismatch (3) and (2)", t.getMessage() );
+        assertEquals( "Precision mismatch 3 != 2", t.getMessage() );
     }
 
-    // @Test
-    // public void compareDissimilarCurrencies()
-    // {
-    //     Amount valueA  = new Amount( 1234567890, 3 );
-    //     Amount valueB  = new Amount( 1234567890, 3 );
-
-    //     // TODO catch exception - until normalization of precision is implemented
-    //     Throwable t = assertThrows( IllegalArgumentException.class
-    //                                ,() -> {
-    //                                   valueA.compareTo( valueB );
-    //                                });
-
-    //     assertTrue( t.getMessage().contains("Incompatible amounts") );
-    // }
-
-
-    // @Test
-    // public void compareDissimilarObjects()
-    // {
-    //     Currency valueA  = new Currency( 3, 1234567890 );
-    //     String   valueB  = new String("Incompatible");
-
-    //     assertEquals( 0, valueA.compareTo( valueB ));
-    // }
 
     @Test
     public void compareAgainstSmallerValue()

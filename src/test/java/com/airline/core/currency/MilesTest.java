@@ -13,8 +13,8 @@ public class MilesTest
         Miles c = new Miles( "loy", 3, 1234567890 );
 
         assertEquals( "loy", c.getCurrencyCode() );
-        assertEquals( 3, c.getDecimalPrecision() );
-        assertEquals( 1234567890, c.getAmount() );
+        assertEquals( 3, c.getAmount().getDecimalPrecision() );
+        assertEquals( 1234567890, c.getAmount().getAmount() );
     }
 }
 

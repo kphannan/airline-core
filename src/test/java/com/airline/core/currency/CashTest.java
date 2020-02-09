@@ -13,8 +13,8 @@ public class CashTest
         Cash c = new Cash( "cur", 3, 1234567890 );
 
         assertEquals( "cur", c.getCurrencyCode() );
-        assertEquals( 3, c.getDecimalPrecision() );
-        assertEquals( 1234567890, c.getAmount() );
+        assertEquals( 3, c.getAmount().getDecimalPrecision() );
+        assertEquals( 1234567890, c.getAmount().getAmount() );
     }
 
 }

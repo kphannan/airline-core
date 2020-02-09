@@ -8,5 +8,3 @@ public class Cash extends Currency
         super( currencyCode, precision, amount );
     }
 }
-
-

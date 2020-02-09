@@ -15,8 +15,8 @@ public class CurrencyTest
         Currency c = new Currency( "cur", 3, 1234567890 );
 
         assertEquals( "cur", c.getCurrencyCode() );
-        assertEquals( 3, c.getDecimalPrecision() );
-        assertEquals( 1234567890, c.getAmount() );
+        assertEquals( 3, c.getAmount().getDecimalPrecision() );
+        assertEquals( 1234567890, c.getAmount().getAmount() );
     }
 
     @Test
@@ -25,8 +25,8 @@ public class CurrencyTest
         Currency c = new Currency( "foo", 2, 4321 );
 
         assertEquals( "foo", c.getCurrencyCode() );
-        assertEquals( 2, c.getDecimalPrecision() );
-        assertEquals( 4321, c.getAmount() );
+        assertEquals( 2, c.getAmount().getDecimalPrecision() );
+        assertEquals( 4321, c.getAmount().getAmount() );
     }
 
     @Test
@@ -62,16 +62,14 @@ public class CurrencyTest
         total.add( addend );
 
         assertEquals( "cur", total.getCurrencyCode() );
-        assertEquals( 3, total.getDecimalPrecision() );
-        assertEquals( 1234567895, total.getAmount() );
+        assertEquals( 3, total.getAmount().getDecimalPrecision() );
+        assertEquals( 1234567895, total.getAmount().getAmount() );
     }
 
     @Test
     public void addNullValue()
     {
         Currency total  = new Currency( "cur", 3, 1234567890 );
-        // Currency addend = new Currency( "cur", 3, 5 );
-
         
         Throwable t = assertThrows( IllegalArgumentException.class
                                    ,() -> {
@@ -97,18 +95,6 @@ public class CurrencyTest
     }
 
 
-    // @Test
-    // public void basicConstructor()
-    // {
-    //     Throwable throwable = assertThrows( IllegalArgumentException.class
-    //                                        ,() -> {
-    //                                            AirlineCodeFactory.build( null );
-    //                                         });
-
-    //     assertEquals( "Airline code is required", throwable.getMessage() );
-    // }
-
-
 
     // ----- Subtraction -----
     @Test
@@ -120,8 +106,8 @@ public class CurrencyTest
         total.subtract( addend );
 
         assertEquals( "cur", total.getCurrencyCode() );
-        assertEquals( 3, total.getDecimalPrecision() );
-        assertEquals( 1234567885, total.getAmount() );
+        assertEquals( 3, total.getAmount().getDecimalPrecision() );
+        assertEquals( 1234567885, total.getAmount().getAmount() );
     }
 
     @Test
@@ -174,16 +160,16 @@ public class CurrencyTest
     @Test
     public void compareDissimilarPrecision()
     {
-        Currency valueA  = new Currency( "cur", 3, 1234567890 );
-        Currency valueB  = new Currency( "cur", 2, 1234567890 );
+        Currency valueA  = new Currency( "cur", 4, 1234567890 );
+        Currency valueB  = new Currency( "cur", 3, 1234567890 );
 
         // TODO catch exception - until normalization of precision is implemented
-        Throwable t = assertThrows( IllegalArgumentException.class
+        Throwable t = assertThrows( ArithmeticException.class
                                    ,() -> {
                                       valueA.compareTo( valueB );
                                    });
 
-        assertTrue( t.getMessage().contains("Precision mismatch cur(3) and cur(2)") );
+        assertEquals( "Precision mismatch 4 != 3", t.getMessage() );
     }
 
     @Test
@@ -198,16 +184,10 @@ public class CurrencyTest
                                       valueA.compareTo( valueB );
                                    });
 
-        assertTrue( t.getMessage().contains("Incompatible currencies cur and ruc") );
+        assertEquals( "Incompatible currencies cur and ruc", t.getMessage() );
     }
-    // @Test
-    // public void compareDissimilarObjects()
-    // {
-    //     Currency valueA  = new Currency( "cur", 3, 1234567890 );
-    //     String   valueB  = new String("Incompatible");
 
-    //     assertEquals( 0, valueA.compareTo( valueB ));
-    // }
+    
 
     @Test
     public void compareAgainstSmallerValue()

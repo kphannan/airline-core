@@ -13,8 +13,8 @@ public class CashPriceTest
         CashPrice c = new CashPrice( "cur", 3, 1234567890 );
 
         assertEquals( "cur", c.getPriceCode() );
-        assertEquals( 3, c.getDecimalPrecision() );
-        assertEquals( 1234567890, c.getAmount() );
+        assertEquals( 3, c.getAmount().getDecimalPrecision() );
+        assertEquals( 1234567890, c.getAmount().getAmount() );
     }
 
 }

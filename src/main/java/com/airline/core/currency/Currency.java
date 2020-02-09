@@ -11,9 +11,8 @@ public class Currency implements Comparable<Currency>
 {
     private String currencyCode;
 
-    private int decimalPrecision;
+    private Amount amount;
 
-    private int amount;
 
     public Currency( final String currencyCode, final int precision, final int amount )
     {
@@ -21,8 +20,7 @@ public class Currency implements Comparable<Currency>
             throw new IllegalArgumentException("Currency code is required" );
 
         this.currencyCode     = currencyCode;
-        this.decimalPrecision = precision;
-        this.amount           = amount;
+        this.amount           = new Amount( amount, precision );
     }
 
     @Override
@@ -40,16 +38,7 @@ public class Currency implements Comparable<Currency>
             throw new IllegalArgumentException(String.format("Incompatible currencies %s and %s", currencyCode, currency.currencyCode ));
         }
 
-        // ! Need to normalize the precision before compare
-        if ( this.decimalPrecision != currency.decimalPrecision )
-        {
-            throw new IllegalArgumentException(String.format( "Precision mismatch %s(%d) and %s(%d)",
-                                                              currencyCode, decimalPrecision,
-                                                              currency.currencyCode, currency.decimalPrecision ));
-        }
-
-
-        return this.amount - currency.amount;
+        return this.amount.compareTo(currency.amount);
     }
 
 
@@ -60,8 +49,7 @@ public class Currency implements Comparable<Currency>
             throw new IllegalArgumentException("Can not add incompatible currencies");
         }
 
-        // TODO Normalize amount based on precision
-        this.amount += arg.amount;
+        this.amount.add( arg.amount );
         return this;
     }
 
@@ -72,8 +60,7 @@ public class Currency implements Comparable<Currency>
             throw new IllegalArgumentException("Can not subtract incompatible currencies");
         }
 
-        // TODO Normalize amount based on precision
-        this.amount -= arg.amount;
+        this.amount.subtract( arg.amount );
         return this;
     }
 
@@ -86,14 +73,9 @@ public class Currency implements Comparable<Currency>
         // Verify they are the same class - a common parent does not count
         if ( this.getClass().equals(rhs.getClass()) )
         {
-            if (decimalPrecision == rhs.decimalPrecision )
-                return true;
+            return amount.getDecimalPrecision() == rhs.getAmount().getDecimalPrecision();
         }
 
         return false;
     }
 }
-
-
-
-
