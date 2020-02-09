@@ -46,15 +46,6 @@ public class OriginDestination implements Comparable<OriginDestination>
     }
 
 
-    public boolean equals( final OriginDestination rhs )
-    {
-        if ( rhs == null )
-            return false;
-
-        return origin.equals(rhs.origin) && destination.equals( rhs.destination );
-    }
-
-
     // ----- Comparable
     @Override
     public int compareTo( final OriginDestination rhs )
