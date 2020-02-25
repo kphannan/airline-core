@@ -2,10 +2,10 @@ package com.airline.core.location;
 
 import java.util.regex.Pattern;
 
-import lombok.Value;
-
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import lombok.Value;
+
 
 // IATA airport code, IATA location identifier, IATA station code
 // @RequiredArgsConstructor
@@ -24,7 +24,7 @@ public class IATAAirportCode implements AirportCode
      * @throws IllegalArgumentException when input is not of the proper format
      */
     @JsonCreator
-    public IATAAirportCode( @JsonProperty( "iataAirportCode") final String iataAirportCode )
+    public IATAAirportCode( @JsonProperty( "iataAirportCode" ) final String iataAirportCode )
     {
         if ( !isAirportCodeValid( iataAirportCode ))
         {

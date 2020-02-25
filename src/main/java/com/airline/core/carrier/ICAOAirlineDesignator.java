@@ -2,10 +2,10 @@ package com.airline.core.carrier;
 
 import java.util.regex.Pattern;
 
-import lombok.Value;
-
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import lombok.Value;
+
 
 
 // AccountingNumber                    // IATA 3 digit accounting code

@@ -2,12 +2,12 @@ package com.airline.core.location;
 
 import java.util.regex.Pattern;
 
-import lombok.Value;
-// import lombok.Data;
-
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 // import com.fasterxml.jackson.annotation.JsonName;
+import lombok.Value;
+// import lombok.Data;
+
  
 
 

@@ -147,7 +147,7 @@ public class AmountTest
         Amount valueA  = new Amount( 1234567890, 3 );
         Amount valueB  = new Amount( 1111111111, 3 );
 
-        assertTrue( valueA.compareTo( valueB ) > 0);
+        assertTrue( valueA.compareTo( valueB ) > 0 );
     }
 
 
@@ -157,7 +157,7 @@ public class AmountTest
         Amount valueA  = new Amount( 123456789, 3 );
         Amount valueB  = new Amount( 222222222, 3 );
 
-        assertTrue( valueA.compareTo( valueB ) < 0);
+        assertTrue( valueA.compareTo( valueB ) < 0 );
     }
 
 }

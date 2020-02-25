@@ -249,7 +249,7 @@
         <module name="CustomImportOrder">
             <property name="sortImportsInGroupAlphabetically" value="true"/>
             <property name="separateLineBetweenGroups" value="true"/>
-            <property name="customImportOrderRules" value="STATIC###THIRD_PARTY_PACKAGE"/>
+            <property name="customImportOrderRules" value="STATIC###STANDARD_JAVA_PACKAGE###THIRD_PARTY_PACKAGE"/>
             <property name="tokens" value="IMPORT, STATIC_IMPORT, PACKAGE_DEF"/>
         </module>
         <module name="MethodParamPad">
@@ -262,7 +262,7 @@
              value="COMMA, SEMI, POST_INC, POST_DEC, DOT, ELLIPSIS, METHOD_REF"/>
             <property name="allowLineBreaks" value="true"/>
         </module>
-        <module name="ParenPad">
+        <!-- <module name="ParenPad">
             <property name="option" value="space" />
             <property name="tokens"
              value="CTOR_CALL, METHOD_CALL, SUPER_CTOR_CALL"/>
@@ -274,7 +274,7 @@
                     EXPR, LITERAL_CATCH, LITERAL_DO, LITERAL_FOR, LITERAL_IF, LITERAL_NEW,
                     LITERAL_SWITCH, LITERAL_SYNCHRONIZED, LITERAL_WHILE, 
                     METHOD_DEF, QUESTION, RESOURCE_SPECIFICATION, LAMBDA"/>
-        </module>        
+        </module>         -->
         <!-- <module name="ParenPad">
             <property name="tokens"
              value="ANNOTATION, ANNOTATION_FIELD_DEF, CTOR_CALL, CTOR_DEF, DOT, ENUM_CONSTANT_DEF,

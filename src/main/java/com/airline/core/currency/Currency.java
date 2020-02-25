@@ -17,7 +17,9 @@ public class Currency implements Comparable<Currency>
     public Currency( final String currencyCode, final int precision, final int amount )
     {
         if ( currencyCode == null || currencyCode.isEmpty() )
+        {
             throw new IllegalArgumentException("Currency code is required" );
+        }
 
         this.currencyCode     = currencyCode;
         this.amount           = new Amount( amount, precision );
@@ -68,7 +70,9 @@ public class Currency implements Comparable<Currency>
     private boolean isCompatible( final Currency rhs )
     {
         if ( rhs == null )
+        {
             throw new IllegalArgumentException( "Incompatible currency (null)" );
+        }
 
         // Verify they are the same class - a common parent does not count
         if ( this.getClass().equals(rhs.getClass()) )

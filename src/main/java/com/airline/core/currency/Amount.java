@@ -25,7 +25,10 @@ public class Amount implements Comparable<Amount>
         }        
 
         if ( decimalPrecision != arg.getDecimalPrecision() )
-            throw new ArithmeticException( String.format( "Precision mismatch %d != %d", decimalPrecision, arg.decimalPrecision ));
+        {
+            throw new ArithmeticException( String.format( "Precision mismatch %d != %d"
+                                                         ,decimalPrecision, arg.decimalPrecision ));
+        }
 
         // TODO Normalize amount based on precision
         this.amount += arg.amount;
@@ -40,7 +43,10 @@ public class Amount implements Comparable<Amount>
         }        
 
         if ( decimalPrecision != arg.getDecimalPrecision() )
-            throw new ArithmeticException( String.format( "Precision mismatch %d != %d", decimalPrecision, arg.decimalPrecision ));
+        {
+            throw new ArithmeticException( String.format( "Precision mismatch %d != %d"
+                                                         ,decimalPrecision, arg.decimalPrecision ));
+        }
 
         // TODO Normalize amount based on precision
         this.amount -= arg.amount;
@@ -59,7 +65,9 @@ public class Amount implements Comparable<Amount>
         // ! Need to normalize the precision before compare
         if ( this.decimalPrecision != amount.decimalPrecision )
         {
-            throw new ArithmeticException( String.format( "Precision mismatch %d != %d", decimalPrecision, amount.decimalPrecision ));
+            throw new ArithmeticException( String.format( "Precision mismatch %d != %d"
+                                                         ,decimalPrecision
+                                                         ,amount.decimalPrecision ));
         }
 
         return this.amount - amount.amount;
