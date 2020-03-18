@@ -14,6 +14,7 @@ import lombok.Value;
 
 
 // ICAO Airline designator, which is a 3 letter code
+// https://www.wikidata.org/wiki/Property:P230
 @Value
 public class ICAOAirlineDesignator implements AirlineCode
 {

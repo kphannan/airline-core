@@ -13,6 +13,7 @@ buildscript {
         serenityVersion        = '2.0.83'
         checkstyleVersion      = '8.29'
         cucumberReportsVersion = '4.11.2'
+        jacksonVersion         = '2.10.1'
     }
 
     repositories {
@@ -106,6 +107,11 @@ dependencies {
     // This dependency is used internally, and not exposed to consumers on their own compile classpath.
     implementation 'com.google.guava:guava:28.0-jre'
 
+    implementation 'org.decimal4j:decimal4j:1.0.3'
+
+    // https://mvnrepository.com/artifact/com.fasterxml.jackson.core/jackson-databind
+    implementation( "com.fasterxml.jackson.core:jackson-databind:${jacksonVersion}" )
+
     // Use JUnit Jupiter API for testing.
     testImplementation("org.junit.jupiter:junit-jupiter-api:${junitVersion}")
 
@@ -126,9 +132,6 @@ dependencies {
 
     testImplementation( "net.masterthought:cucumber-reporting:${cucumberReportsVersion}" )
 
-    // https://mvnrepository.com/artifact/com.fasterxml.jackson.core/jackson-databind
-    compile group: 'com.fasterxml.jackson.core', name: 'jackson-databind', version: '2.10.1'
-
     // https://mvnrepository.com/artifact/com.puppycrawl.tools/checkstyle
     implementation "com.puppycrawl.tools:checkstyle:${checkstyleVersion}"
 
@@ -145,6 +148,11 @@ test {
     useJUnitPlatform()
 }
 
+check {
+    dependsOn {
+        jacocoTestCoverageVerification
+    }
+}
 
 
 // See this page for options https://reflectoring.io/jacoco/

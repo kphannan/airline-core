@@ -13,6 +13,7 @@ import lombok.Value;
 
 // ICAO airport code
 //   - https://en.wikipedia.org/wiki/ICAO_airport_code
+// https://www.wikidata.org/wiki/Property:P239
 @Value
 public class ICAOAirportCode implements AirportCode
 {
@@ -48,7 +49,8 @@ public class ICAOAirportCode implements AirportCode
         }
 
         // Only accept 4 uppercase letters, no leading or trailing spaces
-        return Pattern.matches( "^[A-Z]{4}$", code );
+        return Pattern.matches( "^([A-Z]{2}|[CKY][A-Z0-9])([A-Z]{2}|[0-9]{2,4})$", code );
+        // return Pattern.matches( "^[A-Z]{4}$", code );
     }
 
    // ----- Comparable

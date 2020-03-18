@@ -8,6 +8,7 @@ import lombok.Value;
 
 
 // IATA airport code, IATA location identifier, IATA station code
+// https://www.wikidata.org/wiki/Property:P238
 // @RequiredArgsConstructor
 @Value
 public class IATAAirportCode implements AirportCode
@@ -43,7 +44,7 @@ public class IATAAirportCode implements AirportCode
         }
 
         // Only accept 3 uppercase letters, no leading or trailing spaces
-        return Pattern.matches( "^[A-Z]{3}$", code );
+        return Pattern.matches( "^[A-Z0-9]{3}$", code );
     }
 
     // public String toString()
