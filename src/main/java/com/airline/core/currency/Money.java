@@ -4,17 +4,20 @@ package com.airline.core.currency;
 import lombok.Data;
 // import lombok.Value;
 
+//! Refactor this to a Money class
+//! Create a CurrencyCode class for DDD / type safety
+//! TODO create CurrencyConverter class Money currencyConversion(currencyCode, Money)
 // @Value
 @Data
 // @AllArgsConstructor
-public class Currency implements Comparable<Currency>
+public class Money implements Comparable<Money>
 {
     private String currencyCode;
 
     private Amount amount;
 
 
-    public Currency( final String currencyCode, final int precision, final int amount )
+    public Money( final String currencyCode, final int precision, final int amount )
     {
         if ( currencyCode == null || currencyCode.isEmpty() )
         {
@@ -26,7 +29,7 @@ public class Currency implements Comparable<Currency>
     }
 
     @Override
-    public int compareTo( final Currency currency )
+    public int compareTo( final Money currency )
     {
         if ( currency == null )
         {
@@ -44,7 +47,7 @@ public class Currency implements Comparable<Currency>
     }
 
 
-    public Currency add( final Currency arg )
+    public Money add( final Money arg )
     {
         if ( !isCompatible(arg) )
         {
@@ -55,7 +58,7 @@ public class Currency implements Comparable<Currency>
         return this;
     }
 
-    public Currency subtract( final Currency arg )
+    public Money subtract( final Money arg )
     {
         if ( !isCompatible(arg) )
         {
@@ -67,7 +70,7 @@ public class Currency implements Comparable<Currency>
     }
 
 
-    private boolean isCompatible( final Currency rhs )
+    private boolean isCompatible( final Money rhs )
     {
         if ( rhs == null )
         {

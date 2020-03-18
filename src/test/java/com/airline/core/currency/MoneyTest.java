@@ -7,12 +7,12 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 import org.junit.jupiter.api.Test;
 
 
-public class CurrencyTest
+public class MoneyTest
 {
     @Test
     public void basicConstructor()
     {
-        Currency c = new Currency( "cur", 3, 1234567890 );
+        Money c = new Money( "cur", 3, 1234567890 );
 
         assertEquals( "cur", c.getCurrencyCode() );
         assertEquals( 3, c.getAmount().getDecimalPrecision() );
@@ -22,7 +22,7 @@ public class CurrencyTest
     @Test
     public void basicConstructorAlternate()
     {
-        Currency c = new Currency( "foo", 2, 4321 );
+        Money c = new Money( "foo", 2, 4321 );
 
         assertEquals( "foo", c.getCurrencyCode() );
         assertEquals( 2, c.getAmount().getDecimalPrecision() );
@@ -34,7 +34,7 @@ public class CurrencyTest
     {
         Throwable t = assertThrows( IllegalArgumentException.class,
                                    () -> {
-                                    new Currency( null, 3, 1234567890 );
+                                    new Money( null, 3, 1234567890 );
                                    });
 
         assertEquals( "Currency code is required", t.getMessage());
@@ -45,7 +45,7 @@ public class CurrencyTest
     {
         Throwable t = assertThrows( IllegalArgumentException.class,
                                    () -> {
-                                    new Currency( "", 3, 1234567890 );
+                                    new Money( "", 3, 1234567890 );
                                    });
 
         assertEquals( "Currency code is required", t.getMessage());
@@ -56,8 +56,8 @@ public class CurrencyTest
     @Test
     public void addPositiveValue()
     {
-        Currency total  = new Currency( "cur", 3, 1234567890 );
-        Currency addend = new Currency( "cur", 3, 5 );
+        Money total  = new Money( "cur", 3, 1234567890 );
+        Money addend = new Money( "cur", 3, 5 );
 
         total.add( addend );
 
@@ -69,7 +69,7 @@ public class CurrencyTest
     @Test
     public void addNullValue()
     {
-        Currency total  = new Currency( "cur", 3, 1234567890 );
+        Money total  = new Money( "cur", 3, 1234567890 );
         
         Throwable t = assertThrows( IllegalArgumentException.class,
                                    () -> {
@@ -82,8 +82,8 @@ public class CurrencyTest
     @Test
     public void addAddIncompatibleValue()
     {
-        Currency total   = new Currency( "cur", 3, 1234567890 );
-        Currency addend  = new Currency( "cur", 2, 5 );
+        Money total   = new Money( "cur", 3, 1234567890 );
+        Money addend  = new Money( "cur", 2, 5 );
 
         
         Throwable t = assertThrows( IllegalArgumentException.class,
@@ -100,8 +100,8 @@ public class CurrencyTest
     @Test
     public void subtractPositiveValue()
     {
-        Currency total  = new Currency( "cur", 3, 1234567890 );
-        Currency addend = new Currency( "cur", 3, 5 );
+        Money total  = new Money( "cur", 3, 1234567890 );
+        Money addend = new Money( "cur", 3, 5 );
 
         total.subtract( addend );
 
@@ -113,8 +113,8 @@ public class CurrencyTest
     @Test
     public void addSubtractIncompatibleValue()
     {
-        Currency total   = new Currency( "cur", 3, 1234567890 );
-        Currency subtend = new Currency( "cur", 2, 5 );
+        Money total   = new Money( "cur", 3, 1234567890 );
+        Money subtend = new Money( "cur", 2, 5 );
 
         
         Throwable t = assertThrows( IllegalArgumentException.class,
@@ -130,8 +130,8 @@ public class CurrencyTest
     @Test
     public void compareEquivalentValues()
     {
-        Currency valueA  = new Currency( "cur", 3, 1234567890 );
-        Currency valueB  = new Currency( "cur", 3, 1234567890 );
+        Money valueA  = new Money( "cur", 3, 1234567890 );
+        Money valueB  = new Money( "cur", 3, 1234567890 );
 
         assertEquals( 0, valueA.compareTo( valueB ));
     }
@@ -139,7 +139,7 @@ public class CurrencyTest
     @Test
     public void compareSameInstance()
     {
-        Currency total  = new Currency( "cur", 3, 1234567890 );
+        Money total  = new Money( "cur", 3, 1234567890 );
 
         assertEquals( 0, total.compareTo( total ));
     }
@@ -147,7 +147,7 @@ public class CurrencyTest
     @Test
     public void compareAgainstNullFails()
     {
-        Currency total  = new Currency( "cur", 3, 1234567890 );
+        Money total  = new Money( "cur", 3, 1234567890 );
 
         Throwable t = assertThrows( IllegalArgumentException.class,
                                    () -> {
@@ -160,8 +160,8 @@ public class CurrencyTest
     @Test
     public void compareDissimilarPrecision()
     {
-        Currency valueA  = new Currency( "cur", 4, 1234567890 );
-        Currency valueB  = new Currency( "cur", 3, 1234567890 );
+        Money valueA  = new Money( "cur", 4, 1234567890 );
+        Money valueB  = new Money( "cur", 3, 1234567890 );
 
         // TODO catch exception - until normalization of precision is implemented
         Throwable t = assertThrows( ArithmeticException.class,
@@ -175,8 +175,8 @@ public class CurrencyTest
     @Test
     public void compareDissimilarCurrencies()
     {
-        Currency valueA  = new Currency( "cur", 3, 1234567890 );
-        Currency valueB  = new Currency( "ruc", 3, 1234567890 );
+        Money valueA  = new Money( "cur", 3, 1234567890 );
+        Money valueB  = new Money( "ruc", 3, 1234567890 );
 
         // TODO catch exception - until normalization of precision is implemented
         Throwable t = assertThrows( IllegalArgumentException.class
@@ -192,8 +192,8 @@ public class CurrencyTest
     @Test
     public void compareAgainstSmallerValue()
     {
-        Currency valueA  = new Currency( "cur", 3, 1234567890 );
-        Currency valueB  = new Currency( "cur", 3, 1111111111 );
+        Money valueA  = new Money( "cur", 3, 1234567890 );
+        Money valueB  = new Money( "cur", 3, 1111111111 );
 
         assertTrue( valueA.compareTo( valueB ) > 0 );
     }
@@ -202,8 +202,8 @@ public class CurrencyTest
     @Test
     public void compareAgainstLargerValue()
     {
-        Currency valueA  = new Currency( "cur", 3, 123456789 );
-        Currency valueB  = new Currency( "cur", 3, 222222222 );
+        Money valueA  = new Money( "cur", 3, 123456789 );
+        Money valueB  = new Money( "cur", 3, 222222222 );
 
         assertTrue( valueA.compareTo( valueB ) < 0 );
     }
