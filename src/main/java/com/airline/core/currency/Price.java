@@ -15,8 +15,10 @@ public class Price implements Comparable<Price>
     public Price( final String priceCode, final int precision, final int amount )
     {
         if ( priceCode == null || priceCode.isEmpty() )
+        {
             throw new IllegalArgumentException("Price code is required" );
-
+        }
+    
         this.priceCode        = priceCode;
         this.amount           = new Amount( amount, precision );
     }
@@ -33,7 +35,8 @@ public class Price implements Comparable<Price>
         // !   do conversion maybe before compare.
         if ( !this.priceCode.equals( price.priceCode ))
         {
-            throw new IllegalArgumentException(String.format("Incompatible price codes %s and %s", priceCode, price.priceCode ));
+            throw new IllegalArgumentException(String.format("Incompatible price codes %s and %s"
+                                                             ,priceCode, price.priceCode ));
         }
 
         return this.amount.compareTo(price.amount);
@@ -66,7 +69,9 @@ public class Price implements Comparable<Price>
     private boolean isCompatible( final Price rhs )
     {
         if ( rhs == null )
+        {
             throw new IllegalArgumentException( "Incompatible Price (null)" );
+        }
 
         // Verify they are the same class - a common parent does not count
         if ( this.getClass().equals(rhs.getClass()) )

@@ -10,9 +10,9 @@ public class MilesTest
     @Test
     public void basicConstructor()
     {
-        Miles c = new Miles( "loy", 3, 1234567890 );
+        Miles c = new Miles( "LOY", 3, 1234567890 );
 
-        assertEquals( "loy", c.getCurrencyCode() );
+        assertEquals( "LOY", c.getCurrencyCode().getCode() );
         assertEquals( 3, c.getAmount().getDecimalPrecision() );
         assertEquals( 1234567890, c.getAmount().getAmount() );
     }

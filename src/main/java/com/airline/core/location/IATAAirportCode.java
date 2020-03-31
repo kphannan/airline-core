@@ -21,7 +21,7 @@ public class IATAAirportCode implements AirportCode
     /**
      * Create a new IATAAirportCode instance if the string airport code is
      * exactly 3 uppercase alphabetic characters.
-     * @param airportCode target airport code string as 3 uppercase characters
+     * @param iataAirportCode target airport code string as 3 uppercase characters
      * @throws IllegalArgumentException when input is not of the proper format
      */
     @JsonCreator
@@ -29,7 +29,8 @@ public class IATAAirportCode implements AirportCode
     {
         if ( !isAirportCodeValid( iataAirportCode ))
         {
-            throw new IllegalArgumentException( "Invalid IATA airport code '" + iataAirportCode + "'" );
+            throw new IllegalArgumentException( "Invalid IATA airport code '"
+                                                + iataAirportCode + "'" );
         }
 
         this.airportCode = iataAirportCode;

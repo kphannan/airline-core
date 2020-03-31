@@ -10,9 +10,9 @@ public class CashTest
     @Test
     public void basicConstructor()
     {
-        Cash c = new Cash( "cur", 3, 1234567890 );
+        Cash c = new Cash( "XYZ", 3, 1234567890 );
 
-        assertEquals( "cur", c.getCurrencyCode() );
+        assertEquals( "XYZ", c.getCurrencyCode().getCode() );
         assertEquals( 3, c.getAmount().getDecimalPrecision() );
         assertEquals( 1234567890, c.getAmount().getAmount() );
     }

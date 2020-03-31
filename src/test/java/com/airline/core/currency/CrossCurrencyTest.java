@@ -11,7 +11,7 @@ public class CrossCurrencyTest
     @Test
     public void verifyCashAndMilesCannotBeCompared()
     {
-        Miles miles = new Miles( "loy", 3, 1234567890 );
+        Miles miles = new Miles( "LOY", 3, 1234567890 );
         Cash  cash  = new Cash( "GBP", 3, 1234567890 );
 
         Throwable t = assertThrows( IllegalArgumentException.class
@@ -19,14 +19,14 @@ public class CrossCurrencyTest
                                     miles.compareTo(cash);
                                    });
 
-        assertEquals( "Incompatible currencies loy and GBP" , t.getMessage());
+        assertEquals( "Incompatible currencies CurrencyCode(code=LOY) and CurrencyCode(code=GBP)" , t.getMessage());
     }
 
     
     @Test
     public void verifyCashAndMilesCanNotBeAdded()
     {
-        Miles miles = new Miles( "loy", 3, 1234567890 );
+        Miles miles = new Miles( "LOY", 3, 1234567890 );
         Cash  cash  = new Cash( "GBP", 3, 1234567890 );
     
         Throwable t = assertThrows( IllegalArgumentException.class

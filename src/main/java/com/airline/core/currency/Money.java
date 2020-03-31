@@ -12,10 +12,20 @@ import lombok.Data;
 // @AllArgsConstructor
 public class Money implements Comparable<Money>
 {
-    private String currencyCode;
+    private CurrencyAlphaCode currencyCode;
 
     private Amount amount;
 
+
+    public Money( final CurrencyAlphaCode currencyCode, final int precision, final int amount )
+    {
+        if ( currencyCode == null )
+        {
+            throw new IllegalArgumentException("Currency code is required" );
+        }
+        this.currencyCode     = currencyCode;
+        this.amount           = new Amount( amount, precision );
+    }
 
     public Money( final String currencyCode, final int precision, final int amount )
     {
@@ -24,7 +34,7 @@ public class Money implements Comparable<Money>
             throw new IllegalArgumentException("Currency code is required" );
         }
 
-        this.currencyCode     = currencyCode;
+        this.currencyCode     = new CurrencyAlphaCode( currencyCode );
         this.amount           = new Amount( amount, precision );
     }
 
@@ -40,13 +50,20 @@ public class Money implements Comparable<Money>
         // !   do conversion maybe before compare.
         if ( !this.currencyCode.equals( currency.currencyCode ))
         {
-            throw new IllegalArgumentException(String.format("Incompatible currencies %s and %s", currencyCode, currency.currencyCode ));
+            throw new IllegalArgumentException(String.format("Incompatible currencies %s and %s"
+                                                             ,currencyCode, currency.currencyCode ));
         }
 
         return this.amount.compareTo(currency.amount);
     }
 
 
+    /**
+     * Add a money value to the current Money value.
+     * 
+     * @param arg the Money subtractor
+     * @return the new value of current Money.
+     */
     public Money add( final Money arg )
     {
         if ( !isCompatible(arg) )
@@ -58,6 +75,12 @@ public class Money implements Comparable<Money>
         return this;
     }
 
+    /**
+     * Subtract a money value from the current Money value.
+     * 
+     * @param arg the Money subtractor
+     * @return the new value of current Money.
+     */
     public Money subtract( final Money arg )
     {
         if ( !isCompatible(arg) )

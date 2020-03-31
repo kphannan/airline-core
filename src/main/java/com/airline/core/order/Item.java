@@ -1,7 +1,6 @@
 package com.airline.core.order;
 
 import com.airline.core.currency.Price;
-
 import lombok.Data;
 
 @Data
@@ -13,6 +12,7 @@ public class Item
 
 
     public Item()
-    {}
+    {
+    }
 
 }

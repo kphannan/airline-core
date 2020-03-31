@@ -2,7 +2,6 @@ package com.airline.core.flight;
 
 import com.airline.core.location.AirportCode;
 import com.airline.core.location.AirportCodeFactory;
-
 import lombok.Data;
 
 
@@ -51,12 +50,16 @@ public class OriginDestination implements Comparable<OriginDestination>
     public int compareTo( final OriginDestination rhs )
     {
         if ( rhs == null )
+        {
             return -1;      // ? Is this appropriate
+        }
 
         // TODO implement Comparable on AirportCode
         int result = origin.getAirportCode().compareTo( rhs.origin.getAirportCode() );
         if ( result == 0 )
+        {
             result = destination.getAirportCode().compareTo( rhs.destination.getAirportCode() );
+        }
 
         return result;
     }

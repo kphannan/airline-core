@@ -10,11 +10,11 @@ import org.junit.jupiter.api.Test;
 public class MoneyTest
 {
     @Test
-    public void basicConstructor()
+    public void basicConstructorWithStringCurrencyCode()
     {
-        Money c = new Money( "cur", 3, 1234567890 );
+        Money c = new Money( "CUR", 3, 1234567890 );
 
-        assertEquals( "cur", c.getCurrencyCode() );
+        assertEquals( "CUR", c.getCurrencyCode().getCode() );
         assertEquals( 3, c.getAmount().getDecimalPrecision() );
         assertEquals( 1234567890, c.getAmount().getAmount() );
     }
@@ -22,19 +22,30 @@ public class MoneyTest
     @Test
     public void basicConstructorAlternate()
     {
-        Money c = new Money( "foo", 2, 4321 );
+        Money c = new Money( "FOO", 2, 4321 );
 
-        assertEquals( "foo", c.getCurrencyCode() );
+        assertEquals( "FOO", c.getCurrencyCode().getCode() );
         assertEquals( 2, c.getAmount().getDecimalPrecision() );
         assertEquals( 4321, c.getAmount().getAmount() );
     }
 
     @Test
+    public void basicConstructorWithCurrencyCodeInstance()
+    {
+        var currencyCode = new CurrencyAlphaCode( "GBP" );
+        Money c = new Money( currencyCode, 3, 1234567890 );
+
+        assertEquals( currencyCode, c.getCurrencyCode() );
+        assertEquals( 3, c.getAmount().getDecimalPrecision() );
+        assertEquals( 1234567890, c.getAmount().getAmount() );
+    }
+
+    @Test
     public void nullCurrencyCodeNotAllowed()
     {
-        Throwable t = assertThrows( IllegalArgumentException.class,
-                                   () -> {
-                                    new Money( null, 3, 1234567890 );
+        Throwable t = assertThrows( IllegalArgumentException.class
+                                   ,() -> {
+                                    new Money( (String)null, 3, 1234567890 );
                                    });
 
         assertEquals( "Currency code is required", t.getMessage());
@@ -43,25 +54,37 @@ public class MoneyTest
     @Test
     public void blankCurrencyCodeNotAllowed()
     {
-        Throwable t = assertThrows( IllegalArgumentException.class,
-                                   () -> {
+        Throwable t = assertThrows( IllegalArgumentException.class
+                                   ,() -> {
                                     new Money( "", 3, 1234567890 );
                                    });
 
         assertEquals( "Currency code is required", t.getMessage());
     }
 
+    @Test
+    public void nullCurrencyAlphaCodeNotAllowed()
+    {
+        Throwable t = assertThrows( IllegalArgumentException.class
+                                   ,() -> {
+                                    new Money( (CurrencyAlphaCode)null, 3, 1234567890 );
+                                   });
+
+        assertEquals( "Currency code is required", t.getMessage());
+    }
 
     // ----- Addition -----
     @Test
     public void addPositiveValue()
     {
-        Money total  = new Money( "cur", 3, 1234567890 );
-        Money addend = new Money( "cur", 3, 5 );
+        Money             total        = new Money( "CUR", 3, 1234567890 );
+        Money             addend       = new Money( "CUR", 3, 5 );
+        CurrencyAlphaCode currencyCode = new CurrencyAlphaCode("CUR");
 
         total.add( addend );
 
-        assertEquals( "cur", total.getCurrencyCode() );
+        assertEquals( currencyCode, total.getCurrencyCode() );
+        assertEquals( "CUR", total.getCurrencyCode().getCode() );
         assertEquals( 3, total.getAmount().getDecimalPrecision() );
         assertEquals( 1234567895, total.getAmount().getAmount() );
     }
@@ -69,10 +92,10 @@ public class MoneyTest
     @Test
     public void addNullValue()
     {
-        Money total  = new Money( "cur", 3, 1234567890 );
+        Money total  = new Money( "CUR", 3, 1234567890 );
         
-        Throwable t = assertThrows( IllegalArgumentException.class,
-                                   () -> {
+        Throwable t = assertThrows( IllegalArgumentException.class
+                                   ,() -> {
                                       total.add( null );
                                    });
 
@@ -82,12 +105,12 @@ public class MoneyTest
     @Test
     public void addAddIncompatibleValue()
     {
-        Money total   = new Money( "cur", 3, 1234567890 );
-        Money addend  = new Money( "cur", 2, 5 );
+        Money total   = new Money( "CUR", 3, 1234567890 );
+        Money addend  = new Money( "CUR", 2, 5 );
 
         
-        Throwable t = assertThrows( IllegalArgumentException.class,
-                                   () -> {
+        Throwable t = assertThrows( IllegalArgumentException.class
+                                   ,() -> {
                                       total.add( addend );
                                    });
 
@@ -100,12 +123,12 @@ public class MoneyTest
     @Test
     public void subtractPositiveValue()
     {
-        Money total  = new Money( "cur", 3, 1234567890 );
-        Money addend = new Money( "cur", 3, 5 );
+        Money total  = new Money( "CUR", 3, 1234567890 );
+        Money addend = new Money( "CUR", 3, 5 );
 
         total.subtract( addend );
 
-        assertEquals( "cur", total.getCurrencyCode() );
+        assertEquals( "CUR", total.getCurrencyCode().getCode() );
         assertEquals( 3, total.getAmount().getDecimalPrecision() );
         assertEquals( 1234567885, total.getAmount().getAmount() );
     }
@@ -113,12 +136,12 @@ public class MoneyTest
     @Test
     public void addSubtractIncompatibleValue()
     {
-        Money total   = new Money( "cur", 3, 1234567890 );
-        Money subtend = new Money( "cur", 2, 5 );
+        Money total   = new Money( "CUR", 3, 1234567890 );
+        Money subtend = new Money( "CUR", 2, 5 );
 
         
-        Throwable t = assertThrows( IllegalArgumentException.class,
-                                   () -> {
+        Throwable t = assertThrows( IllegalArgumentException.class
+                                   ,() -> {
                                       total.subtract( subtend );
                                    });
 
@@ -130,8 +153,8 @@ public class MoneyTest
     @Test
     public void compareEquivalentValues()
     {
-        Money valueA  = new Money( "cur", 3, 1234567890 );
-        Money valueB  = new Money( "cur", 3, 1234567890 );
+        Money valueA  = new Money( "CUR", 3, 1234567890 );
+        Money valueB  = new Money( "CUR", 3, 1234567890 );
 
         assertEquals( 0, valueA.compareTo( valueB ));
     }
@@ -139,7 +162,7 @@ public class MoneyTest
     @Test
     public void compareSameInstance()
     {
-        Money total  = new Money( "cur", 3, 1234567890 );
+        Money total  = new Money( "CUR", 3, 1234567890 );
 
         assertEquals( 0, total.compareTo( total ));
     }
@@ -147,10 +170,10 @@ public class MoneyTest
     @Test
     public void compareAgainstNullFails()
     {
-        Money total  = new Money( "cur", 3, 1234567890 );
+        Money total  = new Money( "CUR", 3, 1234567890 );
 
-        Throwable t = assertThrows( IllegalArgumentException.class,
-                                   () -> {
+        Throwable t = assertThrows( IllegalArgumentException.class
+                                   ,() -> {
                                       total.compareTo( null );
                                    });
 
@@ -160,12 +183,12 @@ public class MoneyTest
     @Test
     public void compareDissimilarPrecision()
     {
-        Money valueA  = new Money( "cur", 4, 1234567890 );
-        Money valueB  = new Money( "cur", 3, 1234567890 );
+        Money valueA  = new Money( "CUR", 4, 1234567890 );
+        Money valueB  = new Money( "CUR", 3, 1234567890 );
 
         // TODO catch exception - until normalization of precision is implemented
-        Throwable t = assertThrows( ArithmeticException.class,
-                                   () -> {
+        Throwable t = assertThrows( ArithmeticException.class
+                                   ,() -> {
                                       valueA.compareTo( valueB );
                                    });
 
@@ -175,8 +198,8 @@ public class MoneyTest
     @Test
     public void compareDissimilarCurrencies()
     {
-        Money valueA  = new Money( "cur", 3, 1234567890 );
-        Money valueB  = new Money( "ruc", 3, 1234567890 );
+        Money valueA  = new Money( "CUR", 3, 1234567890 );
+        Money valueB  = new Money( "RUC", 3, 1234567890 );
 
         // TODO catch exception - until normalization of precision is implemented
         Throwable t = assertThrows( IllegalArgumentException.class
@@ -184,7 +207,7 @@ public class MoneyTest
                                       valueA.compareTo( valueB );
                                    });
 
-        assertEquals( "Incompatible currencies cur and ruc", t.getMessage() );
+        assertEquals( "Incompatible currencies CurrencyCode(code=CUR) and CurrencyCode(code=RUC)", t.getMessage() );
     }
 
     
@@ -192,8 +215,8 @@ public class MoneyTest
     @Test
     public void compareAgainstSmallerValue()
     {
-        Money valueA  = new Money( "cur", 3, 1234567890 );
-        Money valueB  = new Money( "cur", 3, 1111111111 );
+        Money valueA  = new Money( "CUR", 3, 1234567890 );
+        Money valueB  = new Money( "CUR", 3, 1111111111 );
 
         assertTrue( valueA.compareTo( valueB ) > 0 );
     }
@@ -202,8 +225,8 @@ public class MoneyTest
     @Test
     public void compareAgainstLargerValue()
     {
-        Money valueA  = new Money( "cur", 3, 123456789 );
-        Money valueB  = new Money( "cur", 3, 222222222 );
+        Money valueA  = new Money( "CUR", 3, 123456789 );
+        Money valueB  = new Money( "CUR", 3, 222222222 );
 
         assertTrue( valueA.compareTo( valueB ) < 0 );
     }

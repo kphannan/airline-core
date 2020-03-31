@@ -26,7 +26,7 @@ public class ICAOAirportCode implements AirportCode
     /**
      * Create a new ICAOAirportCode instance if the string airport code is
      * exactly 4 uppercase alphabetic characters.
-     * @param airportCode target airport code string as 4 uppercase characters
+     * @param icaoAirportCode target airport code string as 4 uppercase characters
      * @throws IllegalArgumentException when input is not of the proper format
      */
     @JsonCreator
@@ -34,7 +34,8 @@ public class ICAOAirportCode implements AirportCode
     {
         if ( !isAirportCodeValid( icaoAirportCode ))
         {
-            throw new IllegalArgumentException( "Invalid ICAO airport code '" + icaoAirportCode + "'" );
+            throw new IllegalArgumentException( "Invalid ICAO airport code '"
+                                                + icaoAirportCode + "'" );
         }
 
         this.airportCode = icaoAirportCode;
@@ -53,10 +54,10 @@ public class ICAOAirportCode implements AirportCode
         // return Pattern.matches( "^[A-Z]{4}$", code );
     }
 
-   // ----- Comparable
-   @Override
-   public int compareTo( final AirportCode rhs )
-   {
+    // ----- Comparable
+    @Override
+    public int compareTo( final AirportCode rhs )
+    {
         return airportCode.compareTo(rhs.getAirportCode());
     }
 }
