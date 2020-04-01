@@ -6,6 +6,7 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 import org.junit.jupiter.api.Test;
 
 
+@SuppressWarnings({"PMD.JUnitTestContainsTooManyAsserts", "PMD.AvoidDuplicateLiterals"})
 public class CrossCurrencyTest
 {
     @Test
@@ -15,11 +16,12 @@ public class CrossCurrencyTest
         Cash  cash  = new Cash( "GBP", 3, 1234567890 );
 
         Throwable t = assertThrows( IllegalArgumentException.class
-                                   ,() -> {
-                                    miles.compareTo(cash);
-                                   });
+                                   ,() -> {miles.compareTo(cash);}
+                                   ,"IllegalArgumentException not thrown when expected"
+                                  );
 
-        assertEquals( "Incompatible currencies CurrencyCode(code=LOY) and CurrencyCode(code=GBP)" , t.getMessage());
+        assertEquals( "Incompatible currencies LOY and GBP" , t.getMessage()
+                     ,"Incorrect exception message");
     }
 
     
@@ -30,11 +32,12 @@ public class CrossCurrencyTest
         Cash  cash  = new Cash( "GBP", 3, 1234567890 );
     
         Throwable t = assertThrows( IllegalArgumentException.class
-                                   ,() -> {
-                                    miles.add(cash);
-                                   });
+                                   ,() -> {miles.add(cash);}
+                                   ,"IllegalArgumentException not thrown when expected"
+                                  );
     
-        assertEquals( "Can not add incompatible currencies" , t.getMessage());
+        assertEquals( "Can not add incompatible currencies" , t.getMessage()
+                     ,"Incorrect exception message");
     }
 }
     

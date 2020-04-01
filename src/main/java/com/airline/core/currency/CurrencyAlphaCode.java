@@ -21,6 +21,7 @@ public class CurrencyAlphaCode extends CurrencyCode<String>
      * @param code the code to validate.
      * @return true if the code meets the standard, false otherwise.
      */
+    @Override
     protected boolean isCodeValid( final String code )
     {
         return Pattern.matches( "^[A-Z]{3}$", code.toString() );

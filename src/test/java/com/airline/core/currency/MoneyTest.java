@@ -1,5 +1,6 @@
 package com.airline.core.currency;
 
+import static org.junit.jupiter.api.Assertions.assertAll;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -7,70 +8,89 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 import org.junit.jupiter.api.Test;
 
 
+@SuppressWarnings({"PMD.JUnitTestContainsTooManyAsserts", "PMD.AvoidDuplicateLiterals"})
 public class MoneyTest
 {
     @Test
     public void basicConstructorWithStringCurrencyCode()
     {
-        Money c = new Money( "CUR", 3, 1234567890 );
+        Money c = new Money( "CUR", 3, 1234567890 );            // NOPMD  (DU-anomaly)
 
-        assertEquals( "CUR", c.getCurrencyCode().getCode() );
-        assertEquals( 3, c.getAmount().getDecimalPrecision() );
-        assertEquals( 1234567890, c.getAmount().getAmount() );
+        assertAll( "Money internal state"
+                  ,() -> assertEquals( "CUR", c.getCurrencyCode().getCode()
+                                      ,"Currency code not as expected" )
+                  ,() -> assertEquals( 3, c.getAmount().getDecimalPrecision()
+                                      ,"amount precision not correct" )
+                  ,() -> assertEquals( 1234567890, c.getAmount().getValue()
+                                      ,"Value of fixed precision number is incorrect" )
+                 );
     }
 
     @Test
     public void basicConstructorAlternate()
     {
-        Money c = new Money( "FOO", 2, 4321 );
+        Money c = new Money( "FOO", 2, 4321 );          // NOPMD  (DU-anomaly)
 
-        assertEquals( "FOO", c.getCurrencyCode().getCode() );
-        assertEquals( 2, c.getAmount().getDecimalPrecision() );
-        assertEquals( 4321, c.getAmount().getAmount() );
+        assertAll( "Money internal state"
+                  ,() -> assertEquals( "FOO", c.getCurrencyCode().getCode() 
+                                      ,"Currency code not as expected" )
+                  ,() -> assertEquals( 2, c.getAmount().getDecimalPrecision()
+                                      ,"amount precision not correct" )
+                  ,() -> assertEquals( 4321, c.getAmount().getValue()
+                                      ,"Value of fixed precision number is incorrect" )
+                  );
     }
 
     @Test
     public void basicConstructorWithCurrencyCodeInstance()
     {
         var currencyCode = new CurrencyAlphaCode( "GBP" );
-        Money c = new Money( currencyCode, 3, 1234567890 );
+        Money c = new Money( currencyCode, 3, 1234567890 );         // NOPMD  (DU-anomaly)
 
-        assertEquals( currencyCode, c.getCurrencyCode() );
-        assertEquals( 3, c.getAmount().getDecimalPrecision() );
-        assertEquals( 1234567890, c.getAmount().getAmount() );
+        assertAll( "Money internal state"
+                  ,() -> assertEquals( currencyCode, c.getCurrencyCode()
+                                      ,"Currency code not as expected" )
+                  ,() -> assertEquals( 3, c.getAmount().getDecimalPrecision()
+                                      ,"amount precision not correct" )
+                  ,() -> assertEquals( 1234567890, c.getAmount().getValue()
+                                      ,"Value of fixed precision number is incorrect" )
+                 );
     }
 
     @Test
     public void nullCurrencyCodeNotAllowed()
     {
         Throwable t = assertThrows( IllegalArgumentException.class
-                                   ,() -> {
-                                    new Money( (String)null, 3, 1234567890 );
-                                   });
+                                   ,() -> {new Money( (String)null, 3, 1234567890 );}
+                                   ,"IllegalArgumentException not thrown when expected"
+                                  );
 
-        assertEquals( "Currency code is required", t.getMessage());
+        assertEquals( "Currency code is required", t.getMessage()
+                     ,"Exception message text is incorrect" );
     }
 
     @Test
     public void blankCurrencyCodeNotAllowed()
     {
         Throwable t = assertThrows( IllegalArgumentException.class
-                                   ,() -> {
-                                    new Money( "", 3, 1234567890 );
-                                   });
+                                   ,() -> {new Money( "", 3, 1234567890 );}
+                                   ,"IllegalArgumentException not thrown when expected"
+                                  );
 
-        assertEquals( "Currency code is required", t.getMessage());
+        assertEquals( "Currency code is required", t.getMessage()
+                     ,"Exception message text is incorrect" );
     }
 
     @Test
     public void nullCurrencyAlphaCodeNotAllowed()
     {
         Throwable t = assertThrows( IllegalArgumentException.class
-                                   ,() -> {
-                                    new Money( (CurrencyAlphaCode)null, 3, 1234567890 );
-                                   });
+                                   ,() -> {new Money( (CurrencyAlphaCode)null, 3, 1234567890 );}
+                                   ,"IllegalArgumentException not thrown when expected"
+                                  );
 
-        assertEquals( "Currency code is required", t.getMessage());
+        assertEquals( "Currency code is required", t.getMessage()
+                     ,"Exception message text is incorrect" );
     }
 
     // ----- Addition -----
@@ -79,14 +99,20 @@ public class MoneyTest
     {
         Money             total        = new Money( "CUR", 3, 1234567890 );
         Money             addend       = new Money( "CUR", 3, 5 );
-        CurrencyAlphaCode currencyCode = new CurrencyAlphaCode("CUR");
+        CurrencyAlphaCode currencyCode = new CurrencyAlphaCode("CUR");          // NOPMD  (DU-anomaly)
 
         total.add( addend );
 
-        assertEquals( currencyCode, total.getCurrencyCode() );
-        assertEquals( "CUR", total.getCurrencyCode().getCode() );
-        assertEquals( 3, total.getAmount().getDecimalPrecision() );
-        assertEquals( 1234567895, total.getAmount().getAmount() );
+        assertAll( "Money internal state"
+                  ,() -> assertEquals( currencyCode, total.getCurrencyCode()
+                                      ,"curency code is wrong" )
+                  ,() -> assertEquals( "CUR", total.getCurrencyCode().getCode()
+                                      ,"curency code string is wrong" )
+                  ,() -> assertEquals( 3, total.getAmount().getDecimalPrecision()
+                                      ,"precision incorrectly modified" )
+                  ,() -> assertEquals( 1234567895, total.getAmount().getValue()
+                                       ,"result of addition is incorrect")
+                 );
     }
 
     @Test
@@ -95,11 +121,12 @@ public class MoneyTest
         Money total  = new Money( "CUR", 3, 1234567890 );
         
         Throwable t = assertThrows( IllegalArgumentException.class
-                                   ,() -> {
-                                      total.add( null );
-                                   });
+                                   ,() -> {total.add( null );}
+                                   ,"IllegalArgumentException not thrown when expected"
+                                  );
 
-        assertEquals( "Incompatible currency (null)", t.getMessage());
+        assertEquals( "Incompatible currency (null)", t.getMessage()
+                     ,"Exception message text is incorrect" );
     }
 
     @Test
@@ -110,11 +137,12 @@ public class MoneyTest
 
         
         Throwable t = assertThrows( IllegalArgumentException.class
-                                   ,() -> {
-                                      total.add( addend );
-                                   });
+                                   ,() -> {total.add( addend );}
+                                   ,"IllegalArgumentException not thrown when expected"
+                                  );
 
-        assertTrue( t.getMessage().contains("Can not add incompatible currencies") );
+        assertTrue( t.getMessage().contains("Can not add incompatible currencies")
+                   ,"Exception message text is incorrect" );
     }
 
 
@@ -128,9 +156,14 @@ public class MoneyTest
 
         total.subtract( addend );
 
-        assertEquals( "CUR", total.getCurrencyCode().getCode() );
-        assertEquals( 3, total.getAmount().getDecimalPrecision() );
-        assertEquals( 1234567885, total.getAmount().getAmount() );
+        assertAll( "Money internal state - post subtraction"
+                  ,() -> assertEquals( "CUR", total.getCurrencyCode().getCode()
+                                      ,"currency code altered" )
+                  ,() -> assertEquals( 3, total.getAmount().getDecimalPrecision()
+                                      ,"precision not preserved through addition" )
+                  ,() -> assertEquals( 1234567885, total.getAmount().getValue()
+                                      ,"value from addition is incorrect" )
+                 );
     }
 
     @Test
@@ -141,11 +174,12 @@ public class MoneyTest
 
         
         Throwable t = assertThrows( IllegalArgumentException.class
-                                   ,() -> {
-                                      total.subtract( subtend );
-                                   });
+                                   ,() -> {total.subtract( subtend );}
+                                   ,"IllegalArgumentException not thrown when expected"
+                                  );
 
-        assertEquals( "Can not subtract incompatible currencies", t.getMessage() );
+        assertEquals( "Can not subtract incompatible currencies", t.getMessage()
+                     ,"Exception message text is incorrect" );
     }
 
 
@@ -156,7 +190,7 @@ public class MoneyTest
         Money valueA  = new Money( "CUR", 3, 1234567890 );
         Money valueB  = new Money( "CUR", 3, 1234567890 );
 
-        assertEquals( 0, valueA.compareTo( valueB ));
+        assertEquals( 0, valueA.compareTo( valueB ), "numerically equal instances should compare as equivalent");
     }
 
     @Test
@@ -164,7 +198,7 @@ public class MoneyTest
     {
         Money total  = new Money( "CUR", 3, 1234567890 );
 
-        assertEquals( 0, total.compareTo( total ));
+        assertEquals( 0, total.compareTo( total ), "object compared to self should be zero");
     }
 
     @Test
@@ -173,11 +207,12 @@ public class MoneyTest
         Money total  = new Money( "CUR", 3, 1234567890 );
 
         Throwable t = assertThrows( IllegalArgumentException.class
-                                   ,() -> {
-                                      total.compareTo( null );
-                                   });
+                                   ,() -> {total.compareTo( null );}
+                                   ,"IllegalArgumentException not thrown when expected"
+                                  );
 
-        assertTrue( t.getMessage().contains("Can not compare against (null) currency") );
+        assertTrue( t.getMessage().contains("Can not compare against (null) currency")
+                   ,"Exception message text is incorrect" );
     }
 
     @Test
@@ -188,11 +223,12 @@ public class MoneyTest
 
         // TODO catch exception - until normalization of precision is implemented
         Throwable t = assertThrows( ArithmeticException.class
-                                   ,() -> {
-                                      valueA.compareTo( valueB );
-                                   });
+                                   ,() -> {valueA.compareTo( valueB );}
+                                   ,"IllegalArgumentException not thrown when expected"
+                                  );
 
-        assertEquals( "Precision mismatch 4 != 3", t.getMessage() );
+        assertEquals( "Precision mismatch 4 != 3", t.getMessage()
+                     ,"Exception message text is incorrect" );
     }
 
     @Test
@@ -203,11 +239,12 @@ public class MoneyTest
 
         // TODO catch exception - until normalization of precision is implemented
         Throwable t = assertThrows( IllegalArgumentException.class
-                                   ,() -> {
-                                      valueA.compareTo( valueB );
-                                   });
+                                   ,() -> {valueA.compareTo( valueB );}
+                                   ,"IllegalArgumentException not thrown when expected"
+                                  );
 
-        assertEquals( "Incompatible currencies CurrencyCode(code=CUR) and CurrencyCode(code=RUC)", t.getMessage() );
+        assertEquals( "Incompatible currencies CUR and RUC", t.getMessage()
+                     ,"Exception message text is incorrect" );
     }
 
     
@@ -218,7 +255,7 @@ public class MoneyTest
         Money valueA  = new Money( "CUR", 3, 1234567890 );
         Money valueB  = new Money( "CUR", 3, 1111111111 );
 
-        assertTrue( valueA.compareTo( valueB ) > 0 );
+        assertTrue( 0 < valueA.compareTo( valueB ), "A should be greater than B" );
     }
 
 
@@ -228,7 +265,7 @@ public class MoneyTest
         Money valueA  = new Money( "CUR", 3, 123456789 );
         Money valueB  = new Money( "CUR", 3, 222222222 );
 
-        assertTrue( valueA.compareTo( valueB ) < 0 );
+        assertTrue( 0 > valueA.compareTo( valueB ), "A should be less than B" );
     }
 
 }

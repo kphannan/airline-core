@@ -33,6 +33,7 @@ plugins {
     id 'java-library'
     id 'jacoco'
     id 'checkstyle'
+    id 'pmd'
     id 'project-report'
     id 'build-dashboard'
     // id 'net.serenity-bdd.aggregator' version "${serenityVersion}"
@@ -214,6 +215,14 @@ checkstyleMain {
 }
 checkstyleTest {
     source = 'src/test/java'
+}
+
+
+pmd {
+    consoleOutput = true
+    toolVersion = "6.21.0"
+    rulePriority = 5
+    ruleSets = ["category/java/errorprone.xml", "category/java/bestpractices.xml"]
 }
 
 

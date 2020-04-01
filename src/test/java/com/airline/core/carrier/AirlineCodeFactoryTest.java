@@ -6,6 +6,7 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 import org.junit.jupiter.api.Test;
 
 
+@SuppressWarnings({"PMD.JUnitTestContainsTooManyAsserts", "PMD.AvoidDuplicateLiterals"})
 public class AirlineCodeFactoryTest
 {
     @Test
@@ -16,7 +17,7 @@ public class AirlineCodeFactoryTest
                                                AirlineCodeFactory.build( null );
                                             });
 
-        assertEquals( "Airline code is required", throwable.getMessage() );
+        assertEquals( "Airline code is required", throwable.getMessage(), "Message is not as expected" );
     }
 
     @Test
@@ -24,7 +25,7 @@ public class AirlineCodeFactoryTest
     {
         AirlineCode airlineCode = AirlineCodeFactory.build( "AF" );
 
-        assertEquals( IATAAirlineDesignator.class, airlineCode.getClass() );
+        assertEquals( IATAAirlineDesignator.class, airlineCode.getClass(), ".class mismatch" );
     }
 
     @Test
@@ -32,6 +33,6 @@ public class AirlineCodeFactoryTest
     {
         AirlineCode airlineCode = AirlineCodeFactory.build( "DAL" );
 
-        assertEquals( ICAOAirlineDesignator.class, airlineCode.getClass() );
+        assertEquals( ICAOAirlineDesignator.class, airlineCode.getClass(), "class mismatch" );
     }
 }

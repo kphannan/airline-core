@@ -33,12 +33,12 @@ public class Flight
     public static class Builder
     {
         // private FlightDesignator     operatingFlightDesignator;
-        private FlightDesignator     flightDesignator;
+        private final transient FlightDesignator     flightDesignator;
     
-        private AirportCode          origin;
-        private AirportCode          destination;
+        private transient AirportCode          origin;
+        private transient AirportCode          destination;
 
-        private List<FlightSegment>  segments      = new ArrayList<>();
+        private transient List<FlightSegment>  segments      = new ArrayList<>();
 
         public Builder( FlightDesignator marketingFlightDesignator )
         {
@@ -155,9 +155,9 @@ public class Flight
                 flight.segments.addAll( segments );
             }
 
-            // Check that origin of segment 1 is flight origin and destination
-            // of the last segment is the flight destination.
-            // Possibly make sure that the segments chain from origin to destination
+            // TODO: Check that origin of segment 1 is flight origin and destination
+            //       of the last segment is the flight destination.
+            //       Possibly make sure that the segments chain from origin to destination
 
             return flight;
         }
@@ -168,6 +168,17 @@ public class Flight
     {
         this.flightDesignator = flightDesignator;        
     }
+
+    public boolean hasSingleSegment()
+    {
+        return segments.size() == 1;
+    }
+
+    public int getNumberOfSegments()
+    {
+        return segments.size();
+    }
+
 }
 
 

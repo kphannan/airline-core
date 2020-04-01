@@ -51,7 +51,7 @@ public class Money implements Comparable<Money>
         if ( !this.currencyCode.equals( currency.currencyCode ))
         {
             throw new IllegalArgumentException(String.format("Incompatible currencies %s and %s"
-                                                             ,currencyCode, currency.currencyCode ));
+                                                             ,currencyCode.getCode(), currency.currencyCode.getCode() ));
         }
 
         return this.amount.compareTo(currency.amount);

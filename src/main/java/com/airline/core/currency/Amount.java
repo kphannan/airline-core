@@ -6,14 +6,14 @@ import lombok.Data;
 @Data
 public class Amount implements Comparable<Amount>
 {
-    private int amount;
+    private int value;
     private int decimalPrecision;
 
 
     public Amount( final int amount, final int precision )
     {
         this.decimalPrecision = precision;
-        this.amount           = amount;
+        this.value            = amount;
     }
 
 
@@ -31,7 +31,7 @@ public class Amount implements Comparable<Amount>
         }
 
         // TODO Normalize amount based on precision
-        this.amount += arg.amount;
+        this.value += arg.value;
         return this;
     }
 
@@ -49,7 +49,7 @@ public class Amount implements Comparable<Amount>
         }
 
         // TODO Normalize amount based on precision
-        this.amount -= arg.amount;
+        this.value -= arg.value;
         return this;
     }
 
@@ -70,7 +70,7 @@ public class Amount implements Comparable<Amount>
                                                          ,amount.decimalPrecision ));
         }
 
-        return this.amount - amount.amount;
+        return this.value - amount.value;
     }
 
 }

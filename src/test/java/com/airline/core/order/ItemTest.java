@@ -15,7 +15,7 @@ public class ItemTest
     {
         Item item = new Item();
 
-        assertNotNull( item );
+        assertNotNull( item, "Ensure a default Item is constructed" );
     }
 
 }

@@ -15,6 +15,7 @@ public class CurrencyNumericCode extends CurrencyCode<String>
         super( c );
     }
 
+    @Override
     protected boolean isCodeValid( final String code )
     {
         return Pattern.matches( "^[0-9]{3}$", code.toString() );
