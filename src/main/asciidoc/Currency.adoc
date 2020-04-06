@@ -1,0 +1,12 @@
+
+== Currency
+Represents a specific type of money.
+
+== Money
+Money is a store of value.  This value may be traded.
+
+plantuml::Money-static.puml[format=svg, alt="Class diagram", width=400, height=300]
+
+// https://asciidoctor.org/news/2014/02/18/plain-text-diagrams-in-asciidoctor/
+// https://github.com/asciidoctor/asciidoctor-diagram/blob/master/examples/features.adoc
+

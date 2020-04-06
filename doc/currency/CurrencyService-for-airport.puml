@@ -1,0 +1,14 @@
+
+@startuml
+!includeurl https://raw.githubusercontent.com/RicardoNiepel/C4-PlantUML/master/C4_Container.puml
+
+title Lookup Currency for an airport
+
+[-> CurrencyService ++ : findAirportCurrency(airport)
+CurrencyService -> currencydB : fetch airport currency
+CurrencyService -> Currency ** : createCurrency(currencyCode)
+
+return airportCurrency
+
+@enduml
+

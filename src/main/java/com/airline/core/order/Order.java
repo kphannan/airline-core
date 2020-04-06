@@ -11,6 +11,8 @@ public class Order
 {
     private String id;
 
+    // private transient tradeCurrency;
+
     private List<Item>  orderItems;
 
 

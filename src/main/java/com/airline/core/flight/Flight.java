@@ -98,7 +98,7 @@ public class Flight
          * @param flightDesignator unique identifier for a flight
          * @param sequence relative sequence number of this segment
          * @param od origin and destination airports for this flight segment
-         * @return
+         * @return the Builder for chaining.
          */
         public Builder segment( FlightDesignator flightDesignator
                                 ,int sequence, OriginDestination od )
@@ -115,7 +115,7 @@ public class Flight
          * @param sequence relative sequence number of this segment
          * @param origin origin airport code
          * @param destination destination airport code
-         * @return
+         * @return the Builder for chaining.
          */
         public Builder segment( FlightDesignator flightDesignator
                                 ,int sequence

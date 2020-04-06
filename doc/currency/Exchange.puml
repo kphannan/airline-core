@@ -4,15 +4,21 @@
 
 title Exchange one currency for another
 
-Service -> Money : round
-activate Money
-Money -> Currency : round
-activate Currency
-Currency -> ToolsV2 : lookupExchangeRate
-Currency -> Money : getAmount
-Currency -> Currency : applyExcangeReate
-Currency -> Money ** : create
+[-> Currency ++: exchange( money )
+Currency -> Currency ++: lookupConversion( to )
+alt Cached Conversion
+Currency -> CurrencyConversion ++: exchange( money )
 return exchangedMoney
+end
+Currency -> CurrencyService : exchange(money.currency, currency.code)
+Currency -> CurrencyService ++: findConversion()
+CurrencyService -> ToolsV2 : lookupExchangeRate(from, toCurrency)
+CurrencyService -> CurrencyConversion ** : create
+return exchangeRate
+return exchangeRate
+Currency -> Currency : calculate exchanged amount
+Currency -> Money ** : create(exchangedValue)
 return exchangedMoney
+
 @enduml
 
