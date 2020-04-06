@@ -15,9 +15,9 @@ public class CrossCurrencyTest
         Miles miles = new Miles( "LOY", 3, 1234567890 );
         Cash  cash  = new Cash( "GBP", 3, 1234567890 );
 
-        Throwable t = assertThrows( IllegalArgumentException.class
+        Throwable t = assertThrows( CurrencyException.class
                                    ,() -> {miles.compareTo(cash);}
-                                   ,"IllegalArgumentException not thrown when expected"
+                                   ,"CurrencyException not thrown when expected"
                                   );
 
         assertEquals( "Incompatible currencies LOY and GBP" , t.getMessage()
@@ -31,9 +31,9 @@ public class CrossCurrencyTest
         Miles miles = new Miles( "LOY", 3, 1234567890 );
         Cash  cash  = new Cash( "GBP", 3, 1234567890 );
     
-        Throwable t = assertThrows( IllegalArgumentException.class
+        Throwable t = assertThrows( CurrencyException.class
                                    ,() -> {miles.add(cash);}
-                                   ,"IllegalArgumentException not thrown when expected"
+                                   ,"CurrencyException not thrown when expected"
                                   );
     
         assertEquals( "Can not add incompatible currencies" , t.getMessage()

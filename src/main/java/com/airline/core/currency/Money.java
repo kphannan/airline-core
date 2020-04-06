@@ -39,22 +39,28 @@ public class Money implements Comparable<Money>
     }
 
     @Override
-    public int compareTo( final Money currency )
+    public int compareTo( final Money rhs )
     {
-        if ( currency == null )
+        if ( rhs == null )
         {
             throw new IllegalArgumentException( "Can not compare against (null) currency" );
         }
 
         // ! Need to ensure currency types are the same
         // !   do conversion maybe before compare.
-        if ( !this.currencyCode.equals( currency.currencyCode ))
+        if ( !isCompatible( rhs ))
         {
-            throw new IllegalArgumentException(String.format("Incompatible currencies %s and %s"
-                                                             ,currencyCode.getCode(), currency.currencyCode.getCode() ));
+            throw new CurrencyException(String.format( "Incompatible currencies %s and %s"
+                                                      ,currencyCode.getCode(), rhs.currencyCode.getCode() ));
         }
+        // else
+        // {
+        //     if (amount.getDecimalPrecision() != rhs.getAmount().getDecimalPrecision())
+        //     // return currencyCode.equals(rhs.currencyCode) &&
+        //     //        (amount.getDecimalPrecision() == rhs.getAmount().getDecimalPrecision());
+        // }
 
-        return this.amount.compareTo(currency.amount);
+        return this.amount.compareTo(rhs.amount);
     }
 
 
@@ -68,7 +74,7 @@ public class Money implements Comparable<Money>
     {
         if ( !isCompatible(arg) )
         {
-            throw new IllegalArgumentException("Can not add incompatible currencies");
+            throw new CurrencyException("Can not add incompatible currencies");
         }
 
         this.amount.add( arg.amount );
@@ -85,7 +91,7 @@ public class Money implements Comparable<Money>
     {
         if ( !isCompatible(arg) )
         {
-            throw new IllegalArgumentException("Can not subtract incompatible currencies");
+            throw new CurrencyException("Can not subtract incompatible currencies");
         }
 
         this.amount.subtract( arg.amount );
@@ -103,7 +109,7 @@ public class Money implements Comparable<Money>
         // Verify they are the same class - a common parent does not count
         if ( this.getClass().equals(rhs.getClass()) )
         {
-            return amount.getDecimalPrecision() == rhs.getAmount().getDecimalPrecision();
+            return currencyCode.equals(rhs.currencyCode);
         }
 
         return false;

@@ -1,0 +1,18 @@
+
+@startuml
+!includeurl https://raw.githubusercontent.com/RicardoNiepel/C4-PlantUML/master/C4_Container.puml
+
+title Exchange one currency for another
+
+Service -> Money : round
+activate Money
+Money -> Currency : round
+activate Currency
+Currency -> ToolsV2 : lookupExchangeRate
+Currency -> Money : getAmount
+Currency -> Currency : applyExcangeReate
+Currency -> Money ** : create
+return exchangedMoney
+return exchangedMoney
+@enduml
+

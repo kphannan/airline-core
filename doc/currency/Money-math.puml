@@ -1,0 +1,18 @@
+
+@startuml
+!includeurl https://raw.githubusercontent.com/RicardoNiepel/C4-PlantUML/master/C4_Container.puml
+
+title Add / Subtract Money
+[-> Money1 ++: add(money2)]
+
+alt same currency
+Money1 -> Money2 ++ : same currency
+note right of Money2 : Only Money of same currency can be added / subtracted
+Money1 -> Money2 : same minorUnit
+Money1 -> Money2 : get amount
+Money1 -> Money1 : add(amount2)
+else incompatible currency
+Money1 -> : throw CurrencyException
+end
+@enduml
+

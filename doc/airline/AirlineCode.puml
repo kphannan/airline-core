@@ -1,0 +1,25 @@
+
+
+@startuml
+!includeurl https://raw.githubusercontent.com/RicardoNiepel/C4-PlantUML/master/C4_Container.puml
+
+title Airline Designator.
+
+AirlineCode <|-- AirlineCodeIata
+AirlineCode <|-- AirlineCodeIcao
+
+interface AirlineCode <<interface>> {
+    -airlineCode : String
+    +getAirineCode : String
+}
+
+class AirlineCodeIata {
+    
+}
+
+class AirlineCodeIcao {
+    
+}
+
+
+@enduml

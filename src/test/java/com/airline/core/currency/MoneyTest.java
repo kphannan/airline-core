@@ -136,9 +136,26 @@ public class MoneyTest
         Money addend  = new Money( "CUR", 2, 5 );
 
         
-        Throwable t = assertThrows( IllegalArgumentException.class
+        Throwable t = assertThrows( ArithmeticException.class
                                    ,() -> {total.add( addend );}
-                                   ,"IllegalArgumentException not thrown when expected"
+                                   ,"ArithmeticException not thrown when expected"
+                                  );
+
+        assertEquals( "Precision mismatch 3 != 2", t.getMessage()
+                     ,"Exception message text is incorrect" );
+    }
+
+
+    @Test
+    public void addAddIncompatibleCurrencies()
+    {
+        Money total   = new Money( "CUR", 3, 1234567890 );
+        Money addend  = new Money( "RUC", 3, 5 );
+
+        
+        Throwable t = assertThrows( CurrencyException.class
+                                   ,() -> {total.add( addend );}
+                                   ,"CurrencyException not thrown when expected"
                                   );
 
         assertTrue( t.getMessage().contains("Can not add incompatible currencies")
@@ -173,9 +190,26 @@ public class MoneyTest
         Money subtend = new Money( "CUR", 2, 5 );
 
         
-        Throwable t = assertThrows( IllegalArgumentException.class
+        Throwable t = assertThrows( ArithmeticException.class
                                    ,() -> {total.subtract( subtend );}
-                                   ,"IllegalArgumentException not thrown when expected"
+                                   ,"ArithmeticException not thrown when expected"
+                                  );
+
+        assertEquals( "Precision mismatch 3 != 2", t.getMessage()
+                     ,"Exception message text is incorrect" );
+    }
+
+
+    @Test
+    public void addSubtractIncompatibleCurrencies()
+    {
+        Money total   = new Money( "CUR", 2, 1234567890 );
+        Money subtend = new Money( "RUC", 2, 5 );
+
+        
+        Throwable t = assertThrows( CurrencyException.class
+                                   ,() -> {total.subtract( subtend );}
+                                   ,"CurrencyException not thrown when expected"
                                   );
 
         assertEquals( "Can not subtract incompatible currencies", t.getMessage()
@@ -224,7 +258,7 @@ public class MoneyTest
         // TODO catch exception - until normalization of precision is implemented
         Throwable t = assertThrows( ArithmeticException.class
                                    ,() -> {valueA.compareTo( valueB );}
-                                   ,"IllegalArgumentException not thrown when expected"
+                                   ,"ArithmeticException not thrown when expected"
                                   );
 
         assertEquals( "Precision mismatch 4 != 3", t.getMessage()
@@ -238,9 +272,9 @@ public class MoneyTest
         Money valueB  = new Money( "RUC", 3, 1234567890 );
 
         // TODO catch exception - until normalization of precision is implemented
-        Throwable t = assertThrows( IllegalArgumentException.class
+        Throwable t = assertThrows( CurrencyException.class
                                    ,() -> {valueA.compareTo( valueB );}
-                                   ,"IllegalArgumentException not thrown when expected"
+                                   ,"CurrencyException not thrown when expected"
                                   );
 
         assertEquals( "Incompatible currencies CUR and RUC", t.getMessage()
