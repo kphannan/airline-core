@@ -4,11 +4,11 @@ package com.airline.core.carrier;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.*;
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import org.junit.jupiter.api.Test;
 
+@SuppressWarnings({"PMD.JUnitTestContainsTooManyAsserts", "PMD.AvoidDuplicateLiterals"})
 public class ICAOAirlineDesignatorTest
 {
 
@@ -17,8 +17,8 @@ public class ICAOAirlineDesignatorTest
     {
         ICAOAirlineDesignator deltaAirlinesCode = new ICAOAirlineDesignator( "DAL" );
 
-        assertNotNull( deltaAirlinesCode );
-        assertEquals( "DAL", deltaAirlinesCode.getAirlineCode() );
+        assertEquals( "DAL", deltaAirlinesCode.getAirlineCode()
+                     ,"Airline code not set properly in constructor" );
     }
 
     @Test
@@ -26,20 +26,22 @@ public class ICAOAirlineDesignatorTest
     {
         ICAOAirlineDesignator aeroMexicoCode = new ICAOAirlineDesignator( "AMX" );
 
-        assertNotNull( aeroMexicoCode );
-        assertEquals( "AMX", aeroMexicoCode.getAirlineCode() );
+        assertEquals( "AMX", aeroMexicoCode.getAirlineCode()
+                     ,"Airline code not set properly in constructor" );
     }
 
 
     @Test
     public void testDeltaAirlinesCodeLowercase()
     {
-        Throwable throwable = assertThrows( IllegalArgumentException.class, () -> {
-            new ICAOAirlineDesignator( "dal" );
-        });
+        Throwable throwable = assertThrows( IllegalArgumentException.class
+                                           ,() -> {new ICAOAirlineDesignator( "dal" );}
+                                           ,"IllegalArgumentException not thrown when expected"
+            );
 
 
-        assertThat( throwable.getMessage()
+        assertThat(  "Exception message contains the necessary detail"
+                   ,throwable.getMessage()
                    ,both(containsString("Invalid ICAO airline code"))
                    .and( containsString( "'dal'")) );
     }
@@ -48,11 +50,13 @@ public class ICAOAirlineDesignatorTest
     @Test
     public void testAirlineCodeThrowsIllegalArgumentException()
     {
-        Throwable throwable = assertThrows( IllegalArgumentException.class, () -> {
-            new ICAOAirlineDesignator( null );
-        });
+        Throwable throwable = assertThrows( IllegalArgumentException.class
+                                           ,() -> {new ICAOAirlineDesignator( null );}
+                                           ,"IllegalArgumentException not thrown when expected"
+            );
 
-        assertEquals( "Airline code is required", throwable.getMessage() );
+        assertEquals( "Airline code is required", throwable.getMessage()
+                     ,"Incorrect exception message" );
     }
 
 

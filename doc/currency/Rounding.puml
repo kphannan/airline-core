@@ -1,0 +1,23 @@
+
+@startuml
+!includeurl https://raw.githubusercontent.com/RicardoNiepel/C4-PlantUML/master/C4_Container.puml
+
+title Apply a rounding rule to Money
+[-> Money : round(rule)
+activate Money
+Money -> Currency : round(rule)
+activate Currency
+Currency -> Money : getAmount
+activate Currency
+Currency -> Currency : lookup(reason)
+Currency -> RoundingStrategy ++ : round(amount)
+return roundedAmount
+Currency -> Money ** : <<instantiate>>
+activate Money
+return moneyRounded
+deactivate Currency
+return moneyRounded
+deactivate Currency
+[<- Money : done
+@enduml
+

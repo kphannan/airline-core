@@ -1,36 +1,42 @@
 package com.airline.core.flight;
 
 
+import static org.junit.jupiter.api.Assertions.assertAll;
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
-// import static org.junit.jupiter.api.Assertions.assertThrows;
-// import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import com.airline.core.carrier.IATAAirlineDesignator;
 
 import org.junit.jupiter.api.Test;
 
+@SuppressWarnings({"PMD.JUnitTestContainsTooManyAsserts", "PMD.AvoidDuplicateLiterals"})
 public class FlightDesignatorTest
 {
 
     @Test
     public void testDefaultConstructorWithAirlineAsString()
     {
-        FlightDesignator flightDesignator = new FlightDesignator( "DL", 1234 );
+        FlightDesignator flightDesignator = new FlightDesignator( "DL", 1234 ); // NOPMD
 
-        assertNotNull( flightDesignator );
-        assertEquals( "IATAAirlineDesignator(airlineCode=DL)", flightDesignator.getAirlineCode().toString() );
-        assertEquals( 1234, flightDesignator.getFlightNumber() );
+        assertAll( "FlightDesignator internal state"
+                  ,() -> assertEquals( "IATAAirlineDesignator(airlineCode=DL)", flightDesignator.getAirlineCode().toString()
+                                      ,"Airline code not set in constructor" )
+                  ,() -> assertEquals( 1234, flightDesignator.getFlightNumber()
+                                      ,"Flight number not set in constructor" )
+                 );
     }
 
     @Test
     public void testDefaultConstructorWithAirlineAsIATA()
     {
-        FlightDesignator flightDesignator = new FlightDesignator( new IATAAirlineDesignator( "DL" ), 1234 );
+        IATAAirlineDesignator airline = new IATAAirlineDesignator( "DL" );
+        FlightDesignator flightDesignator = new FlightDesignator( airline, 4433 );   // NOPMD
 
-        assertNotNull( flightDesignator );
-        assertEquals( "IATAAirlineDesignator(airlineCode=DL)", flightDesignator.getAirlineCode().toString() );
-        assertEquals( 1234, flightDesignator.getFlightNumber() );
+        assertAll( "FlightDesignator internal state"
+                  ,() -> assertEquals( "IATAAirlineDesignator(airlineCode=DL)", flightDesignator.getAirlineCode().toString()
+                                      ,"Airline code not set in constructor" )
+                  ,() -> assertEquals( 4433, flightDesignator.getFlightNumber()
+                                      ,"Flight number not set in constructor" )
+                 );
     }
 
 }

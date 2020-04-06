@@ -2,10 +2,10 @@ package com.airline.core.carrier;
 
 import java.util.regex.Pattern;
 
-import lombok.Value;
-
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import lombok.Value;
+
 
 
 // AccountingNumber                    // IATA 3 digit accounting code
@@ -14,6 +14,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 
 // ICAO Airline designator, which is a 3 letter code
+// https://www.wikidata.org/wiki/Property:P230
 @Value
 public class ICAOAirlineDesignator implements AirlineCode
 {

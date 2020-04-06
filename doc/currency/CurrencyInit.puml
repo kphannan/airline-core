@@ -1,0 +1,22 @@
+
+@startuml
+!includeurl https://raw.githubusercontent.com/RicardoNiepel/C4-PlantUML/master/C4_Container.puml
+
+title Currency Initialization
+CurrencyFactory -> Currency ** : create(mgr)
+activate Currency
+Currency -> Currency : setManager(mgr)
+Currency -> Currency : init
+Currency -> CurrencyFactory ++ : loadRules
+CurrencyFactory -> CurrencyFactory : read rule DB
+activate CurrencyFactory
+CurrencyFactory -> RoundingStrategy ++ : create
+return strategyInstance
+CurrencyFactory -> CurrencyFactory -- : add(rule)
+
+return ruleList
+Currency -> Currency : setRules(ruleList)
+return
+
+@enduml
+

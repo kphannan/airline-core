@@ -8,7 +8,7 @@ package com.airline.core.location;
 //    - ICAO Station Code  // 4 letters  https://en.wikipedia.org/wiki/International_Civil_Aviation_Organization
 
 
-public interface AirportCode
+public interface AirportCode extends Comparable<AirportCode>
 {
     public String getAirportCode();
 }

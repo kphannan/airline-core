@@ -2,7 +2,6 @@ package com.airline.core.flight;
 
 import com.airline.core.carrier.AirlineCode;
 import com.airline.core.carrier.IATAAirlineDesignator;
-
 import lombok.Data;
 
 @Data

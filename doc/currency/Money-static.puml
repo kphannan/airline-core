@@ -1,0 +1,81 @@
+
+
+@startuml
+!includeurl https://raw.githubusercontent.com/RicardoNiepel/C4-PlantUML/master/C4_Container.puml
+
+MonetaryAuthority *-- Currency
+MonetaryAuthority *-- CurrencyCode
+MonetaryAuthority *-- CurrencyConversion
+
+Money --o CurrencyCode
+Money --> Amount
+
+Currency --o CurrencyCode
+Currency --> RoundingStrategy
+Currency -- CountryCode
+
+RoundingStrategy <|-- RoundingUp
+RoundingStrategy <|-- RoundingDown
+RoundingStrategy <|-- RoundingToNearest
+RoundingStrategy <|-- RoundingTruncate
+
+
+
+
+
+class CountryCode {
+    -currencyCode : String
+}
+
+class CurrencyCode<String> {
+    -currencyCode : String
+
+    +getCurrencyCode() : String
+}
+
+class Currency {
+    -currencyCode  : CurrencyCode
+    -minorUnit     : Integer
+    -countryCode   : CountryCode
+}
+
+class CurrencyConversion {
+    +exchange( Money from, CurrencyCode to ) : Money
+}
+
+class Money {
+    -currencyCode : CurrencyCode
+    -amount       : Amount
+
+    +add(Money rhs) : Money
+    +compareTo( Money rhs ) : Integer
+
+    +getAmount() : Integer
+    +getAmountFormatted() : String
+}
+
+class Amount {
+    -value     : Integer
+    -minorUnit : Integer
+
+    +getAmount() : Integer
+    +getAmountFormatted() : String
+}
+
+
+interface RoundingStrategy <<interface>>
+{
+    -name : String
+    +getName() : String
+    +round( Money from ) : Money 
+}
+
+class MonetaryAuthority {
+    +exchange( Money from, CurrencyCode to ) : Money
+}
+
+
+CurrencyException <|-- RuntimeException
+
+
+@enduml

@@ -11,8 +11,10 @@ buildscript {
         junitVersion           = '5.5.2'
         hamcrestVersion        = '2.2'
         serenityVersion        = '2.0.83'
-        checkstyleVersion      = '8.26'
+        checkstyleVersion      = '8.29'
         cucumberReportsVersion = '4.11.2'
+        jacksonVersion         = '2.10.1'
+        asciiDoctorVersion     = '1.5.6'
     }
 
     repositories {
@@ -22,9 +24,9 @@ buildscript {
 
     dependencies {
         classpath("net.serenity-bdd:serenity-gradle-plugin:${serenityVersion}")
-    }
+        classpath 'be.jlr-home.gradle:plantumlPlugin:0.1.+'
+     }
 }
-
 
 
 plugins {
@@ -32,18 +34,20 @@ plugins {
     id 'java-library'
     id 'jacoco'
     id 'checkstyle'
+    id 'pmd'
     id 'project-report'
     id 'build-dashboard'
     // id 'net.serenity-bdd.aggregator' version "${serenityVersion}"
     id "net.nemerosa.versioning" version "2.9.0"
     id "com.gorylenko.gradle-git-properties" version "2.2.0"
     id 'maven-publish'
+    id 'org.asciidoctor.convert' version '1.5.6'
 }
 
 // apply plugin: 'checkstyle'
 // apply plugin: 'jacoco'
 apply plugin: 'net.serenity-bdd.aggregator'
-
+apply plugin: 'plantuml'
 
 repositories {
     mavenLocal()
@@ -59,8 +63,8 @@ version = '0.0.1-SNAPSHOT'
 // version = versioning.info.full
 
 
-sourceCompatibility = 1.8
-targetCompatibility = 1.8
+sourceCompatibility = '13'
+targetCompatibility = "${sourceCompatibility}"
 
 versioning {
     releases = ['release', 'master']
@@ -106,6 +110,11 @@ dependencies {
     // This dependency is used internally, and not exposed to consumers on their own compile classpath.
     implementation 'com.google.guava:guava:28.0-jre'
 
+    implementation 'org.decimal4j:decimal4j:1.0.3'
+
+    // https://mvnrepository.com/artifact/com.fasterxml.jackson.core/jackson-databind
+    implementation( "com.fasterxml.jackson.core:jackson-databind:${jacksonVersion}" )
+
     // Use JUnit Jupiter API for testing.
     testImplementation("org.junit.jupiter:junit-jupiter-api:${junitVersion}")
 
@@ -126,8 +135,8 @@ dependencies {
 
     testImplementation( "net.masterthought:cucumber-reporting:${cucumberReportsVersion}" )
 
-    // https://mvnrepository.com/artifact/com.fasterxml.jackson.core/jackson-databind
-    compile group: 'com.fasterxml.jackson.core', name: 'jackson-databind', version: '2.10.1'
+    // https://mvnrepository.com/artifact/com.puppycrawl.tools/checkstyle
+    implementation "com.puppycrawl.tools:checkstyle:${checkstyleVersion}"
 
 
 }
@@ -142,6 +151,11 @@ test {
     useJUnitPlatform()
 }
 
+check {
+    dependsOn {
+        jacocoTestCoverageVerification
+    }
+}
 
 
 // See this page for options https://reflectoring.io/jacoco/
@@ -157,7 +171,7 @@ jacocoTestCoverageVerification {
             limit {
                 counter = 'LINE'
                 value   = 'COVEREDRATIO'
-                minimum = 1.0
+                minimum = 0.75
             }
         }
 
@@ -206,4 +220,22 @@ checkstyleTest {
 }
 
 
+pmd {
+    consoleOutput = true
+    toolVersion = "6.21.0"
+    rulePriority = 5
+    ruleSets = ["category/java/errorprone.xml", "category/java/bestpractices.xml"]
+}
+
+
+asciidoctor {
+	sourceDir 'src/main/asciidoc'
+	attributes \
+		'snippets': file('target/snippets')
+    // resources 'doc'
+}
+
+plantuml {
+    sourcePath = 'doc'
+}
 

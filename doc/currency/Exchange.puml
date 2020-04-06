@@ -1,0 +1,24 @@
+
+@startuml
+!includeurl https://raw.githubusercontent.com/RicardoNiepel/C4-PlantUML/master/C4_Container.puml
+
+title Exchange one currency for another
+
+[-> Currency ++: exchange( money )
+Currency -> Currency ++: lookupConversion( to )
+alt Cached Conversion
+Currency -> CurrencyConversion ++: exchange( money )
+return exchangedMoney
+end
+Currency -> CurrencyService : exchange(money.currency, currency.code)
+Currency -> CurrencyService ++: findConversion()
+CurrencyService -> ToolsV2 : lookupExchangeRate(from, toCurrency)
+CurrencyService -> CurrencyConversion ** : create
+return exchangeRate
+return exchangeRate
+Currency -> Currency : calculate exchanged amount
+Currency -> Money ** : create(exchangedValue)
+return exchangedMoney
+
+@enduml
+

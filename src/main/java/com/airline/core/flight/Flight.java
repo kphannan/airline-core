@@ -5,7 +5,6 @@ import java.util.List;
 
 import com.airline.core.location.AirportCode;
 import com.airline.core.location.AirportCodeFactory;
-
 import lombok.Data;
 
 
@@ -34,12 +33,12 @@ public class Flight
     public static class Builder
     {
         // private FlightDesignator     operatingFlightDesignator;
-        private FlightDesignator     flightDesignator;
+        private final transient FlightDesignator     flightDesignator;
     
-        private AirportCode          origin;
-        private AirportCode          destination;
+        private transient AirportCode          origin;
+        private transient AirportCode          destination;
 
-        private List<FlightSegment>  segments      = new ArrayList<>();
+        private transient List<FlightSegment>  segments      = new ArrayList<>();
 
         public Builder( FlightDesignator marketingFlightDesignator )
         {
@@ -93,16 +92,39 @@ public class Flight
             return this;
         }
 
-        public Builder segment( FlightDesignator flightDesignator, int sequence, OriginDestination od )
+        /**
+         * Create a new instance of a flight segment between two airports.
+         * 
+         * @param flightDesignator unique identifier for a flight
+         * @param sequence relative sequence number of this segment
+         * @param od origin and destination airports for this flight segment
+         * @return the Builder for chaining.
+         */
+        public Builder segment( FlightDesignator flightDesignator
+                                ,int sequence, OriginDestination od )
         {
             segments.add( new FlightSegment( flightDesignator, sequence, od ));
 
             return this;
         }
 
-        public Builder segment( FlightDesignator flightDesignator, int sequence, AirportCode origin, AirportCode destination )
+        /**
+         * Create a new instance of a flight segment between two airports.
+         * 
+         * @param flightDesignator unique identifier for a flight
+         * @param sequence relative sequence number of this segment
+         * @param origin origin airport code
+         * @param destination destination airport code
+         * @return the Builder for chaining.
+         */
+        public Builder segment( FlightDesignator flightDesignator
+                                ,int sequence
+                                ,AirportCode origin
+                                ,AirportCode destination )
         {
-            segments.add( new FlightSegment( flightDesignator, sequence, new OriginDestination(origin, destination) ));
+            segments.add( new FlightSegment( flightDesignator
+                                             ,sequence
+                                             ,new OriginDestination(origin, destination) ));
 
             return this;
         }
@@ -124,16 +146,18 @@ public class Flight
             // If there aren't any segments, then create 1 for the flight.
             if ( segments.isEmpty() )
             {
-                flight.segments.add( new FlightSegment( flightDesignator, 1, flight.originDestination ));
+                flight.segments.add( new FlightSegment( flightDesignator
+                                                        ,1
+                                                        ,flight.originDestination ));
             }
             else
             {
                 flight.segments.addAll( segments );
             }
 
-            // Check that origin of segment 1 is flight origin and destination of the last segment is
-            // the flight destination.
-            // Possibly make sure that the segments chain from origin to destination
+            // TODO: Check that origin of segment 1 is flight origin and destination
+            //       of the last segment is the flight destination.
+            //       Possibly make sure that the segments chain from origin to destination
 
             return flight;
         }
@@ -144,6 +168,17 @@ public class Flight
     {
         this.flightDesignator = flightDesignator;        
     }
+
+    public boolean hasSingleSegment()
+    {
+        return segments.size() == 1;
+    }
+
+    public int getNumberOfSegments()
+    {
+        return segments.size();
+    }
+
 }
 
 

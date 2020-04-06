@@ -4,7 +4,6 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.both;
 import static org.hamcrest.Matchers.containsString;
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import org.junit.jupiter.api.Test;
@@ -12,6 +11,7 @@ import org.junit.jupiter.api.Test;
 // import net.serenitybdd.junit5.SerenityTest;
 
 // @SerenityTest
+@SuppressWarnings({"PMD.JUnitTestContainsTooManyAsserts", "PMD.AvoidDuplicateLiterals"})
 public class IATAAirlineDesignatorTest
 {
 
@@ -20,8 +20,7 @@ public class IATAAirlineDesignatorTest
     {
         IATAAirlineDesignator dl = new IATAAirlineDesignator( "DL" );
 
-        assertNotNull( dl );
-        assertEquals( "DL", dl.getAirlineCode() );
+        assertEquals( "DL", dl.getAirlineCode(), "Airline code is not as expected" );
     }
 
     @Test
@@ -29,8 +28,7 @@ public class IATAAirlineDesignatorTest
     {
         IATAAirlineDesignator airNorthCharter = new IATAAirlineDesignator( "4N" );
 
-        assertNotNull( airNorthCharter );
-        assertEquals( "4N", airNorthCharter.getAirlineCode() );
+        assertEquals( "4N", airNorthCharter.getAirlineCode(), "Airline code is not correct" );
     }
 
 
@@ -39,8 +37,7 @@ public class IATAAirlineDesignatorTest
     {
         IATAAirlineDesignator airSaharaCode = new IATAAirlineDesignator( "S2" );
 
-        assertNotNull( airSaharaCode );
-        assertEquals( "S2", airSaharaCode.getAirlineCode() );
+        assertEquals( "S2", airSaharaCode.getAirlineCode(), "Airline code is not as expected" );
     }
 
 
@@ -50,8 +47,8 @@ public class IATAAirlineDesignatorTest
     {
         IATAAirlineDesignator airFranceCode = new IATAAirlineDesignator( "AF" );
 
-        assertNotNull( airFranceCode );
-        assertEquals( "AF", airFranceCode.getAirlineCode() );
+        assertEquals( "AF", airFranceCode.getAirlineCode()
+                     ,"Expected airline code of 'AF' is missing" );
     }
 
 
@@ -59,11 +56,12 @@ public class IATAAirlineDesignatorTest
     public void testDeltaAirlinesCodeLowercase()
     {
         Throwable throwable = assertThrows( IllegalArgumentException.class
-                                           ,() -> {
-                                               new IATAAirlineDesignator( "dl" );
-                                            });
+                                           ,() -> {new IATAAirlineDesignator( "dl" );}
+                                           ,"IllegalArgumentException not thrown when expected"
+                                           );
 
-        assertThat( throwable.getMessage()
+        assertThat(  "Exception message contains the necessary detail"
+                   ,throwable.getMessage()
                    ,both(containsString("Invalid IATA airline code"))
                    .and( containsString( "'dl'")) );
     }
@@ -76,7 +74,8 @@ public class IATAAirlineDesignatorTest
             new IATAAirlineDesignator( null );
         });
 
-        assertEquals( "Airline code is required", throwable.getMessage() );
+        assertEquals( "Airline code is required", throwable.getMessage()
+                     ,"exception message is not correct" );
     }
 
 
