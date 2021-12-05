@@ -7,7 +7,7 @@
  */
 buildscript {
     ext {
-        lombokVersion          = '1.18.8'
+        lombokVersion          = '1.18.22'
         junitVersion           = '5.5.2'
         hamcrestVersion        = '2.2'
         serenityVersion        = '2.0.83'
@@ -19,7 +19,6 @@ buildscript {
 
     repositories {
         mavenLocal()
-        jcenter()
     }
 
     dependencies {
@@ -39,7 +38,7 @@ plugins {
     id 'build-dashboard'
     // id 'net.serenity-bdd.aggregator' version "${serenityVersion}"
     id "net.nemerosa.versioning" version "2.9.0"
-    id "com.gorylenko.gradle-git-properties" version "2.2.0"
+    id "com.gorylenko.gradle-git-properties" version "2.3.2"
     id 'maven-publish'
     id 'org.asciidoctor.convert' version '1.5.6'
 }
@@ -51,9 +50,7 @@ apply plugin: 'plantuml'
 
 repositories {
     mavenLocal()
-    // Use jcenter for resolving dependencies.
     // You can declare any Maven/Ivy/file repository here.
-    jcenter()
     mavenCentral()
 }
 
@@ -223,7 +220,7 @@ checkstyleTest {
 pmd {
     consoleOutput = true
     toolVersion = "6.21.0"
-    rulePriority = 5
+    rulesMinimumPriority = 5
     ruleSets = ["category/java/errorprone.xml", "category/java/bestpractices.xml"]
 }
 
