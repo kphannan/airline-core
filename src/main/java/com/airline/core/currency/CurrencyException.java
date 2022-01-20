@@ -1,11 +1,11 @@
 package com.airline.core.currency;
 
+
+/**
+ * Base exception for currency violations.
+ */
 public class CurrencyException extends RuntimeException
 {
-
-    /**
-     *
-     */
     private static final long serialVersionUID = -6737139477011503232L;
 
     public CurrencyException()
@@ -26,14 +26,19 @@ public class CurrencyException extends RuntimeException
     }
 
 
-    protected CurrencyException(String message, Throwable cause, boolean enableSupression, boolean writeStackTrace )
-    {
-        super( message, cause, enableSupression, writeStackTrace );
-    }
-
     public CurrencyException(Throwable cause)
     {
         this( null, cause );
     }
+
+
+    protected CurrencyException( String     message
+                                ,Throwable  cause
+                                ,boolean    enableSupression
+                                ,boolean    writeStackTrace )
+    {
+        super( message, cause, enableSupression, writeStackTrace );
+    }
+
 
 }
