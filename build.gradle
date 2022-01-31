@@ -7,14 +7,35 @@
  */
 buildscript {
     ext {
-        lombokVersion          = '1.18.22'
-        junitVersion           = '5.5.2'
-        hamcrestVersion        = '2.2'
-        serenityVersion        = '2.0.83'
-        checkstyleVersion      = '8.29'
-        cucumberReportsVersion = '4.11.2'
-        jacksonVersion         = '2.10.1'
-        asciiDoctorVersion     = '1.5.6'
+        // --- Languages / framworks
+        lombokVersion              = '1.18.22'
+        apacheLangVersion          = '3.12.0'
+        hibernateValidatorVersion  = '7.0.2.Final'
+        jacksonVersion             = '2.10.1'
+
+        // --- Testing ---
+        // --- unit testing
+        junitVersion               = '5.8.2'
+        hamcrestVersion            = '2.2'
+        serenityVersion            = '2.0.83'
+        cucumberReportsVersion     = '4.11.2'
+
+
+        // ===== Quality checks =====
+        // --- Coding practies (static analysis) ---
+        // --- Coding style
+        checkstyleVersion          = '9.0.1'
+        // --- Common Coding flaws
+        pmdVersion                 = '6.41.0'
+
+        // --- Testing ---
+        // Unit testing
+        junitVersion               = '5.8.2'
+        // --- Code coverage
+        pitVersion                 = '1.7.3'
+
+        // --- Documentation ---
+        asciiDoctorVersion         = '1.5.6'
     }
 
     repositories {
@@ -29,18 +50,40 @@ buildscript {
 
 
 plugins {
-    // Apply the java-library plugin to add support for Java Library
+    // --- Artifact
+    // Apply the java-library plugin for API and implementation separation.
     id 'java-library'
-    id 'jacoco'
-    id 'checkstyle'
+
+    // --- annotation processors
+    id "io.freefair.lombok" version "6.3.0"
+
+    // --- Frameworks
+
+
+    // ===== Quality Assurance =====
+    // --- Static Analysis
+    // --- PMD
     id 'pmd'
-    id 'project-report'
-    id 'build-dashboard'
-    // id 'net.serenity-bdd.aggregator' version "${serenityVersion}"
+    // --- Style
+    id 'checkstyle'
+    // --- Coverage
+    id 'jacoco'
+    // --- Mutation testing
+    id 'info.solidsoft.pitest' version '1.7.0'
+
+
+    // ===== Configuration Management =====
     id "net.nemerosa.versioning" version "2.9.0"
     id "com.gorylenko.gradle-git-properties" version "2.3.2"
     id 'maven-publish'
+
+    // ===== Documentation =====
     id 'org.asciidoctor.convert' version '1.5.6'
+
+    id 'project-report'
+    id 'build-dashboard'
+    // id 'net.serenity-bdd.aggregator' version "${serenityVersion}"
+
 }
 
 // apply plugin: 'checkstyle'
@@ -136,6 +179,8 @@ dependencies {
     implementation "com.puppycrawl.tools:checkstyle:${checkstyleVersion}"
 
 
+    // --- Mutation testing
+    testRuntimeOnly( 'org.pitest:pitest-junit5-plugin:0.15' )
 }
 
 
@@ -143,6 +188,11 @@ compileJava {
     options.compilerArgs << "-Xlint:unchecked" << "-Xlint:deprecation"
 }
 
+
+
+// ===== Quality Assurance =====
+
+// --- unit test
 test {
     // Use junit platform for unit tests
     useJUnitPlatform()
@@ -154,7 +204,8 @@ check {
     }
 }
 
-
+// ===== Static Code Analysis =====
+// --- Coverage (Jacoco) ---
 // See this page for options https://reflectoring.io/jacoco/
 jacocoTestCoverageVerification {
     violationRules {
@@ -187,44 +238,60 @@ jacocoTestCoverageVerification {
 }
 
 
-
+// ----- Checkstyle -----
 checkstyle {
-    // assign the latest checkstyle version explicitly
-    // default version is very old, likes 5.9
     toolVersion = "${checkstyleVersion}"
     // checkstyle.xml copy from:
     // https://raw.githubusercontent.com/checkstyle/checkstyle/checkstyle-8.6/src/main/resources/google_checks.xml
     // the version should be as same as plugin version
-    // configFile = rootProject.file('config/checkstyle/checkstyle.xml')
     configFile = file("${rootDir}/config/checkstyle/checkstyle.xml")
-}
-// task Checkstyle(type: Checkstyle) {
-//     // source 'src/main/java'
-//     include '**/*.java'
-//     exclude '**/gen/**'
-//     exclude '**/R.java'
-//     exclude '**/BuildConfig.java'
+    // // source 'src/main/java'
+    // include '**/*.java'
+    // exclude '**/gen/**'
+    // exclude '**/R.java'
+    // exclude '**/BuildConfig.java'
 
-//     // empty classpath
-//     classpath = rootProject.files()
-// }
+    // // empty classpath
+    // classpath = rootProject.files()
+
+}
 
 checkstyleMain {
     source = 'src/main/java'
 }
+
 checkstyleTest {
     source = 'src/test/java'
 }
 
 
+// ----- PMD -----
 pmd {
-    consoleOutput = true
-    toolVersion = "6.21.0"
-    rulesMinimumPriority = 5
-    ruleSets = ["category/java/errorprone.xml", "category/java/bestpractices.xml"]
+    consoleOutput = false
+    ignoreFailures = true       // Don't interrupt the build
+    toolVersion = "${pmdVersion}"
+    ruleSetFiles = files("${rootDir}/config/pmd/pmd.xml")
+    ruleSets = []
+}
+
+// --- Mutation Tests
+pitest {
+    verbose = true
+    testSourceSets = [sourceSets.test]
+    mainSourceSets = [sourceSets.main]
+    // targetClasses = ['com.example.security.*']  //by default "${project.group}.*"
+    pitestVersion = "${pitVersion}" //not needed when a default PIT version should be used
+    threads = 4
+    outputFormats = ['XML', 'HTML']
+    timestampedReports = false
+    withHistory = false
+    // mutators = ['DEFAULTS', 'STRONGER', 'ALL']
+    mutators = ['DEFAULTS', 'STRONGER' ]
 }
 
 
+
+// ===== Documentation =====
 asciidoctor {
 	sourceDir 'src/main/asciidoc'
 	attributes \
@@ -235,4 +302,6 @@ asciidoctor {
 plantuml {
     sourcePath = 'doc'
 }
+
+
 
