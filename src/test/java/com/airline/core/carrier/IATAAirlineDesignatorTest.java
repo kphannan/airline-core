@@ -11,7 +11,7 @@ import org.junit.jupiter.api.Test;
 // import net.serenitybdd.junit5.SerenityTest;
 
 // @SerenityTest
-@SuppressWarnings({"PMD.JUnitTestContainsTooManyAsserts", "PMD.AvoidDuplicateLiterals"})
+@SuppressWarnings( { "PMD.JUnitTestContainsTooManyAsserts", "PMD.AvoidDuplicateLiterals" } )
 public class IATAAirlineDesignatorTest
 {
 
@@ -47,23 +47,23 @@ public class IATAAirlineDesignatorTest
     {
         IATAAirlineDesignator airFranceCode = new IATAAirlineDesignator( "AF" );
 
-        assertEquals( "AF", airFranceCode.getAirlineCode()
-                     ,"Expected airline code of 'AF' is missing" );
+        assertEquals(  "AF", airFranceCode.getAirlineCode()
+                     , "Expected airline code of 'AF' is missing" );
     }
 
 
     @Test
     public void testDeltaAirlinesCodeLowercase()
     {
-        Throwable throwable = assertThrows( IllegalArgumentException.class
-                                           ,() -> {new IATAAirlineDesignator( "dl" );}
-                                           ,"IllegalArgumentException not thrown when expected"
-                                           );
+        Throwable throwable = assertThrows(  IllegalArgumentException.class
+                                           , () -> { new IATAAirlineDesignator( "dl" ); }
+                                           , "IllegalArgumentException not thrown when expected"
+                                          );
 
         assertThat(  "Exception message contains the necessary detail"
-                   ,throwable.getMessage()
-                   ,both(containsString("Invalid IATA airline code"))
-                   .and( containsString( "'dl'")) );
+                   , throwable.getMessage()
+                   , both(containsString( "Invalid IATA airline code" ) )
+                   . and( containsString( "'dl'")) );
     }
 
 
@@ -74,8 +74,8 @@ public class IATAAirlineDesignatorTest
             new IATAAirlineDesignator( null );
         });
 
-        assertEquals( "Airline code is required", throwable.getMessage()
-                     ,"exception message is not correct" );
+        assertEquals(  "Airline code is required", throwable.getMessage()
+                     , "exception message is not correct" );
     }
 
 
