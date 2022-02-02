@@ -16,7 +16,7 @@ public class IATAAirlineDesignatorTest
 {
 
     @Test
-    public void testDeltaAirlinesCode()
+    void testDeltaAirlinesCode()
     {
         IATAAirlineDesignator dl = new IATAAirlineDesignator( "DL" );
 
@@ -24,7 +24,7 @@ public class IATAAirlineDesignatorTest
     }
 
     @Test
-    public void testAirNorthCharterCode()
+    void testAirNorthCharterCode()
     {
         IATAAirlineDesignator airNorthCharter = new IATAAirlineDesignator( "4N" );
 
@@ -33,7 +33,7 @@ public class IATAAirlineDesignatorTest
 
 
     @Test
-    public void testAirSaharaCode()
+    void testAirSaharaCode()
     {
         IATAAirlineDesignator airSaharaCode = new IATAAirlineDesignator( "S2" );
 
@@ -43,7 +43,7 @@ public class IATAAirlineDesignatorTest
 
 
     @Test
-    public void testAirFranceCode()
+    void testAirFranceCode()
     {
         IATAAirlineDesignator airFranceCode = new IATAAirlineDesignator( "AF" );
 
@@ -53,7 +53,7 @@ public class IATAAirlineDesignatorTest
 
 
     @Test
-    public void testDeltaAirlinesCodeLowercase()
+    void testDeltaAirlinesCodeLowercase()
     {
         Throwable throwable = assertThrows(  IllegalArgumentException.class
                                            , () -> { new IATAAirlineDesignator( "dl" ); }
@@ -68,7 +68,7 @@ public class IATAAirlineDesignatorTest
 
 
     @Test
-    public void testAirlineCodeThrowsIllegalArgumentException()
+    void testAirlineCodeThrowsIllegalArgumentException()
     {
         Throwable throwable = assertThrows( IllegalArgumentException.class, () -> {
             new IATAAirlineDesignator( null );

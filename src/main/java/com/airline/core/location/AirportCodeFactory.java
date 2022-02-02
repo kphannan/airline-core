@@ -1,7 +1,11 @@
 package com.airline.core.location;
 
 
-public class AirportCodeFactory
+/**
+ * Create an an airport code instance based on the type of standard
+ * airport code provided. IATA and ICAO standards are supported.
+ */
+public final class AirportCodeFactory
 {
     /**
      * Create an airport Code of the appropriate type:

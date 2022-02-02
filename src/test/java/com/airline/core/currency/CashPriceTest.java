@@ -8,10 +8,10 @@ import org.junit.jupiter.api.Test;
 
 
 @SuppressWarnings({"PMD.JUnitTestContainsTooManyAsserts", "PMD.AvoidDuplicateLiterals"})
-public class CashPriceTest
+class CashPriceTest
 {
     @Test
-    public void basicConstructor()
+    void basicConstructor()
     {
         CashPrice c = new CashPrice( "cur", 3, 1234567890 );        // NOPMD
 

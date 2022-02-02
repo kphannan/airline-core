@@ -78,7 +78,7 @@ plugins {
     id 'maven-publish'
 
     // ===== Documentation =====
-    id 'org.asciidoctor.convert' version '1.5.6'
+    id 'org.asciidoctor.convert' version '1.5.8'
 
     id 'project-report'
     id 'build-dashboard'
@@ -103,7 +103,7 @@ version = '0.0.1-SNAPSHOT'
 // version = versioning.info.full
 
 
-sourceCompatibility = '13'
+sourceCompatibility = '17'
 targetCompatibility = "${sourceCompatibility}"
 
 versioning {
@@ -144,6 +144,8 @@ task fatJar(type: Jar) {
 }
 
 dependencies {
+    // ===== Frameworks =====
+
     // This dependency is exported to consumers, that is to say found on their compile classpath.
     api 'org.apache.commons:commons-math3:3.6.1'
 
@@ -155,32 +157,34 @@ dependencies {
     // https://mvnrepository.com/artifact/com.fasterxml.jackson.core/jackson-databind
     implementation( "com.fasterxml.jackson.core:jackson-databind:${jacksonVersion}" )
 
-    // Use JUnit Jupiter API for testing.
-    testImplementation("org.junit.jupiter:junit-jupiter-api:${junitVersion}")
 
-    // Use JUnit Jupiter Engine for testing.
-    testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:${junitVersion}")
-
-    // https://mvnrepository.com/artifact/org.hamcrest/hamcrest
-    testImplementation("org.hamcrest:hamcrest:${hamcrestVersion}")
-
-
+    // ===== Language Support =====
+    // --- Lombok
     compileOnly("org.projectlombok:lombok:${lombokVersion}")
     testImplementation("org.projectlombok:lombok:${lombokVersion}")
     annotationProcessor("org.projectlombok:lombok:${lombokVersion}")
     testAnnotationProcessor("org.projectlombok:lombok:${lombokVersion}")
 
-    testImplementation("net.serenity-bdd:serenity-core:${serenityVersion}" )
-    testImplementation("net.serenity-bdd:serenity-junit:${serenityVersion}" )
 
-    testImplementation( "net.masterthought:cucumber-reporting:${cucumberReportsVersion}" )
 
-    // https://mvnrepository.com/artifact/com.puppycrawl.tools/checkstyle
+
+    // ===== Quality Assurance =====
+    // --- Static Analysis
+    // --- PMD
+    // --- Style
     implementation "com.puppycrawl.tools:checkstyle:${checkstyleVersion}"
-
-
+    // --- Unit testing
+    testImplementation("org.junit.jupiter:junit-jupiter-api:${junitVersion}")
+    testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:${junitVersion}")
+    testImplementation("org.hamcrest:hamcrest:${hamcrestVersion}")
+    // --- Coverage
     // --- Mutation testing
     testRuntimeOnly( 'org.pitest:pitest-junit5-plugin:0.15' )
+    // --- Reporting
+    testImplementation( "net.serenity-bdd:serenity-core:${serenityVersion}" )
+    testImplementation( "net.serenity-bdd:serenity-junit:${serenityVersion}" )
+    testImplementation( "net.masterthought:cucumber-reporting:${cucumberReportsVersion}" )
+
 }
 
 
@@ -240,20 +244,12 @@ jacocoTestCoverageVerification {
 
 // ----- Checkstyle -----
 checkstyle {
+    showViolations = false
     toolVersion = "${checkstyleVersion}"
     // checkstyle.xml copy from:
     // https://raw.githubusercontent.com/checkstyle/checkstyle/checkstyle-8.6/src/main/resources/google_checks.xml
     // the version should be as same as plugin version
     configFile = file("${rootDir}/config/checkstyle/checkstyle.xml")
-    // // source 'src/main/java'
-    // include '**/*.java'
-    // exclude '**/gen/**'
-    // exclude '**/R.java'
-    // exclude '**/BuildConfig.java'
-
-    // // empty classpath
-    // classpath = rootProject.files()
-
 }
 
 checkstyleMain {
@@ -276,7 +272,7 @@ pmd {
 
 // --- Mutation Tests
 pitest {
-    verbose = true
+    verbose = false
     testSourceSets = [sourceSets.test]
     mainSourceSets = [sourceSets.main]
     // targetClasses = ['com.example.security.*']  //by default "${project.group}.*"
@@ -284,7 +280,7 @@ pitest {
     threads = 4
     outputFormats = ['XML', 'HTML']
     timestampedReports = false
-    withHistory = false
+    withHistory = true
     // mutators = ['DEFAULTS', 'STRONGER', 'ALL']
     mutators = ['DEFAULTS', 'STRONGER' ]
 }

@@ -9,11 +9,11 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 import org.junit.jupiter.api.Test;
 
 @SuppressWarnings({"PMD.JUnitTestContainsTooManyAsserts", "PMD.AvoidDuplicateLiterals"})
-public class ICAOAirlineDesignatorTest
+class ICAOAirlineDesignatorTest
 {
 
     @Test
-    public void testDeltaAirlinesCode()
+    void testDeltaAirlinesCode()
     {
         ICAOAirlineDesignator deltaAirlinesCode = new ICAOAirlineDesignator( "DAL" );
 
@@ -22,7 +22,7 @@ public class ICAOAirlineDesignatorTest
     }
 
     @Test
-    public void testAirFranceCode()
+    void testAirFranceCode()
     {
         ICAOAirlineDesignator aeroMexicoCode = new ICAOAirlineDesignator( "AMX" );
 
@@ -32,7 +32,7 @@ public class ICAOAirlineDesignatorTest
 
 
     @Test
-    public void testDeltaAirlinesCodeLowercase()
+    void testDeltaAirlinesCodeLowercase()
     {
         Throwable throwable = assertThrows( IllegalArgumentException.class
                                            ,() -> {new ICAOAirlineDesignator( "dal" );}
@@ -48,7 +48,7 @@ public class ICAOAirlineDesignatorTest
 
 
     @Test
-    public void testAirlineCodeThrowsIllegalArgumentException()
+    void testAirlineCodeThrowsIllegalArgumentException()
     {
         Throwable throwable = assertThrows( IllegalArgumentException.class
                                            ,() -> {new ICAOAirlineDesignator( null );}

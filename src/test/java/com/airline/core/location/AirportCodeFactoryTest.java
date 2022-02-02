@@ -3,14 +3,25 @@ package com.airline.core.location;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
+import com.utility.TestUtility;
+import java.lang.reflect.InvocationTargetException;
 import org.junit.jupiter.api.Test;
 
 
 @SuppressWarnings({"PMD.JUnitTestContainsTooManyAsserts", "PMD.AvoidDuplicateLiterals"})
-public class AirportCodeFactoryTest
+class AirportCodeFactoryTest
 {
+
     @Test
-    public void nullAirportCodeThrowsIllegalArgument()
+    void airportCodeFactory_isWellFormedUtilityClass()
+        throws NoSuchMethodException, InstantiationException, IllegalAccessException, IllegalArgumentException, InvocationTargetException
+    {
+        TestUtility.assertUtilityClassWellDefined( AirportCodeFactory.class );
+    }
+
+
+    @Test
+    void nullAirportCodeThrowsIllegalArgument()
     {
         Throwable throwable = assertThrows( IllegalArgumentException.class
                                            ,() -> {AirportCodeFactory.build( null );}
@@ -21,7 +32,7 @@ public class AirportCodeFactoryTest
     }
 
     @Test
-    public void iataCodeFromTwoCharacterCode()
+    void iataCodeFromTwoCharacterCode()
     {
         AirportCode airportCode = AirportCodeFactory.build( "ORD" );
 
@@ -30,7 +41,7 @@ public class AirportCodeFactoryTest
     }
 
     @Test
-    public void icaoCodeFromThreeCharacterCode()
+    void icaoCodeFromThreeCharacterCode()
     {
         AirportCode airportCode = AirportCodeFactory.build( "CYEG" );
 

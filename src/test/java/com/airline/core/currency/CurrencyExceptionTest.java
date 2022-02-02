@@ -9,10 +9,10 @@ import org.junit.jupiter.api.Test;
 
 
 @SuppressWarnings({"PMD.JUnitTestContainsTooManyAsserts", "PMD.AvoidDuplicateLiterals"})
-public class CurrencyExceptionTest
+class CurrencyExceptionTest
 {
     @Test
-    public void defaultConstructor()
+    void defaultConstructor()
     {
         CurrencyException cex = new CurrencyException();          // NOPMD
 
@@ -28,7 +28,7 @@ public class CurrencyExceptionTest
 
 
     @Test
-    public void constructorWithCause()
+    void constructorWithCause()
     {
         Throwable           t = new Throwable( "Test message" );
         CurrencyException cex = new CurrencyException(t);          // NOPMD

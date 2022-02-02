@@ -20,6 +20,11 @@ import lombok.Value;
 
 
 //    - IATA Airline Designator   // 2 letter/number
+/**
+ * Represents an industry standard 2 character alphanumeric code.
+ * The code is verified for format only.  It is not validated against a published
+ * list of air carriers.
+ */
 @Value
 public class IATAAirlineDesignator implements AirlineCode
 {

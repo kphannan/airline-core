@@ -15,6 +15,11 @@ import lombok.Value;
 
 // ICAO Airline designator, which is a 3 letter code
 // https://www.wikidata.org/wiki/Property:P230
+/**
+ * Represents an industry standard 3 character uppercase alpha code.
+ * The code is verified for format only.  It is not validated against a published
+ * list of air carriers.
+ */
 @Value
 public class ICAOAirlineDesignator implements AirlineCode
 {

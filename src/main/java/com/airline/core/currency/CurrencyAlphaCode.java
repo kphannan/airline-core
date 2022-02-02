@@ -2,7 +2,6 @@ package com.airline.core.currency;
 
 import java.util.regex.Pattern;
 
-// import lombok.EqualsAndHashCode;
 
 /**
  * ISO 4217 currency names.
@@ -10,9 +9,15 @@ import java.util.regex.Pattern;
 // @EqualsAndHashCode(callSuper=false)
 public class CurrencyAlphaCode extends CurrencyCode<String>
 {
-    public CurrencyAlphaCode( final String c )
+    /**
+     * Construct an ISO country code.
+     * The country code is validated against a list of acceptable codes.
+     *
+     * @param isoCountryCode the intended ISO country code.
+     */
+    public CurrencyAlphaCode( final String code )
     {
-        super( c );
+        super( code );
     }
 
     /**
@@ -24,6 +29,6 @@ public class CurrencyAlphaCode extends CurrencyCode<String>
     @Override
     protected boolean isCodeValid( final String code )
     {
-        return Pattern.matches( "^[A-Z]{3}$", code.toString() );
+        return Pattern.matches( "^[A-Z]{3}$", code );
     }
 }

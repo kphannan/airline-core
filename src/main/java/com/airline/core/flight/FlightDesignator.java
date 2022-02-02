@@ -12,13 +12,13 @@ public class FlightDesignator
 
 
 
-    public FlightDesignator( final String carrier, int flightNumber )
+    public FlightDesignator( final String carrier, final int flightNumber )
     {
         this.airlineCode  = new IATAAirlineDesignator( carrier );
         this.flightNumber = flightNumber;
     }
 
-    public FlightDesignator( AirlineCode airline, int flightNumber )
+    public FlightDesignator( final AirlineCode airline, final int flightNumber )
     {
         this.airlineCode  = airline;
         this.flightNumber = flightNumber;

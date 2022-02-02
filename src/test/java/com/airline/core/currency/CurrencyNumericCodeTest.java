@@ -7,10 +7,10 @@ import org.junit.jupiter.api.Test;
 
 
 @SuppressWarnings({"PMD.JUnitTestContainsTooManyAsserts", "PMD.AvoidDuplicateLiterals"})
-public class CurrencyNumericCodeTest
+class CurrencyNumericCodeTest
 {
     @Test
-    public void basicConstructor()
+    void basicConstructor()
     {
         var c = new CurrencyNumericCode( "036" );
 
@@ -19,19 +19,19 @@ public class CurrencyNumericCodeTest
 
 
     @Test
-    public void nullCurrencyCodeThrowsException()
+    void nullCurrencyCodeThrowsException()
     {
-        Throwable t = assertThrows( NullPointerException.class
+        Throwable t = assertThrows( IllegalArgumentException.class
                                    ,() -> {new CurrencyNumericCode( null );}
                                    ,"IllegalArgumentException not thrown when expected"
                                   );
 
-        assertEquals( "isoCountryCode is marked non-null but is null", t.getMessage()
+        assertEquals( "Currency code is required", t.getMessage()
                      ,"Incorrect exception message" );
     }
 
     @Test
-    public void blankCurrencyCodeThrowsException()
+    void blankCurrencyCodeThrowsException()
     {
         Throwable t = assertThrows( IllegalArgumentException.class
                                    ,() -> {new CurrencyNumericCode( "" );}
@@ -45,4 +45,4 @@ public class CurrencyNumericCodeTest
 
 }
 
-    
+

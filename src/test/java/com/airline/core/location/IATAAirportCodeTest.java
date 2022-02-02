@@ -2,6 +2,7 @@ package com.airline.core.location;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.*;
+import static org.junit.jupiter.api.Assertions.assertAll;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -9,11 +10,11 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import org.junit.jupiter.api.Test;
 
 @SuppressWarnings({"PMD.JUnitTestContainsTooManyAsserts", "PMD.AvoidDuplicateLiterals"})
-public class IATAAirportCodeTest
+class IATAAirportCodeTest
 {
 
     @Test
-    public void testAltantaIATAAirportCode()
+    void testAltantaIATAAirportCode()
     {
         IATAAirportCode atlantaIATAAirportCode = new IATAAirportCode( "ATL" );
 
@@ -22,7 +23,7 @@ public class IATAAirportCodeTest
     }
 
     @Test
-    public void testNaritaIATAAirportCode()
+    void testNaritaIATAAirportCode()
     {
         IATAAirportCode naritaIATAAirportCode = new IATAAirportCode( "NRT" );
 
@@ -31,7 +32,7 @@ public class IATAAirportCodeTest
     }
 
     @Test
-    public void testAltantaIATAAirportCodeLowercase()
+    void testAltantaIATAAirportCodeLowercase()
     {
         Throwable throwable = assertThrows( IllegalArgumentException.class
                                            ,() -> {new IATAAirportCode( "atl" );}
@@ -39,15 +40,15 @@ public class IATAAirportCodeTest
                                           );
 
 
-        assertThat( "Exception message contains the necessary detail"
-                   ,throwable.getMessage()
-                   ,both(containsString( "Invalid IATA airport code" ))
-                   .and( containsString( "'atl'")) );
+        assertThat(  "Exception message contains the necessary detail"
+                   , throwable.getMessage()
+                   , both(containsString( "Invalid IATA airport code" ))
+                     .and( containsString( "'atl'")) );
     }
 
 
     @Test
-    public void testIATAAirportCodeThrowsIllegalArgumentException()
+    void testIATAAirportCodeThrowsIllegalArgumentException()
     {
         Throwable throwable = assertThrows( IllegalArgumentException.class
                                            ,() -> {new IATAAirportCode( null );}
@@ -61,7 +62,7 @@ public class IATAAirportCodeTest
     // ----- Comparable
 
     @Test
-    public void compareSimilarIATAAirportCode()
+    void compareSimilarIATAAirportCode()
     {
         IATAAirportCode narita1IATAAirportCode = new IATAAirportCode( "NRT" );
         IATAAirportCode narita2IATAAirportCode = new IATAAirportCode( "NRT" );
@@ -72,16 +73,18 @@ public class IATAAirportCodeTest
     }
 
     @Test
-    public void collationOrderOfIATAAirportCode()
+    void collationOrderOfIATAAirportCode()
     {
         IATAAirportCode naritaIATAAirportCode  = new IATAAirportCode( "NRT" );
         IATAAirportCode atlantaIATAAirportCode = new IATAAirportCode( "ATL" );
 
-        assertTrue( 0 < naritaIATAAirportCode.compareTo( atlantaIATAAirportCode )
-                   ,"Sort order of airport coes is incorrect" );
+        assertAll(
+              () -> assertTrue(  0 < naritaIATAAirportCode.compareTo( atlantaIATAAirportCode )
+                               , "Sort order of airport coes is incorrect" )
 
-        assertTrue( 0 > atlantaIATAAirportCode.compareTo( naritaIATAAirportCode )
-                   ,"Sort order of airport coes is incorrect" );
+            , () -> assertTrue(  0 > atlantaIATAAirportCode.compareTo( naritaIATAAirportCode )
+                               , "Sort order of airport coes is incorrect" )
+        );
     }
 
 }

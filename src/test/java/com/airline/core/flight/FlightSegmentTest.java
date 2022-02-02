@@ -10,11 +10,11 @@ import com.airline.core.location.IATAAirportCode;
 import org.junit.jupiter.api.Test;
 
 @SuppressWarnings({"PMD.JUnitTestContainsTooManyAsserts", "PMD.AvoidDuplicateLiterals"})
-public class FlightSegmentTest
+class FlightSegmentTest
 {
 
     @Test
-    public void properlyConstructInstanceFromOriginAndDestination()
+    void properlyConstructInstanceFromOriginAndDestination()
     {
         FlightDesignator flightDesignator = new FlightDesignator( "DL", 1234 ); // NOPMD
         IATAAirportCode   origin = new IATAAirportCode( "AVB" );
@@ -33,7 +33,7 @@ public class FlightSegmentTest
 
 
     @Test
-    public void properlyConstructInstanceFromOD()
+    void properlyConstructInstanceFromOD()
     {
         FlightDesignator flightDesignator = new FlightDesignator( "KL", 7654 ); // NOPMD
         IATAAirportCode   origin = new IATAAirportCode( "ORL" );

@@ -7,37 +7,37 @@ import org.junit.jupiter.api.Test;
 
 
 @SuppressWarnings({"PMD.JUnitTestContainsTooManyAsserts", "PMD.AvoidDuplicateLiterals"})
-public class CrossPriceTest
+class CrossPriceTest
 {
     @Test
-    public void verifyCashAndMilesCannotBeCompared()
+    void verifyCashAndMilesCannotBeCompared()
     {
-        MilesPrice miles = new MilesPrice( "loy", 3, 1234567890 );
-        CashPrice  cash  = new CashPrice( "GBP", 3, 1234567890 );
+        final MilesPrice miles = new MilesPrice(       1_234_567_890, 3 );
+        final CashPrice  cash  = new CashPrice( "GBP", 1_234_567_890, 3 );
 
-        Throwable t = assertThrows( IllegalArgumentException.class
-                                   ,() -> {miles.compareTo(cash);}
-                                   ,"IllegalArgumentException not thrown when expected"
+        Throwable t = assertThrows(  IllegalArgumentException.class
+                                   , () -> { miles.compareTo( cash ); }
+                                   , "IllegalArgumentException not thrown when expected"
                                   );
 
-        assertEquals( "Incompatible price codes loy and GBP" , t.getMessage()
-                     ,"Incorrect exception message");
+        assertEquals(  "Incompatible price codes ZZZ and GBP" , t.getMessage()
+                     , "Incorrect exception message");
     }
 
-    
+
     @Test
-    public void verifyCashAndMilesCanNotBeAdded()
+    void verifyCashAndMilesCanNotBeAdded()
     {
-        MilesPrice miles = new MilesPrice( "loy", 3, 1234567890 );
-        CashPrice  cash  = new CashPrice( "GBP", 3, 1234567890 );
-    
-        Throwable t = assertThrows( IllegalArgumentException.class
-                                   ,() -> {miles.add(cash);}
-                                   ,"IllegalArgumentException not thrown when expected"
+        final MilesPrice miles = new MilesPrice(       1_234_567_890, 3 );
+        final CashPrice  cash  = new CashPrice( "GBP", 1_234_567_890, 3 );
+
+        Throwable t = assertThrows(  IllegalArgumentException.class
+                                   , () -> { miles.add( cash ); }
+                                   , "IllegalArgumentException not thrown when expected"
                                   );
-    
-        assertEquals( "Can not add incompatible prices" , t.getMessage()
-                     ,"Incorrect exception message");
+
+        assertEquals(  "Can not add incompatible prices" , t.getMessage()
+                     , "Incorrect exception message");
     }
 }
-    
+

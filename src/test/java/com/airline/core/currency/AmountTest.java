@@ -1,39 +1,45 @@
 package com.airline.core.currency;
 
+import static org.junit.Assert.assertSame;
 import static org.junit.jupiter.api.Assertions.assertAll;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import org.junit.jupiter.api.Test;
 
 
-@SuppressWarnings({"PMD.JUnitTestContainsTooManyAsserts", "PMD.AvoidDuplicateLiterals"})
-public class AmountTest
+/**
+ * Unit tests of Amount class
+ */
+@SuppressWarnings( { "PMD.JUnitTestContainsTooManyAsserts", "PMD.AvoidDuplicateLiterals" } )
+class AmountTest
 {
-
     // ----- Addition -----
     @Test
-    public void addPositiveValue()
+    void addPositiveValue()
     {
-        Amount total  = new Amount( 1234567890, 3 );
-        Amount addend = new Amount( 5, 3 );
+        final Amount total  = new Amount( 1_234_567_800, 3 );
+        final Amount addend = new Amount( 5, 3 );
 
-        total.add( addend );
+        final Amount result = total.add( addend );
 
-        assertAll( "Money internal state"
-                  ,() -> assertEquals( 3, total.getDecimalPrecision()
-                                      ,"Precision altered in calculation" )
-                  ,() -> assertEquals( 1234567895, total.getValue()
-                                      ,"sum of 2 values is incorrect" )
-                 );
+        assertAll(  "Money internal state"
+                  , () -> assertEquals( 3, total.getDecimalPrecision()
+                                       ,"Precision altered in calculation" )
+                  , () -> assertEquals( 1_234_567_805, total.getValue()
+                                       ,"sum of 2 values is incorrect" )
+                  , () -> assertSame( total, result )
+                  , () -> assertEquals( 1_234_567_805, result.getValue() )
+                );
     }
 
     @Test
-    public void addNullValue()
+    void addNullValue()
     {
         Amount total  = new Amount( 1234567890, 3 );
-        
+
         Throwable t = assertThrows( IllegalArgumentException.class
                                    ,() -> {total.add( null );}
                                    ,"IllegalArgumentException not thrown when expected"
@@ -44,11 +50,11 @@ public class AmountTest
     }
 
     @Test
-    public void addAddIncompatibleValue()
+    void addAddIncompatibleValue()
     {
         Amount total   = new Amount( 1234567890, 3 );
         Amount addend  = new Amount( 5, 2 );
-        
+
         Throwable t = assertThrows( ArithmeticException.class
                                    ,() -> {total.add( addend );}
                                    ,"ArithmeticException not thrown when expected"
@@ -61,24 +67,25 @@ public class AmountTest
 
     // ----- Subtraction -----
     @Test
-    public void subtractPositiveValue()
+    void subtractPositiveValue()
     {
-        Amount total  = new Amount( 1234567890, 3 );
-        Amount addend = new Amount( 5, 3 );
+        final Amount total  = new Amount( 123_4567_890, 3 );
+        final Amount addend = new Amount( 5, 3 );
 
-        total.subtract( addend );
+        final Amount result = total.subtract( addend );
 
-        assertAll( "Money internal state"
-                  ,() -> assertEquals( 3, total.getDecimalPrecision(), "precision does not match" )
-                  ,() -> assertEquals( 1234567885, total.getValue(), "fixed numeric value is incorrect" )
+        assertAll(  "Money internal state"
+                  , () -> assertEquals( 3, total.getDecimalPrecision(), "precision does not match" )
+                  , () -> assertEquals( 1_234_567_885, total.getValue(), "fixed numeric value is incorrect" )
+                  , () -> assertSame( total, result )
                  );
     }
 
     @Test
-    public void subtractNullValue()
+    void subtractNullValue()
     {
         Amount total  = new Amount( 1234567890, 3 );
-        
+
         Throwable t = assertThrows( IllegalArgumentException.class
                                    ,() -> {total.subtract( null );}
                                    ,"IllegalArgumentException not thrown when expected"
@@ -89,12 +96,12 @@ public class AmountTest
     }
 
     @Test
-    public void addSubtractIncompatibleValue()
+    void addSubtractIncompatibleValue()
     {
         Amount total   = new Amount( 1234567890, 3 );
         Amount subtend = new Amount( 5, 2 );
 
-        
+
         Throwable t = assertThrows( ArithmeticException.class
                                    ,() -> {total.subtract( subtend );}
                                    ,"ArithmeticException not thrown when expected"
@@ -107,7 +114,7 @@ public class AmountTest
 
     // ----- Comparison -----
     @Test
-    public void compareEquivalentValues()
+    void compareEquivalentValues()
     {
         Amount valueA  = new Amount( 1234567890, 3 );
         Amount valueB  = new Amount( 1234567890, 3 );
@@ -117,7 +124,7 @@ public class AmountTest
     }
 
     @Test
-    public void compareSameInstance()
+    void compareSameInstance()
     {
         Amount total  = new Amount( 1234567890, 3 );
 
@@ -125,28 +132,28 @@ public class AmountTest
     }
 
     @Test
-    public void compareAgainstNullFails()
+    void compareAgainstNullFails()
     {
-        Amount total  = new Amount( 1234567890, 3 );
+        final Amount total  = new Amount( 1_234_567_890, 3 );
 
-        Throwable t = assertThrows( IllegalArgumentException.class
-                                   ,() -> {total.compareTo( null );}
-                                   ,"IllegalArgumentException not thrown when expected"
-                                  );
+        final Throwable t = assertThrows(  IllegalArgumentException.class
+                                         , () -> {total.compareTo( null );}
+                                         , "IllegalArgumentException not thrown when expected"
+                                        );
 
         assertEquals( "Can not compare against (null) amount", t.getMessage(), "Incorrect exception message" );
     }
 
     @Test
-    public void compareDissimilarPrecision()
+    void compareDissimilarPrecision()
     {
-        Amount valueA  = new Amount( 1234567890, 3 );
-        Amount valueB  = new Amount( 1234567890, 2 );
+        final Amount valueA  = new Amount( 1_234_567_890, 3 );
+        final Amount valueB  = new Amount( 1_234_567_890, 2 );
 
         // TODO catch exception - until normalization of precision is implemented
-        Throwable t = assertThrows( ArithmeticException.class
-                                   ,() -> {valueA.compareTo( valueB );}
-                                   ,"ArithmeticException not thrown when expected"
+        Throwable t = assertThrows(  ArithmeticException.class
+                                   , () -> { valueA.compareTo( valueB ); }
+                                   , "ArithmeticException not thrown when expected"
                                   );
 
         assertEquals( "Precision mismatch 3 != 2", t.getMessage(), "Exception message is not correct" );
@@ -154,22 +161,40 @@ public class AmountTest
 
 
     @Test
-    public void compareAgainstSmallerValue()
+    void compareAgainstSmallerValue()
     {
-        Amount valueA  = new Amount( 1234567890, 3 );
-        Amount valueB  = new Amount( 1111111111, 3 );
+        final Amount valueA  = new Amount( 1_234_567_890, 3 );
+        final Amount valueB  = new Amount( 1_111_111_111, 3 );
 
         assertTrue( valueA.compareTo( valueB ) > 0, "Collation order is reversed"  );
     }
 
 
     @Test
-    public void compareAgainstLargerValue()
+    void compareAgainstLargerValue()
     {
-        Amount valueA  = new Amount( 123456789, 3 );
-        Amount valueB  = new Amount( 222222222, 3 );
+        final Amount valueA  = new Amount( 123_456_789, 3 );
+        final Amount valueB  = new Amount( 222_222_222, 3 );
 
         assertTrue( valueA.compareTo( valueB ) < 0, "Collation order is not correct" );
     }
 
+
+    @Test
+    void amount_equalsDifferentAmount_returnsFalse()
+    {
+        final Amount valueA  = new Amount( 123_456_789, 3 );
+        final Amount valueB  = new Amount( 222_222_222, 3 );
+
+        assertFalse( valueA.equals( valueB ), "Collation order is not correct" );
+    }
+
+    @Test
+    void amount_equalsSimilarAmount_returnsTrue()
+    {
+        final Amount valueA  = new Amount( 123_456_789, 3 );
+        final Amount valueB  = new Amount( 123_456_789, 3 );
+
+        assertTrue( valueA.equals( valueB ), "Collation order is not correct" );
+    }
 }

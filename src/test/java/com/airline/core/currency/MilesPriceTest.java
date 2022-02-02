@@ -7,22 +7,22 @@ import org.junit.jupiter.api.Test;
 
 
 @SuppressWarnings({"PMD.JUnitTestContainsTooManyAsserts", "PMD.AvoidDuplicateLiterals"})
-public class MilesPriceTest
+class MilesPriceTest
 {
     @Test
-    public void basicConstructor()
+    void basicConstructor()
     {
-        MilesPrice c = new MilesPrice( "loy", 5, 987654321 );       // NOPMD
+        MilesPrice c = new MilesPrice( 987_654_321, 5 );       // NOPMD
 
         assertAll( "Money internal state"
-                  ,() -> assertEquals( "loy", c.getPriceCode()
-                                      ,"Currency code not as expected" )
-                  ,() -> assertEquals( 5, c.getAmount().getDecimalPrecision()
-                                      ,"amount precision not correct" )
-                  ,() -> assertEquals( 987654321, c.getAmount().getValue()
-                                      ,"Value of fixed precision number is incorrect" )
+                  ,() -> assertEquals(  "ZZZ", c.getPriceCode()
+                                      , "Currency code not as expected" )
+                  ,() -> assertEquals(  5, c.getAmount().getDecimalPrecision()
+                                      , "amount precision not correct" )
+                  ,() -> assertEquals(  987_654_321, c.getAmount().getValue()
+                                      , "Value of fixed precision number is incorrect" )
                  );
     }
 }
 
-    
+

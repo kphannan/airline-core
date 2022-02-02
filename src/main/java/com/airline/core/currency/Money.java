@@ -1,15 +1,20 @@
 package com.airline.core.currency;
 
-// import lombok.AllArgsConstructor;
-import lombok.Data;
-// import lombok.Value;
-
+import lombok.Value;
+import lombok.experimental.NonFinal;
+// import lombok.AccessLevel;
+// import lombok.Setter;
 //! Refactor this to a Money class
 //! Create a CurrencyCode class for DDD / type safety
 //! TODO create CurrencyConverter class Money currencyConversion(currencyCode, Money)
-// @Value
-@Data
+/**
+ * An amount of money in a specific currency.
+ */
+@Value
+@NonFinal
+// @Data
 // @AllArgsConstructor
+// @Setter( AccessLevel.PRIVATE )
 public class Money implements Comparable<Money>
 {
     private CurrencyAlphaCode currencyCode;
@@ -17,25 +22,40 @@ public class Money implements Comparable<Money>
     private Amount amount;
 
 
-    public Money( final CurrencyAlphaCode currencyCode, final int precision, final int amount )
+    /**
+     * Create an amount of Money in a specific currency.
+     *
+     * @param currencyCode the currency.
+     * @param precision number of fractional digits.
+     * @param amount the fixed point amount.
+     */
+    public Money( final CurrencyAlphaCode currencyCode, final int amount, final int precision )
     {
         if ( currencyCode == null )
         {
-            throw new IllegalArgumentException("Currency code is required" );
+            throw new IllegalArgumentException( "Currency code is required" );
         }
         this.currencyCode     = currencyCode;
         this.amount           = new Amount( amount, precision );
     }
 
-    public Money( final String currencyCode, final int precision, final int amount )
+    /**
+     * Create an amount of Money in a specific currency.
+     *
+     * @param currencyCode the currency.
+     * @param precision number of fractional digits.
+     * @param amount the fixed point amount.
+     */
+    public Money( final String currencyCode, final int amount, final int precision )
     {
-        if ( currencyCode == null || currencyCode.isEmpty() )
-        {
-            throw new IllegalArgumentException("Currency code is required" );
-        }
+        this( new  CurrencyAlphaCode( currencyCode ), amount, precision );
+        // if ( currencyCode == null || currencyCode.isEmpty() )
+        // {
+        //     throw new IllegalArgumentException("Currency code is required" );
+        // }
 
-        this.currencyCode     = new CurrencyAlphaCode( currencyCode );
-        this.amount           = new Amount( amount, precision );
+        // this.currencyCode     = new CurrencyAlphaCode( currencyCode );
+        // this.amount           = new Amount( amount, precision );
     }
 
     @Override
@@ -48,10 +68,10 @@ public class Money implements Comparable<Money>
 
         // ! Need to ensure currency types are the same
         // !   do conversion maybe before compare.
-        if ( !isCompatible( rhs ))
+        if ( !isCompatible( rhs ) )
         {
-            throw new CurrencyException(String.format( "Incompatible currencies %s and %s"
-                                                      ,currencyCode.getCode(), rhs.currencyCode.getCode() ));
+            throw new CurrencyException( String.format(  "Incompatible currencies %s and %s"
+                                                       , currencyCode.getCode(), rhs.currencyCode.getCode() ) );
         }
         // else
         // {
@@ -60,21 +80,21 @@ public class Money implements Comparable<Money>
         //     //        (amount.getDecimalPrecision() == rhs.getAmount().getDecimalPrecision());
         // }
 
-        return this.amount.compareTo(rhs.amount);
+        return this.amount.compareTo( rhs.amount );
     }
 
 
     /**
      * Add a money value to the current Money value.
-     * 
+     *
      * @param arg the Money subtractor
      * @return the new value of current Money.
      */
     public Money add( final Money arg )
     {
-        if ( !isCompatible(arg) )
+        if ( !isCompatible( arg ) )
         {
-            throw new CurrencyException("Can not add incompatible currencies");
+            throw new CurrencyException( "Can not add incompatible currencies" );
         }
 
         this.amount.add( arg.amount );
@@ -83,15 +103,15 @@ public class Money implements Comparable<Money>
 
     /**
      * Subtract a money value from the current Money value.
-     * 
+     *
      * @param arg the Money subtractor
      * @return the new value of current Money.
      */
     public Money subtract( final Money arg )
     {
-        if ( !isCompatible(arg) )
+        if ( !isCompatible( arg ) )
         {
-            throw new CurrencyException("Can not subtract incompatible currencies");
+            throw new CurrencyException( "Can not subtract incompatible currencies" );
         }
 
         this.amount.subtract( arg.amount );
@@ -106,10 +126,9 @@ public class Money implements Comparable<Money>
             throw new IllegalArgumentException( "Incompatible currency (null)" );
         }
 
-        // Verify they are the same class - a common parent does not count
-        if ( this.getClass().equals(rhs.getClass()) )
+        if ( this.getClass().equals( rhs.getClass() ) )
         {
-            return currencyCode.equals(rhs.currencyCode);
+            return currencyCode.equals( rhs.currencyCode );
         }
 
         return false;

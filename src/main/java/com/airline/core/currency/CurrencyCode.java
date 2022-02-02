@@ -1,7 +1,6 @@
 package com.airline.core.currency;
 
 import lombok.Data;
-import lombok.NonNull;
 
 /**
  * ISO 4217 currency names.
@@ -17,12 +16,17 @@ public abstract class CurrencyCode<T>
      *
      * @param isoCountryCode the intended ISO country code.
      */
-    public CurrencyCode( @NonNull final T isoCountryCode )
+    protected CurrencyCode( final T isoCountryCode )
     {
-        if ( !isCurrencyCodeValid( isoCountryCode ))
+        if ( null == isoCountryCode )
+        {
+            throw new IllegalArgumentException(  "Currency code is required" );
+        }
+
+        if ( !isCurrencyCodeValid( isoCountryCode ) )
         {
             throw new IllegalArgumentException(  "Invalid ISO 4217 currency code '"
-                                               + isoCountryCode + "'");
+                                               + isoCountryCode + "'" );
         }
 
         this.code = isoCountryCode;
@@ -33,13 +37,13 @@ public abstract class CurrencyCode<T>
     /**
      * Verify the structure of a country code.  A validation predicate is
      * mandatory for a derived class.
-     * 
+     *
      * @param isoCountryCode the code to validate.
      * @return true on sucessful validation
      */
-    abstract protected boolean isCodeValid( final T isoCountryCode );
+    protected abstract boolean isCodeValid( final T isoCountryCode );
 
-    
+
     private boolean isCurrencyCodeValid( final T isoCountryCode )
     {
         return isCodeValid( isoCountryCode );

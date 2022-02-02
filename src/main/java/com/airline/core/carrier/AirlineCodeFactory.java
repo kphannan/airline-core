@@ -1,8 +1,12 @@
 package com.airline.core.carrier;
 
 
-public class AirlineCodeFactory
+/**
+ * Factory to create specific airline code object (IATA or ICAO) based on an input string.
+ */
+public final class AirlineCodeFactory
 {
+
     /**
      * Create an airline designator of the appropriate type:
      * IATA - 2 characters
@@ -10,6 +14,7 @@ public class AirlineCodeFactory
      * The factory does not check if the code is a valid code against
      * the list managed by either organization.  Only that it meets the
      * structural requirements of number and type of characters.
+     *
      * @param airlineCode the target airline code
      * @return an IATA Airline Code or ICAO airline code depending on the
      *     number of characters in the target.
@@ -30,4 +35,5 @@ public class AirlineCodeFactory
     {
         // Empty constructor
     }
+
 }

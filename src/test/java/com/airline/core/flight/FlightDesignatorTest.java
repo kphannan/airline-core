@@ -9,11 +9,11 @@ import com.airline.core.carrier.IATAAirlineDesignator;
 import org.junit.jupiter.api.Test;
 
 @SuppressWarnings({"PMD.JUnitTestContainsTooManyAsserts", "PMD.AvoidDuplicateLiterals"})
-public class FlightDesignatorTest
+class FlightDesignatorTest
 {
 
     @Test
-    public void testDefaultConstructorWithAirlineAsString()
+    void testDefaultConstructorWithAirlineAsString()
     {
         FlightDesignator flightDesignator = new FlightDesignator( "DL", 1234 ); // NOPMD
 
@@ -26,7 +26,7 @@ public class FlightDesignatorTest
     }
 
     @Test
-    public void testDefaultConstructorWithAirlineAsIATA()
+    void testDefaultConstructorWithAirlineAsIATA()
     {
         IATAAirlineDesignator airline = new IATAAirlineDesignator( "DL" );
         FlightDesignator flightDesignator = new FlightDesignator( airline, 4433 );   // NOPMD

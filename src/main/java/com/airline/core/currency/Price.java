@@ -1,26 +1,28 @@
 package com.airline.core.currency;
 
-import lombok.Data;
+import lombok.Value;
+import lombok.experimental.NonFinal;
 
 
 
-@Data
+@Value
+@NonFinal
 public class Price implements Comparable<Price>
 {
     private String priceCode;
 
     private Amount amount;
 
-    
-    public Price( final String priceCode, final int precision, final int amount )
+
+    public Price( final String priceCode, final int amount, final int precision )
     {
         if ( priceCode == null || priceCode.isEmpty() )
         {
-            throw new IllegalArgumentException("Price code is required" );
+            throw new IllegalArgumentException( "Price code is required" );
         }
-    
-        this.priceCode        = priceCode;
-        this.amount           = new Amount( amount, precision );
+
+        this.priceCode = priceCode;
+        this.amount    = new Amount( amount, precision );
     }
 
     @Override
@@ -33,35 +35,35 @@ public class Price implements Comparable<Price>
 
         // ! Need to ensure Price types are the same
         // !   do conversion maybe before compare.
-        if ( !this.priceCode.equals( price.priceCode ))
+        if ( !this.priceCode.equals( price.priceCode ) )
         {
-            throw new IllegalArgumentException(String.format("Incompatible price codes %s and %s"
-                                                             ,priceCode, price.priceCode ));
+            throw new IllegalArgumentException( String.format( "Incompatible price codes %s and %s"
+                                                              , priceCode, price.priceCode ) );
         }
 
-        return this.amount.compareTo(price.amount);
+        return this.amount.compareTo( price.amount );
     }
 
 
     public Price add( final Price arg )
     {
-        if ( !isCompatible(arg) )
+        if ( !isCompatible( arg ) )
         {
-            throw new IllegalArgumentException("Can not add incompatible prices");
+            throw new IllegalArgumentException( "Can not add incompatible prices" );
         }
 
-        this.amount.add(arg.amount);
+        this.amount.add( arg.amount );
         return this;
     }
 
     public Price subtract( final Price arg )
     {
-        if ( !isCompatible(arg) )
+        if ( !isCompatible( arg ) )
         {
-            throw new IllegalArgumentException("Can not subtract incompatible prices");
+            throw new IllegalArgumentException( "Can not subtract incompatible prices" );
         }
 
-        this.amount.subtract(arg.amount);
+        this.amount.subtract( arg.amount );
         return this;
     }
 
@@ -74,9 +76,9 @@ public class Price implements Comparable<Price>
         }
 
         // Verify they are the same class - a common parent does not count
-        if ( this.getClass().equals(rhs.getClass()) )
+        if ( this.getClass().equals( rhs.getClass() ) )
         {
-            return this.priceCode.equals(rhs.priceCode);
+            return this.priceCode.equals( rhs.priceCode );
         }
 
         return false;

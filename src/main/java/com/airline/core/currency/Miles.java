@@ -3,9 +3,11 @@ package com.airline.core.currency;
 
 public class Miles extends Money
 {
-    public Miles( final String currencyCode, final int precision, final int amount )
+    public static final String MILES_CURRENCY_CODE = "ZZZ";
+
+    public Miles( final int amount, final int precision )
     {
-        super( currencyCode, precision, amount );
+        super( MILES_CURRENCY_CODE, amount, precision );
     }
 }
 

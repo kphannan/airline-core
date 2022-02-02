@@ -2,6 +2,8 @@ package com.airline.core.currency;
 
 import static org.junit.jupiter.api.Assertions.assertAll;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
@@ -9,12 +11,12 @@ import org.junit.jupiter.api.Test;
 
 
 @SuppressWarnings({"PMD.JUnitTestContainsTooManyAsserts", "PMD.AvoidDuplicateLiterals"})
-public class PriceTest
+class PriceTest
 {
     @Test
-    public void basicConstructor()
+    void basicConstructor()
     {
-        Price c = new Price( "cur", 3, 1234567890 );        // NOPMD  (DU - Anomaly)
+        Price c = new Price( "cur", 1_234_567_890, 3 );        // NOPMD  (DU - Anomaly)
 
         assertAll(  "Verify constructor sets multiple attributes properly"
                   , () -> assertEquals( "cur", c.getPriceCode(), "construct didn't set currency code" )
@@ -24,9 +26,9 @@ public class PriceTest
     }
 
     @Test
-    public void basicConstructorAlternate()
+    void basicConstructorAlternate()
     {
-        Price c = new Price( "foo", 2, 4321 );          // NOPMD  (DU - Anomaly)
+        Price c = new Price( "foo", 4_321, 2 );          // NOPMD  (DU - Anomaly)
 
         assertAll(  "Verify constructor sets multiple attributes properly"
                   , () -> assertEquals( "foo", c.getPriceCode(), "construct didn't set currency code" )
@@ -36,7 +38,7 @@ public class PriceTest
     }
 
     @Test
-    public void nullPriceCodeNotAllowed()
+    void nullPriceCodeNotAllowed()
     {
         Throwable t = assertThrows(  IllegalArgumentException.class
                                    , () -> { new Price( null, 3, 1234567890 ); }
@@ -48,10 +50,10 @@ public class PriceTest
     }
 
     @Test
-    public void blankPriceCodeNotAllowed()
+    void blankPriceCodeNotAllowed()
     {
         Throwable t = assertThrows(  IllegalArgumentException.class
-                                   , () -> { new Price( "", 3, 1234567890 ); }
+                                   , () -> { new Price( "", 1_234_567_890, 3 ); }
                                    , "IllegalArgumentException not thrown when expected"
                                   );
 
@@ -62,27 +64,29 @@ public class PriceTest
 
     // ----- Addition -----
     @Test
-    public void addPositiveValue()
+    void addPositiveValue()
     {
-        Price total  = new Price( "mno", 3, 1234567890 );
-        Price addend = new Price( "mno", 3, 5 );
+        final Price total  = new Price( "mno", 1_234_567_890, 3 );
+        final Price addend = new Price( "mno", 5, 3 );
 
-        total.add( addend );
+        final Price result = total.add( addend );
 
         assertAll(  "Verify result of addition"
                   , () -> assertEquals(  "mno", total.getPriceCode()
                                        , "currency code changed incorrectly" )
                   , () -> assertEquals(  3, total.getAmount().getDecimalPrecision()
                                        , "precision somehow got altered")
-                  , () -> assertEquals(  1234567895, total.getAmount().getValue()
-                                       , "result of addition is wrong")
+                  , () -> assertEquals(  1_234_567_895, total.getAmount().getValue()
+                                       , "result of addition is wrong" )
+                  , () -> assertSame( total, result )
+                  , () -> assertEquals( 1_234_567_895, result.getAmount().getValue() )
                  );
     }
 
     @Test
-    public void addNullValue()
+    void addNullValue()
     {
-        Price total  = new Price( "pqr", 3, 1234567890 );
+        Price total  = new Price( "pqr", 1_234_567_890, 3 );
 
         Throwable t = assertThrows(  IllegalArgumentException.class
                                    , () -> { total.add( null ); }
@@ -94,10 +98,10 @@ public class PriceTest
     }
 
     @Test
-    public void addAddIncompatibleValue()
+    void addAddIncompatibleValue()
     {
-        Price total   = new Price( "cur", 3, 1234567890 );
-        Price addend  = new Price( "ruc", 2, 5 );
+        Price total   = new Price( "cur", 1_234_567_890, 3 );
+        Price addend  = new Price( "ruc", 5, 2 );
 
 
         Throwable t = assertThrows(  IllegalArgumentException.class
@@ -114,25 +118,26 @@ public class PriceTest
 
     // ----- Subtraction -----
     @Test
-    public void subtractPositiveValue()
+    void subtractPositiveValue()
     {
-        Price total  = new Price( "abc", 3, 1234567890 );
-        Price addend = new Price( "abc", 3, 5 );
+        final Price total  = new Price( "abc", 1_234_567_890, 3 );
+        final Price addend = new Price( "abc", 5, 3 );
 
-        total.subtract( addend );
+        final Price result = total.subtract( addend );
 
         assertAll(  "Verify integrity of the total"
                   , () -> assertEquals( "abc", total.getPriceCode(), "Incorrect currency code" )
                   , () -> assertEquals( 3, total.getAmount().getDecimalPrecision(), "Precision incorrectly modified" )
-                  , () -> assertEquals( 1234567885, total.getAmount().getValue(), "subtraction failed" )
+                  , () -> assertEquals( 1_234_567_885, total.getAmount().getValue(), "subtraction failed" )
+                  , () -> assertSame( total, result )
                  );
     }
 
     @Test
-    public void addSubtractIncompatibleValue()
+    void addSubtractIncompatibleValue()
     {
-        Price total   = new Price( "cur", 3, 1234567890 );
-        Price subtend = new Price( "ruc", 2, 5 );
+        Price total   = new Price( "cur", 1_234_567_890, 3 );
+        Price subtend = new Price( "ruc", 5, 2 );
 
 
         Throwable t = assertThrows(  IllegalArgumentException.class
@@ -147,10 +152,10 @@ public class PriceTest
 
     // ----- Comparison -----
     @Test
-    public void compareEquivalentValues()
+    void compareEquivalentValues()
     {
-        Price valueA  = new Price( "stu", 3, 1234567890 );
-        Price valueB  = new Price( "stu", 3, 1234567890 );
+        final Price valueA  = new Price( "stu", 1_234_567_890, 3 );
+        final Price valueB  = new Price( "stu", 1_234_567_890, 3 );
 
         assertEquals( 0, valueA.compareTo( valueB )
                      ,"Numerically equivalent instances should compare equally"
@@ -158,9 +163,9 @@ public class PriceTest
     }
 
     @Test
-    public void compareSameInstance()
+    void compareSameInstance()
     {
-        Price total  = new Price( "vwx", 3, 1234567890 );
+        final Price total  = new Price( "vwx", 1_234_567_890, 3 );
 
         assertEquals(  0, total.compareTo( total )
                      , "value compared to self should result in zero (0)"
@@ -168,9 +173,9 @@ public class PriceTest
     }
 
     @Test
-    public void compareAgainstNullFails()
+    void compareAgainstNullFails()
     {
-        Price total  = new Price( "yzz", 3, 1234567890 );
+        final Price total  = new Price( "yzz", 1_234_567_890, 3 );
 
         Throwable t = assertThrows(  IllegalArgumentException.class
                                    , () -> { total.compareTo( null ); }
@@ -182,10 +187,10 @@ public class PriceTest
     }
 
     @Test
-    public void compareDissimilarPrecision()
+    void compareDissimilarPrecision()
     {
-        Price valueA  = new Price( "def", 3, 1234567890 );
-        Price valueB  = new Price( "def", 2, 1234567890 );
+        final Price valueA  = new Price( "def", 1_234_567_890, 3 );
+        final Price valueB  = new Price( "def", 1_234_567_890, 2 );
 
         // TODO catch exception - until normalization of precision is implemented
         Throwable t = assertThrows(  ArithmeticException.class
@@ -198,10 +203,10 @@ public class PriceTest
     }
 
     @Test
-    public void compareDissimilarCurrencies()
+    void compareDissimilarCurrencies()
     {
-        Price valueA  = new Price( "cur", 3, 1234567890 );
-        Price valueB  = new Price( "ruc", 3, 1234567890 );
+        final Price valueA  = new Price( "cur", 1_234_567_890, 3 );
+        final Price valueB  = new Price( "ruc", 1_234_567_890, 3 );
 
         // TODO catch exception - until normalization of precision is implemented
         Throwable t = assertThrows(  IllegalArgumentException.class
@@ -215,10 +220,10 @@ public class PriceTest
 
 
     @Test
-    public void compareAgainstSmallerValue()
+    void compareAgainstSmallerValue()
     {
-        Price valueA  = new Price( "ghi", 3, 1234567890 );
-        Price valueB  = new Price( "ghi", 3, 1111111111 );
+        final Price valueA  = new Price( "ghi", 1_234_567_890, 3 );
+        final Price valueB  = new Price( "ghi", 1_111_111_111, 3 );
 
         assertTrue(  0 < valueA.compareTo( valueB )
                    , "A incorrectly treated larger than B");
@@ -226,13 +231,34 @@ public class PriceTest
 
 
     @Test
-    public void compareAgainstLargerValue()
+    void compareAgainstLargerValue()
     {
-        Price valueA  = new Price( "jkl", 3, 123456789 );
-        Price valueB  = new Price( "jkl", 3, 222222222 );
+        final Price valueA  = new Price( "jkl", 123_456_789, 3 );
+        final Price valueB  = new Price( "jkl", 222_222_222, 3 );
 
         assertTrue(  0 > valueA.compareTo( valueB )
                    , "Comparison thinks B is not greater than A");
+    }
+
+
+
+
+    @Test
+    void price_equalsDifferentPrice_returnsFalse()
+    {
+        final Price valueA  = new Price( "ABC", 123_456_789, 3 );
+        final Price valueB  = new Price( "ABC", 222_222_222, 3 );
+
+        assertFalse( valueA.equals( valueB ), "Equals not working" );
+    }
+
+    @Test
+    void price_equalsSimilarPrice_returnsTrue()
+    {
+        final Price valueA  = new Price( "IRL", 123_456_789, 3 );
+        final Price valueB  = new Price( "IRL", 123_456_789, 3 );
+
+        assertTrue( valueA.equals( valueB ), "Equals not working" );
     }
 
 }

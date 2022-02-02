@@ -3,9 +3,9 @@ package com.airline.core.currency;
 
 public class MilesPrice extends Price
 {
-    public MilesPrice( final String priceCode, final int precision, final int amount )
+    public MilesPrice( final int amount, final int precision )
     {
-        super( priceCode, precision, amount );
+        super( Miles.MILES_CURRENCY_CODE, amount, precision );
     }
 }
 

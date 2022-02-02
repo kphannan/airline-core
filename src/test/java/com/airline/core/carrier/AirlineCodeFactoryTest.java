@@ -3,25 +3,36 @@ package com.airline.core.carrier;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
+import com.utility.TestUtility;
+import java.lang.reflect.InvocationTargetException;
 import org.junit.jupiter.api.Test;
 
 
-@SuppressWarnings({"PMD.JUnitTestContainsTooManyAsserts", "PMD.AvoidDuplicateLiterals"})
-public class AirlineCodeFactoryTest
+@SuppressWarnings( { "PMD.JUnitTestContainsTooManyAsserts", "PMD.AvoidDuplicateLiterals" } )
+class AirlineCodeFactoryTest
 {
     @Test
-    public void nullAirlineCodeThrowsIllegalArgument()
+    void airlineCodeFactory_isWellFormedUtilityClass()
+        throws NoSuchMethodException, InstantiationException, IllegalAccessException, IllegalArgumentException, InvocationTargetException
     {
-        Throwable throwable = assertThrows( IllegalArgumentException.class
-                                           ,() -> {
+        TestUtility.assertUtilityClassWellDefined( AirlineCodeFactory.class );
+    }
+
+
+
+    @Test
+    void nullAirlineCodeThrowsIllegalArgument()
+    {
+        Throwable throwable = assertThrows(  IllegalArgumentException.class
+                                           , () -> {
                                                AirlineCodeFactory.build( null );
-                                            });
+                                           });
 
         assertEquals( "Airline code is required", throwable.getMessage(), "Message is not as expected" );
     }
 
     @Test
-    public void iataCodeFromTwoCharacterCode()
+    void iataCodeFromTwoCharacterCode()
     {
         AirlineCode airlineCode = AirlineCodeFactory.build( "AF" );
 
@@ -29,7 +40,7 @@ public class AirlineCodeFactoryTest
     }
 
     @Test
-    public void icaoCodeFromThreeCharacterCode()
+    void icaoCodeFromThreeCharacterCode()
     {
         AirlineCode airlineCode = AirlineCodeFactory.build( "DAL" );
 
