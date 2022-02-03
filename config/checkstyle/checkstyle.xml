@@ -95,7 +95,7 @@
       <property name="tokens"
                value="CLASS_DEF, METHOD_DEF, CTOR_DEF, LITERAL_FOR, LITERAL_WHILE, STATIC_INIT,
                     INSTANCE_INIT, ANNOTATION_DEF, ENUM_DEF, INTERFACE_DEF, RECORD_DEF,
-                    LITERAL_CATCH, LITERAL_TRY, 
+                    LITERAL_CATCH, LITERAL_TRY,
                     COMPACT_CTOR_DEF"/>
     </module>
     <module name="SuppressionXpathSingleFilter">
@@ -276,9 +276,9 @@
     </module>
     <module name="AbbreviationAsWordInName">
       <property name="ignoreFinal" value="false"/>
-      <property name="allowedAbbreviationLength" value="3"/>
+      <property name="allowedAbbreviationLength" value="6"/>
       <property name="tokens"
-               value="CLASS_DEF, INTERFACE_DEF, 
+               value="CLASS_DEF, INTERFACE_DEF,
                     METHOD_DEF,
                     PARAMETER_DEF, VARIABLE_DEF, PATTERN_VARIABLE_DEF"/>
     </module>

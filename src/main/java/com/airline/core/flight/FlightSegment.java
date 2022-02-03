@@ -6,9 +6,9 @@ import lombok.Value;
 @Value
 public class FlightSegment
 {
-    private FlightDesignator  flightDesignator;
-    private int               segmentNumber;
-    private OriginDestination originDestination;
+    private final FlightDesignator  flightDesignator;
+    private final int               segmentNumber;
+    private final OriginDestination originDestination;
 
 
     /**

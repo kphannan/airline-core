@@ -2,10 +2,15 @@ package com.airline.core.flight;
 
 import com.airline.core.location.AirportCode;
 import com.airline.core.location.AirportCodeFactory;
-import lombok.Data;
+import lombok.Value;
 
 
-@Data
+/**
+ * Specifies the starting (take-off) location and the ending (landing) airport.
+ * The origin and destination could represent start/end of a flight segment, or
+ * the entire trip.
+ */
+@Value
 public class OriginDestination implements Comparable<OriginDestination>
 {
     private final AirportCode origin;
@@ -54,7 +59,6 @@ public class OriginDestination implements Comparable<OriginDestination>
             return -1;      // ? Is this appropriate
         }
 
-        // TODO implement Comparable on AirportCode
         int result = origin.getAirportCode().compareTo( rhs.origin.getAirportCode() );
         if ( result == 0 )
         {

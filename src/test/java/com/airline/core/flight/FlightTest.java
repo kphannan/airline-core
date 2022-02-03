@@ -1,13 +1,15 @@
 package com.airline.core.flight;
 
-import static org.junit.Assert.assertNull;
 import static org.junit.jupiter.api.Assertions.assertAll;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
+
+import java.util.List;
 
 import com.airline.core.location.IATAAirportCode;
 import org.junit.jupiter.api.Test;
@@ -42,7 +44,7 @@ class FlightTest
         Flight flight = flightBuilder.build();      // NOPMD  (DU - Anomaly)
 
         assertAll(  "Origin and destination airport code check"
-                  , () -> assertEquals(  flightDesignator, flight.getFlightDesignator()
+                  , () -> assertEquals(  flightDesignator, flight.getDesignator()
                                        , "incorrect flight designator" )
                   , () -> assertEquals(  new IATAAirportCode( "MSP" ), flight.getOriginDestination().getOrigin()
                                        , "Originating airport code not set properly" )
@@ -65,7 +67,7 @@ class FlightTest
         Flight flight = flightBuilder.build();  // NOPMD  (DU - Anomaly)
 
         assertAll(  "Origin and destination airport code check"
-                  , () -> assertEquals(  flightDesignator, flight.getFlightDesignator()
+                  , () -> assertEquals(  flightDesignator, flight.getDesignator()
                                        , "incorrect flight designator" )
                   , () -> assertEquals(  new IATAAirportCode( "ATL" ), flight.getOriginDestination().getOrigin()
                                        , "Originating airport code not set properly" )
@@ -96,7 +98,7 @@ class FlightTest
         Flight flight = flightBuilder.build(); // NOPMD  (DU - Anomaly)
 
         assertAll(  "Origin and destination airport code check"
-                  , () -> assertEquals(  flightDesignator, flight.getFlightDesignator()
+                  , () -> assertEquals(  flightDesignator, flight.getDesignator()
                                        , "incorrect flight designator" )
                   , () -> assertEquals(  new IATAAirportCode( "ATO" ), flight.getOriginDestination().getOrigin()
                                        , "Originating airport code not set properly" )
@@ -177,10 +179,11 @@ class FlightTest
         flightBuilder.between( "YYZ", "NRT" );
 
         Flight                  flight           = flightBuilder.build();
+        List<FlightSegment>     flightSegments   = flight.getSegments();
         FlightSegment           newSegment       = new FlightSegment( flightDesignator, 1, od );
 
         Throwable thrown = assertThrows(  UnsupportedOperationException.class
-                                        , () -> flight.getSegments().add( newSegment )
+                                        , () -> flightSegments.add( newSegment )
                                        );
 
         assertNull( thrown.getMessage() );
@@ -195,6 +198,17 @@ class FlightTest
         Flight                  flight           = flightBuilder.build();
 
         assertFalse( flight.getSegments().isEmpty() );
+    }
+
+    @Test
+    void flight_twoSimilarInstances_equalsIsTrue()
+    {
+        Flight.Builder          flightBuilder    = new Flight.Builder( new FlightDesignator( "UA", 5468 ) )
+                                                             .between( "YYZ", "NRT" );
+        Flight                  flightA          = flightBuilder.build();
+        Flight                  flightB          = flightBuilder.build();
+
+        assertTrue( flightA.equals( flightB ) );
     }
 
 }

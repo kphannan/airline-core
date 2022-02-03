@@ -17,11 +17,13 @@ import lombok.experimental.NonFinal;
 //      Leaf<Flight>              Composite<Flight>
 //                                    add(Flight)
 //                                    remove(Flight)
+/**
+ * Representation of a flight.
+ */
 @Value
 public class Flight
 {
-    private final FlightDesignator   flightDesignator;
-    // private       FlightDesignator   operatingFlightDesignator;
+    private final FlightDesignator   designator;
 
     @NonFinal
     private OriginDestination        originDestination;
@@ -33,21 +35,26 @@ public class Flight
     /*
      * Flight builder
      */
+    @SuppressWarnings( { "PMD.BeanMembersShouldSerialize" } )
     public static class Builder
     {
-        // private FlightDesignator     operatingFlightDesignator;
-        private final transient FlightDesignator     flightDesignator;
+        private final FlightDesignator     designator;
 
-        private transient AirportCode                origin;
-        private transient AirportCode                destination;
+        private AirportCode                origin;
+        private AirportCode                destination;
 
-        private final transient List<FlightSegment>  segments      = new ArrayList<>();
-
+        private final List<FlightSegment>  segments      = new ArrayList<>();
 
 
-        public Builder( FlightDesignator marketingFlightDesignator )
+
+        /**
+         * Create a Flight builder that requires a flight designator.
+         *
+         * @param designator unique identifier of the flight.
+         */
+        public Builder( final FlightDesignator designator )
         {
-            this.flightDesignator = marketingFlightDesignator;
+            this.designator = designator;
         }
 
         // public Builder operatedAs( FlightDesignator operatingFlightDesignator )
@@ -107,9 +114,9 @@ public class Flight
          */
         public Builder segment(   final FlightDesignator flightDesignator
                                 , final int sequence
-                                , final OriginDestination od )
+                                , final OriginDestination originDestination )
         {
-            segments.add( new FlightSegment( flightDesignator, sequence, od ) );
+            segments.add( new FlightSegment( flightDesignator, sequence, originDestination ) );
 
             return this;
         }
@@ -142,17 +149,16 @@ public class Flight
          */
         public Flight build()
         {
-            final Flight flight = new Flight( flightDesignator );
+            final Flight flight = new Flight( designator );
 
             flight.originDestination = new OriginDestination( origin, destination );
-            // flight.operatingFlightDesignator = operatingFlightDesignator;
 
             flight.segments = new ArrayList<>();
 
             // If there aren't any segments, then create 1 for the flight.
             if ( segments.isEmpty() )
             {
-                flight.segments.add( new FlightSegment( flightDesignator
+                flight.segments.add( new FlightSegment( designator
                                                        , 1
                                                        , flight.originDestination ) );
             }
@@ -170,16 +176,32 @@ public class Flight
     }
 
 
-    public Flight( final FlightDesignator flightDesignator )
+    /**
+     * Constructor is private to force use of the Builder.
+     *
+     * @param flightDesignator
+     */
+    private Flight( final FlightDesignator designator )
     {
-        this.flightDesignator = flightDesignator;
+        this.designator = designator;
     }
 
+    /**
+     * Verifies the flight is comprised of only a single segment.
+     *
+     * @return true if a single segment flight, false otherwise.
+     */
     public boolean hasSingleSegment()
     {
         return segments.size() == 1;
     }
 
+    /**
+     * Conventiently get the total number of segments in this flight.
+     * A flight must have at least one segment.
+     *
+     * @return total number of segments in the flight, with a minimum of one.
+     */
     public int getNumberOfSegments()
     {
         return segments.size();

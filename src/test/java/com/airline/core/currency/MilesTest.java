@@ -14,13 +14,13 @@ class MilesTest
     {
         Miles c = new Miles( 987_654_321, 5 );        // NOPMD  (DU-anomaly)
 
-        assertAll( "Money internal state"
-                  ,() -> assertEquals( "ZZZ", c.getCurrencyCode().getCode()
-                                      ,"Currency code not as expected" )
-                  ,() -> assertEquals( 5, c.getAmount().getDecimalPrecision()
-                                      ,"amount precision not correct" )
-                  ,() -> assertEquals( 987654321, c.getAmount().getValue()
-                                      ,"Value of fixed precision number is incorrect" )
+        assertAll(  "Money internal state"
+                  , () -> assertEquals(  "ZZZ", c.getCurrencyCode().getCode()
+                                       , "Currency code not as expected" )
+                  , () -> assertEquals(  5, c.getAmount().getDecimalPrecision()
+                                       , "amount precision not correct" )
+                  , () -> assertEquals(  987654321, c.getAmount().getValue()
+                                       , "Value of fixed precision number is incorrect" )
                  );
     }
 

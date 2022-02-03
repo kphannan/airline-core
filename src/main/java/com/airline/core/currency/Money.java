@@ -2,8 +2,8 @@ package com.airline.core.currency;
 
 import lombok.Value;
 import lombok.experimental.NonFinal;
-// import lombok.AccessLevel;
-// import lombok.Setter;
+
+
 //! Refactor this to a Money class
 //! Create a CurrencyCode class for DDD / type safety
 //! TODO create CurrencyConverter class Money currencyConversion(currencyCode, Money)
@@ -49,13 +49,6 @@ public class Money implements Comparable<Money>
     public Money( final String currencyCode, final int amount, final int precision )
     {
         this( new  CurrencyAlphaCode( currencyCode ), amount, precision );
-        // if ( currencyCode == null || currencyCode.isEmpty() )
-        // {
-        //     throw new IllegalArgumentException("Currency code is required" );
-        // }
-
-        // this.currencyCode     = new CurrencyAlphaCode( currencyCode );
-        // this.amount           = new Amount( amount, precision );
     }
 
     @Override
@@ -73,12 +66,6 @@ public class Money implements Comparable<Money>
             throw new CurrencyException( String.format(  "Incompatible currencies %s and %s"
                                                        , currencyCode.getCode(), rhs.currencyCode.getCode() ) );
         }
-        // else
-        // {
-        //     if (amount.getDecimalPrecision() != rhs.getAmount().getDecimalPrecision())
-        //     // return currencyCode.equals(rhs.currencyCode) &&
-        //     //        (amount.getDecimalPrecision() == rhs.getAmount().getDecimalPrecision());
-        // }
 
         return this.amount.compareTo( rhs.amount );
     }

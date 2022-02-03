@@ -4,7 +4,9 @@ import lombok.Value;
 import lombok.experimental.NonFinal;
 
 
-
+/**
+ * Generic price, whose code is a CurrencyCode.
+ */
 @Value
 @NonFinal
 public class Price implements Comparable<Price>
@@ -14,7 +16,13 @@ public class Price implements Comparable<Price>
     private Amount amount;
 
 
-    public Price( final String priceCode, final int amount, final int precision )
+    /**
+     * Instantiate a Price.
+     * @param priceCode
+     * @param amount
+     * @param precision
+     */
+    protected Price( final String priceCode, final int amount, final int precision )
     {
         if ( priceCode == null || priceCode.isEmpty() )
         {
@@ -45,6 +53,12 @@ public class Price implements Comparable<Price>
     }
 
 
+    /**
+     * Add one price to another, with the target updated.
+     *
+     * @param arg the price to add.
+     * @return this instance with the value changed.
+     */
     public Price add( final Price arg )
     {
         if ( !isCompatible( arg ) )
@@ -56,6 +70,12 @@ public class Price implements Comparable<Price>
         return this;
     }
 
+    /**
+     * Subtract a price from this target price.
+     *
+     * @param arg the price to subtract.
+     * @return this instance with the value changed.
+     */
     public Price subtract( final Price arg )
     {
         if ( !isCompatible( arg ) )
@@ -68,6 +88,12 @@ public class Price implements Comparable<Price>
     }
 
 
+    /**
+     * Determine if a price is of the same type and currency as this.
+     *
+     * @param rhs the price to check compatibility.
+     * @return true if compatible, false otherwise.
+     */
     private boolean isCompatible( final Price rhs )
     {
         if ( rhs == null )

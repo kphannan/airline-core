@@ -3,6 +3,7 @@ package com.airline.core.flight;
 import static org.junit.jupiter.api.Assertions.assertAll;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
@@ -20,6 +21,7 @@ class OriginDestinationTest
         final OriginDestination od = new OriginDestination( "ATL", "JFK" );       // NOPMD
 
         assertAll(  "Origin and destination airport code check"
+                  , () -> assertNotNull( od )
                   , () -> assertEquals( new IATAAirportCode( "ATL" ), od.getOrigin(), "Origin does not match" )
                   , () -> assertEquals( new IATAAirportCode( "JFK" ), od.getDestination(), "Destination does not match" )
 
@@ -48,8 +50,8 @@ class OriginDestinationTest
                                          , "IllegalArgumentException not thrown when expected"
                                         );
 
-        assertEquals( "Both origin and destination must be specified", t.getMessage()
-                     ,"Incorrect exception message" );
+        assertEquals(  "Both origin and destination must be specified", t.getMessage()
+                     , "Incorrect exception message" );
     }
 
     @Test
@@ -79,7 +81,7 @@ class OriginDestinationTest
 
                   , () -> assertEquals( "LAX", od.getOrigin().getAirportCode(), "origin airport code should match" )
                   , () -> assertEquals( "ABE", od.getDestination().getAirportCode(), "destination airport code should match" )
-                 );
+        );
     }
 
 
@@ -97,6 +99,19 @@ class OriginDestinationTest
                      , "Incorrect exception message" );
     }
 
+    @Test
+    void testConstructorWithNullOriginAndNonNullDestinationIATACodes()
+    {
+        final IATAAirportCode   atl = new IATAAirportCode( "ABG" );
+
+        final Throwable t = assertThrows(  IllegalArgumentException.class
+                                         , () -> { new OriginDestination( null, atl ); }
+                                         , "IllegalArgumentException not thrown when expected"
+                                        );
+
+        assertEquals(  "Both origin and destination must be specified", t.getMessage()
+                     , "Incorrect exception message" );
+    }
 
     @Test
     void testConstructorWithBothOriginDestinationIATANullThrows()
@@ -142,7 +157,7 @@ class OriginDestinationTest
 
         assertEquals(  new OriginDestination( new IATAAirportCode( "ACT" ), new IATAAirportCode( "AKB" ) ), od
                      , "Both origin and destination must be equal"
-                    );
+        );
 }
 
     @Test
@@ -154,7 +169,7 @@ class OriginDestinationTest
 
         assertFalse(  od.equals( new OriginDestination( new IATAAirportCode( "LAX" ), new IATAAirportCode( "GWY" ) ) )
                     , "Both origin and destination must be equal"
-                   );
+        );
     }
 
     @Test
@@ -166,7 +181,7 @@ class OriginDestinationTest
 
         assertFalse(  od.equals( new OriginDestination( new IATAAirportCode( "GLA" ), new IATAAirportCode( "YFO" ) ) )
                     , "Different instances should compare equally"
-                   );
+        );
     }
 
     // ----- compareTo() -----

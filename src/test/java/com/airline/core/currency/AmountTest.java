@@ -1,9 +1,9 @@
 package com.airline.core.currency;
 
-import static org.junit.Assert.assertSame;
 import static org.junit.jupiter.api.Assertions.assertAll;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
@@ -26,10 +26,10 @@ class AmountTest
         final Amount result = total.add( addend );
 
         assertAll(  "Money internal state"
-                  , () -> assertEquals( 3, total.getDecimalPrecision()
-                                       ,"Precision altered in calculation" )
-                  , () -> assertEquals( 1_234_567_805, total.getValue()
-                                       ,"sum of 2 values is incorrect" )
+                  , () -> assertEquals(  3, total.getDecimalPrecision()
+                                       , "Precision altered in calculation" )
+                  , () -> assertEquals(  1_234_567_805, total.getValue()
+                                       , "sum of 2 values is incorrect" )
                   , () -> assertSame( total, result )
                   , () -> assertEquals( 1_234_567_805, result.getValue() )
                 );
@@ -38,30 +38,30 @@ class AmountTest
     @Test
     void addNullValue()
     {
-        Amount total  = new Amount( 1234567890, 3 );
+        Amount total  = new Amount( 1_234_567_890, 3 );
 
-        Throwable t = assertThrows( IllegalArgumentException.class
-                                   ,() -> {total.add( null );}
-                                   ,"IllegalArgumentException not thrown when expected"
+        Throwable t = assertThrows(  IllegalArgumentException.class
+                                   , () -> { total.add( null ); }
+                                   , "IllegalArgumentException not thrown when expected"
                                   );
 
-        assertEquals( "Incompatible (null) amount", t.getMessage()
-                     ,"Incorrect exception message text" );
+        assertEquals(  "Incompatible (null) amount", t.getMessage()
+                     , "Incorrect exception message text" );
     }
 
     @Test
     void addAddIncompatibleValue()
     {
-        Amount total   = new Amount( 1234567890, 3 );
+        Amount total   = new Amount( 1_234_567_890, 3 );
         Amount addend  = new Amount( 5, 2 );
 
-        Throwable t = assertThrows( ArithmeticException.class
-                                   ,() -> {total.add( addend );}
-                                   ,"ArithmeticException not thrown when expected"
+        Throwable t = assertThrows(  ArithmeticException.class
+                                   , () -> { total.add( addend ); }
+                                   , "ArithmeticException not thrown when expected"
                                   );
 
-        assertEquals( "Precision mismatch 3 != 2", t.getMessage()
-                     ,"Exception message should identify precision mismatch" );
+        assertEquals(  "Precision mismatch 3 != 2", t.getMessage()
+                     , "Exception message should identify precision mismatch" );
     }
 
 
@@ -84,31 +84,31 @@ class AmountTest
     @Test
     void subtractNullValue()
     {
-        Amount total  = new Amount( 1234567890, 3 );
+        Amount total  = new Amount( 1_234_567_890, 3 );
 
-        Throwable t = assertThrows( IllegalArgumentException.class
-                                   ,() -> {total.subtract( null );}
-                                   ,"IllegalArgumentException not thrown when expected"
+        Throwable t = assertThrows(  IllegalArgumentException.class
+                                   , () -> { total.subtract( null ); }
+                                   , "IllegalArgumentException not thrown when expected"
                                   );
 
-        assertEquals( "Incompatible (null) amount", t.getMessage()
-                     ,"Unexpected exception message");
+        assertEquals(  "Incompatible (null) amount", t.getMessage()
+                     , "Unexpected exception message");
     }
 
     @Test
     void addSubtractIncompatibleValue()
     {
-        Amount total   = new Amount( 1234567890, 3 );
+        Amount total   = new Amount( 1_234_567_890, 3 );
         Amount subtend = new Amount( 5, 2 );
 
 
-        Throwable t = assertThrows( ArithmeticException.class
-                                   ,() -> {total.subtract( subtend );}
-                                   ,"ArithmeticException not thrown when expected"
+        Throwable t = assertThrows(  ArithmeticException.class
+                                   , () -> { total.subtract( subtend ); }
+                                   , "ArithmeticException not thrown when expected"
                                   );
 
-        assertEquals( "Precision mismatch 3 != 2", t.getMessage()
-                     ,"Incorrect exception message" );
+        assertEquals(  "Precision mismatch 3 != 2", t.getMessage()
+                     , "Incorrect exception message" );
     }
 
 
@@ -116,19 +116,19 @@ class AmountTest
     @Test
     void compareEquivalentValues()
     {
-        Amount valueA  = new Amount( 1234567890, 3 );
-        Amount valueB  = new Amount( 1234567890, 3 );
+        Amount valueA  = new Amount( 1_234_567_890, 3 );
+        Amount valueB  = new Amount( 1_234_567_890, 3 );
 
-        assertEquals( 0, valueA.compareTo( valueB )
-                     ,"different instances with similar values should compare equally");
+        assertEquals(  0, valueA.compareTo( valueB )
+                     , "different instances with similar values should compare equally");
     }
 
     @Test
     void compareSameInstance()
     {
-        Amount total  = new Amount( 1234567890, 3 );
+        Amount total  = new Amount( 1_234_567_890, 3 );
 
-        assertEquals( 0, total.compareTo( total ), "an instance should compare to itself");
+        assertEquals( 0, total.compareTo( total ), "an instance should compare to itself" );
     }
 
     @Test
@@ -137,7 +137,7 @@ class AmountTest
         final Amount total  = new Amount( 1_234_567_890, 3 );
 
         final Throwable t = assertThrows(  IllegalArgumentException.class
-                                         , () -> {total.compareTo( null );}
+                                         , () -> { total.compareTo( null ); }
                                          , "IllegalArgumentException not thrown when expected"
                                         );
 

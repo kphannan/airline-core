@@ -9,7 +9,10 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import org.junit.jupiter.api.Test;
 
-@SuppressWarnings({"PMD.JUnitTestContainsTooManyAsserts"})
+/**
+ * Unit tests for ICAOAirportCode.
+ */
+@SuppressWarnings( { "PMD.JUnitTestContainsTooManyAsserts" } )
 class ICAOAirportCodeTest
 {
 
@@ -34,14 +37,14 @@ class ICAOAirportCodeTest
     @Test
     void testAltantaICAOAirportCodeLowercase()
     {
-        Throwable throwable = assertThrows( IllegalArgumentException.class
-                                           ,() -> { new ICAOAirportCode( "katl" ); }
-                                           ,"Did not thow expected exception" );
+        Throwable throwable = assertThrows(  IllegalArgumentException.class
+                                           , () -> { new ICAOAirportCode( "katl" ); }
+                                           , "Did not thow expected exception" );
 
         assertThat(  "Exception message contains the necessary detail"
                    , throwable.getMessage()
                    , both(containsString( "Invalid ICAO airport code" ) )
-                     .and( containsString( "'katl'" ))
+                     .and( containsString( "'katl'" ) )
                   );
     }
 
@@ -49,12 +52,12 @@ class ICAOAirportCodeTest
     @Test
     void testICAOAirportCodeThrowsIllegalArgumentException()
     {
-        Throwable throwable = assertThrows( IllegalArgumentException.class
-                                           ,() -> {new ICAOAirportCode( null );}
-                                           ,"Did not thow expected exception" );
+        Throwable throwable = assertThrows(  IllegalArgumentException.class
+                                           , () -> { new ICAOAirportCode( null ); }
+                                           , "Did not thow expected exception" );
 
-        assertEquals( "Airport code is required", throwable.getMessage()
-                     ,"Incorrect exception message" );
+        assertEquals(  "Airport code is required", throwable.getMessage()
+                     , "Incorrect exception message" );
     }
 
     // ----- equals()
@@ -76,8 +79,8 @@ class ICAOAirportCodeTest
         ICAOAirportCode edmonton1ICAOAirportCode = new ICAOAirportCode( "KYYZ" );
         ICAOAirportCode edmonton2ICAOAirportCode = new ICAOAirportCode( "KYYZ" );
 
-        assertEquals( 0, edmonton1ICAOAirportCode.compareTo( edmonton2ICAOAirportCode )
-                     ,"Different instances with same airport code are equivalent"
+        assertEquals(  0, edmonton1ICAOAirportCode.compareTo( edmonton2ICAOAirportCode )
+                     , "Different instances with same airport code are equivalent"
                     );
     }
 
@@ -87,13 +90,13 @@ class ICAOAirportCodeTest
         ICAOAirportCode edmontonICAOAirportCode  = new ICAOAirportCode( "CYEG" );       // NOPMD  (DU - Anomaly)
         ICAOAirportCode atlantaICAOAirportCode   = new ICAOAirportCode( "KATL" );       // NOPMD  (DU - Anomaly)
 
-        assertAll( "Origin and destination airport code check"
-                  ,() -> assertTrue( edmontonICAOAirportCode.compareTo( atlantaICAOAirportCode ) < 0
-                                    ,"verify correct collation (sort) order"
-                                   )
-                  ,() -> assertTrue( atlantaICAOAirportCode.compareTo( edmontonICAOAirportCode ) > 0
-                                    ,"verify correct collation (sort) order"
-                                   )
+        assertAll(  "Origin and destination airport code check"
+                  , () -> assertTrue(  edmontonICAOAirportCode.compareTo( atlantaICAOAirportCode ) < 0
+                                     , "verify correct collation (sort) order"
+                                    )
+                  , () -> assertTrue(  atlantaICAOAirportCode.compareTo( edmontonICAOAirportCode ) > 0
+                                     , "verify correct collation (sort) order"
+                                    )
                  );
     }
 }

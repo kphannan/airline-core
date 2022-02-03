@@ -23,9 +23,9 @@ class AirportCodeFactoryTest
     @Test
     void nullAirportCodeThrowsIllegalArgument()
     {
-        Throwable throwable = assertThrows( IllegalArgumentException.class
-                                           ,() -> {AirportCodeFactory.build( null );}
-                                           ,"IllegalArgumentException not thrown when expected"
+        Throwable throwable = assertThrows(  IllegalArgumentException.class
+                                           , () -> { AirportCodeFactory.build( null ); }
+                                           , "IllegalArgumentException not thrown when expected"
                                            );
 
         assertEquals( "Airport code is required", throwable.getMessage(), "Incorrect exception message" );
@@ -36,8 +36,8 @@ class AirportCodeFactoryTest
     {
         AirportCode airportCode = AirportCodeFactory.build( "ORD" );
 
-        assertEquals( IATAAirportCode.class, airportCode.getClass()
-                     ,"Object of the wrong class was constructed based on the airport code form" );
+        assertEquals(  IATAAirportCode.class, airportCode.getClass()
+                     , "Object of the wrong class was constructed based on the airport code form" );
     }
 
     @Test
@@ -45,7 +45,7 @@ class AirportCodeFactoryTest
     {
         AirportCode airportCode = AirportCodeFactory.build( "CYEG" );
 
-        assertEquals( ICAOAirportCode.class, airportCode.getClass()
-                     ,"Object of the wrong class was constructed based on the airport code form" );
+        assertEquals(  ICAOAirportCode.class, airportCode.getClass()
+                     , "Object of the wrong class was constructed based on the airport code form" );
     }
 }

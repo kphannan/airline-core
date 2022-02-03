@@ -62,8 +62,8 @@ public class IATAAirlineDesignatorTest
 
         assertThat(  "Exception message contains the necessary detail"
                    , throwable.getMessage()
-                   , both(containsString( "Invalid IATA airline code" ) )
-                   . and( containsString( "'dl'")) );
+                   , both( containsString( "Invalid IATA airline code" ) )
+                   . and(  containsString( "'dl'") ) );
     }
 
 

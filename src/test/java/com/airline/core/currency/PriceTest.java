@@ -45,8 +45,8 @@ class PriceTest
                                    , "IllegalArgumentException not thrown when expected"
                                   );
 
-        assertEquals( "Price code is required" , t.getMessage()
-                     ,"Incorrect exception message");
+        assertEquals(  "Price code is required" , t.getMessage()
+                     , "Incorrect exception message" );
     }
 
     @Test
@@ -58,7 +58,7 @@ class PriceTest
                                   );
 
         assertEquals(  "Price code is required" , t.getMessage()
-                     , "Incorrect exception message");
+                     , "Incorrect exception message" );
     }
 
 
@@ -94,7 +94,7 @@ class PriceTest
                                   );
 
         assertEquals(  "Incompatible Price (null)", t.getMessage()
-                     , "Incorrect exception message");
+                     , "Incorrect exception message" );
     }
 
     @Test
@@ -110,7 +110,7 @@ class PriceTest
                                   );
 
         assertEquals(  "Can not add incompatible prices", t.getMessage()
-                     , "Incorrect exception message");
+                     , "Incorrect exception message" );
     }
 
 
@@ -146,7 +146,7 @@ class PriceTest
                                   );
 
         assertEquals(  "Can not subtract incompatible prices", t.getMessage()
-                     , "Incorrect exception message");
+                     , "Incorrect exception message" );
     }
 
 
@@ -183,7 +183,7 @@ class PriceTest
                                   );
 
         assertEquals(  "Can not compare against (null) price", t.getMessage()
-                     , "Incorrect exception message");
+                     , "Incorrect exception message" );
     }
 
     @Test
@@ -199,7 +199,7 @@ class PriceTest
                                   );
 
         assertEquals(  "Precision mismatch 3 != 2", t.getMessage()
-                     , "Incorrect exception message");
+                     , "Incorrect exception message" );
     }
 
     @Test
@@ -215,7 +215,7 @@ class PriceTest
                                   );
 
         assertEquals(  "Incompatible price codes cur and ruc", t.getMessage()
-                     , "Incorrect exception message");
+                     , "Incorrect exception message" );
     }
 
 
@@ -226,7 +226,7 @@ class PriceTest
         final Price valueB  = new Price( "ghi", 1_111_111_111, 3 );
 
         assertTrue(  0 < valueA.compareTo( valueB )
-                   , "A incorrectly treated larger than B");
+                   , "A incorrectly treated larger than B" );
     }
 
 
@@ -237,7 +237,7 @@ class PriceTest
         final Price valueB  = new Price( "jkl", 222_222_222, 3 );
 
         assertTrue(  0 > valueA.compareTo( valueB )
-                   , "Comparison thinks B is not greater than A");
+                   , "Comparison thinks B is not greater than A" );
     }
 
 
