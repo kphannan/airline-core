@@ -39,5 +39,20 @@ class CrossPriceTest
         assertEquals(  "Can not add incompatible prices" , t.getMessage()
                      , "Incorrect exception message");
     }
+
+    @Test
+    void price_addCash_shouldReturnFalse()
+    {
+        final CashPrice  cash  = new CashPrice(  "USD", 987_654_321, 5 );        // NOPMD  (DU-anomaly)
+        final Price      price = new Price(      "USD", 987_654_321, 5 );        // NOPMD  (DU-anomaly)
+
+        Throwable t = assertThrows(  IllegalArgumentException.class
+                                   , () -> { price.add( cash ); }
+                                   , "CurrencyException not thrown when expected"
+                                  );
+
+        assertEquals(  "Can not add incompatible prices" , t.getMessage()
+                     , "Incorrect exception message");
+    }
 }
 

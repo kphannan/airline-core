@@ -32,8 +32,8 @@ class FlightDesignatorTest
     @Test
     void testDefaultConstructorWithAirlineAsIATA()
     {
-        IATAAirlineDesignator airline = new IATAAirlineDesignator( "DL" );
-        FlightDesignator flightDesignator = new FlightDesignator( airline, 4433 );   // NOPMD
+        IATAAirlineDesignator airline          = new IATAAirlineDesignator( "DL" );
+        FlightDesignator      flightDesignator = new FlightDesignator( airline, 4433 );   // NOPMD
 
         assertAll(  "FlightDesignator internal state"
                   , () -> assertEquals( "IATAAirlineDesignator(airlineCode=DL)", flightDesignator.getAirlineCode().toString()
