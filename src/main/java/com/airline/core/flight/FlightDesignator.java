@@ -10,7 +10,7 @@ import lombok.Data;
 @Data
 public class FlightDesignator
 {
-    public static final int MIN_FLIGHT_NUMBER =    0;
+    public static final int MIN_FLIGHT_NUMBER =    1;
     public static final int MAX_FLIGHT_NUMBER = 9999;
 
     private final AirlineCode airlineCode;

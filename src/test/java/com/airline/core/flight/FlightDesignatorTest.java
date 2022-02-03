@@ -51,7 +51,7 @@ class FlightDesignatorTest
                                               , () -> new FlightDesignator( "AA", -5 )
                                              );
 
-        assertEquals( "Invalid flight number 0 <= '-5' <= 9999", thrown.getMessage() );
+        assertEquals( "Invalid flight number 1 <= '-5' <= 9999", thrown.getMessage() );
     }
 
     @Test
@@ -61,7 +61,7 @@ class FlightDesignatorTest
                                               , () -> new FlightDesignator( "AA", 10000 )
                                              );
 
-        assertEquals( "Invalid flight number 0 <= '10000' <= 9999", thrown.getMessage() );
+        assertEquals( "Invalid flight number 1 <= '10000' <= 9999", thrown.getMessage() );
     }
 
     @Test

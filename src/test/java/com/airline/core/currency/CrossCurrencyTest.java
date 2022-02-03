@@ -90,8 +90,6 @@ class CrossCurrencyTest
 
         assertEquals(  "Can not add incompatible currencies" , t.getMessage()
                      , "Incorrect exception message");
-        // final Money result = money.add( miles );
-        // assertFalse( result.hashCode() == 0 );
     }
 
 }
