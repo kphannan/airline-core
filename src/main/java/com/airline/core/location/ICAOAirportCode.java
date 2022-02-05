@@ -4,11 +4,9 @@ import java.util.regex.Pattern;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
-// import com.fasterxml.jackson.annotation.JsonName;
 import lombok.Value;
-// import lombok.Data;
 
- 
+
 
 
 // ICAO airport code
@@ -30,7 +28,7 @@ public class ICAOAirportCode implements AirportCode
      * @throws IllegalArgumentException when input is not of the proper format
      */
     @JsonCreator
-    public ICAOAirportCode( @JsonProperty("icaoAirportCode") final String icaoAirportCode )
+    public ICAOAirportCode( @JsonProperty( "icaoAirportCode" ) final String icaoAirportCode )
     {
         if ( !isAirportCodeValid( icaoAirportCode ))
         {
@@ -51,7 +49,6 @@ public class ICAOAirportCode implements AirportCode
 
         // Only accept 4 uppercase letters, no leading or trailing spaces
         return Pattern.matches( "^([A-Z]{2}|[CKY][A-Z0-9])([A-Z]{2}|[0-9]{2,4})$", code );
-        // return Pattern.matches( "^[A-Z]{4}$", code );
     }
 
     // ----- Comparable
